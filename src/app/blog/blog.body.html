@@ -1,0 +1,136 @@
+
+<nav>
+  <div style="display:flex;align-items:center;gap:16px">
+    <a class="nav-logo" href="/"><div class="logo-mark"><img src="/cloud-logo-v2.jpg" alt="Damasqas"></div> damasqas</a>
+  </div>
+  <div class="nav-center">
+    <a class="nav-tab" href="/">Home</a>
+    <a class="nav-tab active" href="/blog">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Book a Demo</a>
+  </div>
+</nav>
+
+<article>
+
+<div class="article-meta">
+  <span class="tag">ANNOUNCEMENT</span>
+  <span>March 26, 2026</span>
+  <span>&middot;</span>
+  <span>8 min read</span>
+</div>
+
+<h1>Announcing Damasqas V1: <span class="accent">The AI SRE I Wish I Had</span></h1>
+
+<div class="article-author">
+  <div class="author-avatar"><img src="/shalin-profile-pic.jpg" alt="Shalin Patel"></div>
+  <div class="author-info">
+    <div class="author-name">Shalin Patel</div>
+    <div class="author-title">Founder, Damasqas &middot; <a href="https://www.linkedin.com/in/shalin1patel/" style="color:var(--ink-60)">LinkedIn</a></div>
+  </div>
+</div>
+
+<p class="lead">I've spent the last three years running on-call across every kind of production system you can imagine. Today I'm launching the tool I needed at every single one of them.</p>
+
+<h2>The same 3 AM wake-up call, everywhere</h2>
+
+<p>I've operated production infrastructure at <strong>AWS</strong>, where I was on the MWAA team (Managed Workflows for Apache Airflow) helping Fortune 500 customers debug stuck tasks, crashed schedulers, and cascading failures in their managed infrastructure. I ran trading systems at <strong>Moment</strong>, a quantitative hedge fund where a silent service degradation meant the desk was trading on stale prices for hours. I kept enrichment pipelines alive at <strong>Pocus</strong>, a sales intelligence startup acquired by Apollo, where a vendor API going down at 2 AM silently poisoned the entire sales database. And I managed infrastructure at an <strong>insurance firm</strong> where downtime didn't just cost revenue. It triggered compliance violations.</p>
+
+<p>Different industries. Different stacks. Different scales. But the same problem every single time:</p>
+
+<div class="pull-quote">
+  <p>PagerDuty goes off at 3 AM. You open your laptop, bleary-eyed, and start the investigation loop: check Datadog, check the deploy log, read the error, search Slack for context, grep through logs, cross-reference with recent PRs. By the time you find root cause, 45 minutes have passed and the damage has cascaded.</p>
+</div>
+
+<p>At AWS, I was literally the person F500 companies called when their infrastructure broke. I'd dig through CloudWatch logs, cross-reference scheduler heartbeats, check resource limits. The same investigation loop, hundreds of times, for customers paying millions for managed infrastructure. At Moment, a silent degradation in a market data service meant the trading desk operated on stale prices for hours before anyone noticed. At Pocus, a third-party API outage cascaded into corrupted enrichment data and nobody knew until sales reps started complaining.</p>
+
+<p>The pattern is always the same. Something breaks. The alert is either missing, too noisy, or too vague to act on. Someone spends 30 to 60 minutes reading logs, checking deploys, correlating timelines, and trying to figure out whether this is your bug, their outage, or a config change that slipped through.</p>
+
+<h2>Why existing tools don't solve this</h2>
+
+<p>I looked at every tool in the incident management space. The workflow tools (Incident.io, Rootly, PagerDuty) are excellent at <em>organizing</em> incident response. Slack channels, role assignments, status pages, postmortem templates. But they don't investigate anything. They don't touch your infrastructure. They make the process of being on fire more organized, but you still need a human to figure out what's burning and put it out.</p>
+
+<p>The enterprise AI SRE tools (Resolve.ai, Traversal, TierZero) are closer to what's needed. But they're built for large enterprises with complex sales cycles, months of onboarding, and price points that don't make sense for a 10-person startup. If you're a startup CTO who also happens to be the on-call engineer, you can't spend 6 months evaluating a $200K/yr platform.</p>
+
+<p>And the generic AI coding agents? Cool for building a todo app. Useless when you need to correlate a PagerDuty alert with a Datadog metric spike, a Railway deploy that went out 4 minutes earlier, a GitHub PR that changed an environment variable, and a Stripe status page showing a partial outage. That's not a coding problem. That's a <strong>reliability engineering</strong> problem. It requires domain knowledge that no generic tool has.</p>
+
+<h2>So I built Damasqas</h2>
+
+<p>Damasqas is an AI SRE that lives in your Slack workspace. It connects to your monitoring, your deployment platform, your code, and your third-party dependencies. And it <strong>actually understands the relationships between them</strong>.</p>
+
+<p>Ask it a question in plain English:</p>
+
+<div class="scene">
+  <strong>You:</strong> @damasqas why is checkout returning 500s?<br><br>
+  <strong>damasqas:</strong> Correlated across <span class="ok">datadog</span>, <span class="ok">railway</span>, and <span class="ok">github</span>. Deploy <span class="warn">#142</span> went live 4 minutes ago. PR <span class="warn">#89</span> changed the <code>STRIPE_API_VERSION</code> env var. The Stripe webhook handler is failing on the new payload format.<br><br>
+  Rolled back to <span class="ok">deploy #141</span>. Checkout healthy. Pushed a fix to <span class="ok">github/pr-#91</span> with an updated webhook parser. Tests passing. Ready to merge.
+</div>
+
+<p>It didn't just tell me what happened. It correlated signals across Datadog, Railway, and GitHub. It identified that a deploy changed a Stripe API version, which broke the webhook handler. It rolled back production. It wrote a fix. It pushed a PR. And it asked me to approve. All in Slack, all in under a minute.</p>
+
+<p>That's what I mean by <em>reliability engineering intelligence</em>. Not "I can write code in a container." I can correlate your monitoring alerts, your deployment history, your config changes, your third-party dependency health, and tell you whether this is your bug, their outage, or a config drift that slipped through CI.</p>
+
+<h2>What V1 can do</h2>
+
+<p>Today's launch includes everything I wished I had during every on-call rotation I've ever been on:</p>
+
+<p><strong>Incident investigation in plain English.</strong> Ask what's wrong and get the full picture. Damasqas correlates across monitoring, deploys, config changes, and third-party status pages to find root cause, not just surface the error.</p>
+
+<p><strong>Alert denoising.</strong> 247 PagerDuty alerts in 30 minutes? Damasqas groups them into 3 actual incidents, kills duplicates, and surfaces what matters. Your phone stops buzzing for things that don't need you.</p>
+
+<p><strong>Autonomous remediation.</strong> When something breaks, Damasqas doesn't just alert you. It rolls back bad deploys, restarts crashed services, fixes config drift, and opens PRs for code-level issues. Destructive actions require your approval.</p>
+
+<p><strong>SLO tracking with error budgets.</strong> Set up SLOs in plain English: "payments API should be 99.9% available." Damasqas tracks your error budget burn rate and alerts you before you breach, not after.</p>
+
+<p><strong>Dependency health monitoring.</strong> Is checkout failing because of your code or because Stripe is having a partial outage? Damasqas checks third-party status pages, correlates timing, and tells you definitively. Stops false investigations before they start.</p>
+
+<p><strong>Rule-based automation.</strong> "If the API error rate exceeds 5% for 3 minutes, roll back the last deploy." "Every Monday at 9am, post an SLO summary to #engineering." Rules that modify state require explicit approval.</p>
+
+<p><strong>Intelligent model routing.</strong> Not every question needs Opus 4.6. A service status check gets routed to a fast, cheap model. A cross-service root cause analysis gets the full reasoning power. You pay for what each task actually needs.</p>
+
+<h2>Why this isn't just another wrapper</h2>
+
+<p>I've seen the wave of AI SRE startups. Some are workflow tools that slapped an LLM onto their incident management product. Others are generic coding agents that happen to know some bash. The value is the sandbox, not the intelligence.</p>
+
+<p>Damasqas is different because the value <em>is</em> the intelligence. It's not a general-purpose agent that happens to know some DevOps. It's a specialist that understands:</p>
+
+<ul>
+  <li>Service topology, deployment graphs, and dependency chains</li>
+  <li>The difference between a deploy regression, a config drift, and a third-party outage</li>
+  <li>That 99.9% availability on your payments API is a different severity than 99% on your marketing site</li>
+  <li>How to correlate a PagerDuty alert, a Datadog metric, a Railway deploy, and a GitHub PR into a single root cause</li>
+</ul>
+
+<p>If Anthropic ships a better coding sandbox tomorrow, a wrapper dies. If Anthropic ships a better model tomorrow, Damasqas gets <em>smarter</em>, because the domain knowledge, the integrations, the SLO configs, and the service context are ours.</p>
+
+<h2>What's next</h2>
+
+<p>V1 ships with connectors for <strong>Datadog, PagerDuty, GitHub, Railway, Slack, and PostgreSQL</strong>. We're already building support for:</p>
+
+<ul>
+  <li><strong>Monitoring:</strong> AWS CloudWatch, Grafana, Prometheus</li>
+  <li><strong>Alerting:</strong> OpsGenie, Sentry</li>
+  <li><strong>Infrastructure:</strong> Kubernetes, Vercel, GCP, Render</li>
+  <li><strong>Project management:</strong> Linear</li>
+</ul>
+
+<p>Every new integration is an MCP server that plugs in without changing the bot. The architecture is built to grow.</p>
+
+<h2>Try it</h2>
+
+<p>Damasqas is free to start. Connect one project, ask unlimited questions, get zero-config baseline alerts. If you're a startup CTO or engineering lead who wants SRE-grade reliability without the SRE team, book a demo and I'll show you what it looks like on your actual stack.</p>
+
+<div class="cta-box">
+  <h3>Your production stack deserves its own SRE.</h3>
+  <p>Connect your stack in 5 minutes. Ask your first question. See the difference a specialist makes.</p>
+  <a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Book a demo</a>
+</div>
+
+<p>I built this because every team I've ever been on needed it. If you've ever been woken up at 3 AM by PagerDuty and spent 45 minutes just figuring out <em>what</em> broke, this is for you.</p>
+
+<p style="color:var(--ink-60);margin-top:8px">Shalin</p>
+
+<div class="blog-footer">&copy; 2026 Damasqas Corp.</div>
+
+</article>

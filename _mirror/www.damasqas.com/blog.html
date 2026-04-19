@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Announcing Damasqas: The AI SRE That Triages, Investigates, and Fixes Your Incidents</title>
+<meta name="description" content="After running on-call at AWS, Moment (hedge fund), Pocus (acquired by Apollo), and more, I built the AI SRE I wished I had. Damasqas connects to your monitoring, correlates signals across your stack, and remediates autonomously. All from Slack.">
+<meta name="keywords" content="AI SRE, incident response, root cause analysis, auto-remediation, alert denoising, on-call automation, site reliability engineering, Slack bot, production monitoring, PagerDuty alternative">
+<meta name="author" content="Shalin Patel">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://damasqas.com/blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Announcing Damasqas: The AI SRE That Triages, Investigates, and Fixes Your Incidents">
+<meta property="og:description" content="After running on-call at AWS, Moment, and Pocus, I built the AI SRE I wished I had. It connects to your stack, correlates signals, and remediates autonomously.">
+<meta property="og:url" content="https://damasqas.com/blog">
+<meta property="og:site_name" content="Damasqas">
+<meta property="og:image" content="https://damasqas.com/cloud-logo-v2.jpg">
+<meta property="article:published_time" content="2026-03-26T00:00:00Z">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Announcing Damasqas: The AI SRE That Triages, Investigates, and Fixes Your Incidents">
+<meta name="twitter:description" content="After running on-call at AWS, Moment, and Pocus, I built the AI SRE I wished I had. All from Slack.">
+<meta name="twitter:image" content="https://damasqas.com/cloud-logo-v2.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Announcing Damasqas: The AI SRE That Triages, Investigates, and Fixes Your Incidents",
+  "description": "After running on-call at AWS, Moment (hedge fund), Pocus (acquired by Apollo), and more, I built the AI SRE I wished I had.",
+  "author": {"@type": "Person","name": "Shalin Patel","url": "https://www.linkedin.com/in/shalin1patel/","jobTitle": "Founder","worksFor": {"@type": "Organization","name": "Damasqas"}},
+  "publisher": {"@type": "Organization","name": "Damasqas","url": "https://damasqas.com"},
+  "datePublished": "2026-03-26",
+  "dateModified": "2026-03-26",
+  "mainEntityOfPage": "https://damasqas.com/blog",
+  "image": "https://damasqas.com/cloud-logo-v2.jpg",
+  "keywords": ["AI SRE", "incident response", "root cause analysis", "auto-remediation", "on-call automation", "Slack bot"],
+  "articleSection": "Product Launch"
+}
+</script>
+<link rel="icon" type="image/jpeg" href="cloud-logo-v2.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#ECE5D5;
+  --bg-elev-1:#F2ECDC;
+  --bg-elev-2:#F7F1E2;
+  --bg-warm:#E5DEC9;
+  --ink-100:#1A1814;
+  --ink-80:#3D3A32;
+  --ink-60:#7A7466;
+  --ink-40:#B0A990;
+  --ink-20:#D5CDB3;
+  --accent:#4A6B9C;
+  --accent-deep:#2E4B73;
+  --accent-soft:#D8E0EC;
+  --signal-ok:#6B8A5C;
+  --signal-warn:#B88A3F;
+  --signal-bad:#B5524A;
+  --hairline:rgba(26,24,20,0.08);
+  --hairline-strong:rgba(26,24,20,0.14);
+  --shadow-pop:0 1px 2px rgba(26,24,20,0.05),0 8px 24px rgba(26,24,20,0.06);
+  --font-display:'Newsreader',Georgia,serif;
+  --font-body:'Instrument Sans',-apple-system,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink-100);font-family:var(--font-body);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:14px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(236,229,213,0.85);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid var(--hairline);
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-weight:500;font-size:1.2rem;
+  letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:10px;
+  color:var(--ink-100);text-decoration:none;
+}
+.nav-logo:hover{text-decoration:none}
+.logo-mark{width:28px;height:28px;border-radius:7px;overflow:hidden;flex-shrink:0;border:1px solid var(--hairline)}
+.logo-mark img{width:100%;height:100%;object-fit:cover}
+.nav-center{display:flex;gap:6px;align-items:center}
+.nav-tab{
+  padding:6px 14px;border-radius:6px;
+  font-size:0.85rem;font-weight:500;
+  color:var(--ink-60);text-decoration:none;
+  transition:all 0.15s;
+}
+.nav-tab:hover{color:var(--ink-100);background:rgba(26,24,20,0.03);text-decoration:none}
+.nav-tab.active{color:var(--accent);background:var(--accent-soft)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;border-radius:7px;
+  font-size:0.78rem;font-weight:600;
+  font-family:var(--font-body);
+  cursor:pointer;transition:all 0.2s;
+  border:none;text-decoration:none;white-space:nowrap;
+}
+.btn:hover{text-decoration:none}
+.btn-primary{
+  background:var(--ink-100);color:var(--bg-elev-2);
+  box-shadow:var(--shadow-pop);
+}
+.btn-primary:hover{filter:brightness(1.15)}
+
+/* Article */
+article{max-width:680px;margin:0 auto;padding:100px 24px 80px}
+.article-meta{
+  font-family:var(--font-body);
+  font-size:0.75rem;
+  color:var(--ink-60);
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:24px;
+}
+.article-meta .tag{
+  padding:3px 10px;border-radius:4px;
+  background:var(--accent-soft);
+  color:var(--accent-deep);
+  font-weight:600;font-size:0.7rem;
+}
+article h1{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,4vw,2.6rem);
+  font-weight:500;
+  letter-spacing:-0.015em;
+  line-height:1.15;
+  margin-bottom:20px;
+  color:var(--ink-100);
+}
+article h1 .accent{color:var(--ink-40);font-style:italic}
+.article-author{
+  display:flex;align-items:center;gap:12px;
+  padding:20px 0 32px;
+  border-bottom:1px solid var(--hairline);
+  margin-bottom:40px;
+}
+.author-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid var(--hairline)}
+.author-avatar img{width:100%;height:100%;object-fit:cover}
+.author-info .author-name{font-weight:600;font-size:0.92rem;color:var(--ink-100)}
+.author-info .author-title{font-size:0.82rem;color:var(--ink-60)}
+
+article h2{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:500;
+  letter-spacing:-0.01em;
+  margin-top:48px;margin-bottom:14px;
+  line-height:1.3;
+  color:var(--ink-100);
+}
+article h3{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:500;
+  margin-top:36px;margin-bottom:10px;
+  color:var(--ink-100);
+}
+article p{color:var(--ink-60);margin-bottom:18px;line-height:1.9;font-size:0.95rem}
+article p.lead{
+  font-family:var(--font-display);
+  font-size:1.15rem;line-height:1.85;
+  color:var(--ink-60);font-style:italic;
+  margin-bottom:28px;
+}
+article strong{color:var(--ink-100);font-weight:600}
+article em{font-style:italic}
+article ul,article ol{color:var(--ink-60);padding-left:24px;margin-bottom:18px;font-size:0.95rem}
+article li{margin-bottom:8px;line-height:1.8}
+code{
+  font-family:'Instrument Sans',sans-serif;
+  font-size:0.85em;
+  background:var(--bg-elev-2);
+  border:1px solid var(--hairline);
+  padding:2px 6px;border-radius:4px;
+  color:var(--accent);
+}
+
+.pull-quote{border-left:3px solid var(--ink-40);padding:20px 0 20px 28px;margin:32px 0}
+.pull-quote p{
+  font-family:var(--font-display);
+  font-size:1.2rem;line-height:1.7;
+  color:var(--ink-80);font-weight:500;
+  font-style:italic;
+  margin-bottom:0;
+}
+
+.scene{
+  background:var(--bg-elev-2);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  padding:20px 24px;margin:20px 0 24px;
+  font-size:0.9rem;line-height:1.8;
+  color:var(--ink-60);
+}
+.scene strong{color:var(--ink-100)}
+.scene .warn{color:var(--signal-warn)}
+.scene .red{color:var(--signal-bad)}
+.scene .ok{color:var(--signal-ok)}
+
+.cta-box{
+  background:var(--bg-elev-2);
+  border:1px solid var(--hairline);
+  border-radius:14px;
+  padding:36px 32px;margin:48px 0;
+  text-align:center;
+  box-shadow:var(--shadow-pop);
+}
+.cta-box h3{
+  font-family:var(--font-display);
+  font-size:1.3rem;font-weight:500;
+  margin-bottom:10px;color:var(--ink-100);
+}
+.cta-box p{color:var(--ink-60);margin-bottom:20px;font-size:0.92rem}
+.cta-box .btn{
+  padding:14px 26px;
+  font-size:0.88rem;
+  border-radius:10px;
+}
+
+.blog-footer{
+  border-top:1px solid var(--hairline);
+  padding:16px 0 0;margin-top:60px;
+  color:var(--ink-60);font-size:0.8rem;
+  text-align:center;
+}
+
+@media(max-width:900px){nav .nav-center{display:none}}
+@media(max-width:600px){article{padding:80px 20px 60px}article h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div style="display:flex;align-items:center;gap:16px">
+    <a class="nav-logo" href="index.html"><div class="logo-mark"><img src="cloud-logo-v2.jpg" alt="Damasqas"></div> damasqas</a>
+  </div>
+  <div class="nav-center">
+    <a class="nav-tab" href="index.html">Home</a>
+    <a class="nav-tab active" href="blog.html">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Book a Demo</a>
+  </div>
+</nav>
+
+<article>
+
+<div class="article-meta">
+  <span class="tag">ANNOUNCEMENT</span>
+  <span>March 26, 2026</span>
+  <span>&middot;</span>
+  <span>8 min read</span>
+</div>
+
+<h1>Announcing Damasqas V1: <span class="accent">The AI SRE I Wish I Had</span></h1>
+
+<div class="article-author">
+  <div class="author-avatar"><img src="shalin-profile-pic.jpg" alt="Shalin Patel"></div>
+  <div class="author-info">
+    <div class="author-name">Shalin Patel</div>
+    <div class="author-title">Founder, Damasqas &middot; <a href="https://www.linkedin.com/in/shalin1patel/" style="color:var(--ink-60)">LinkedIn</a></div>
+  </div>
+</div>
+
+<p class="lead">I've spent the last three years running on-call across every kind of production system you can imagine. Today I'm launching the tool I needed at every single one of them.</p>
+
+<h2>The same 3 AM wake-up call, everywhere</h2>
+
+<p>I've operated production infrastructure at <strong>AWS</strong>, where I was on the MWAA team (Managed Workflows for Apache Airflow) helping Fortune 500 customers debug stuck tasks, crashed schedulers, and cascading failures in their managed infrastructure. I ran trading systems at <strong>Moment</strong>, a quantitative hedge fund where a silent service degradation meant the desk was trading on stale prices for hours. I kept enrichment pipelines alive at <strong>Pocus</strong>, a sales intelligence startup acquired by Apollo, where a vendor API going down at 2 AM silently poisoned the entire sales database. And I managed infrastructure at an <strong>insurance firm</strong> where downtime didn't just cost revenue. It triggered compliance violations.</p>
+
+<p>Different industries. Different stacks. Different scales. But the same problem every single time:</p>
+
+<div class="pull-quote">
+  <p>PagerDuty goes off at 3 AM. You open your laptop, bleary-eyed, and start the investigation loop: check Datadog, check the deploy log, read the error, search Slack for context, grep through logs, cross-reference with recent PRs. By the time you find root cause, 45 minutes have passed and the damage has cascaded.</p>
+</div>
+
+<p>At AWS, I was literally the person F500 companies called when their infrastructure broke. I'd dig through CloudWatch logs, cross-reference scheduler heartbeats, check resource limits. The same investigation loop, hundreds of times, for customers paying millions for managed infrastructure. At Moment, a silent degradation in a market data service meant the trading desk operated on stale prices for hours before anyone noticed. At Pocus, a third-party API outage cascaded into corrupted enrichment data and nobody knew until sales reps started complaining.</p>
+
+<p>The pattern is always the same. Something breaks. The alert is either missing, too noisy, or too vague to act on. Someone spends 30 to 60 minutes reading logs, checking deploys, correlating timelines, and trying to figure out whether this is your bug, their outage, or a config change that slipped through.</p>
+
+<h2>Why existing tools don't solve this</h2>
+
+<p>I looked at every tool in the incident management space. The workflow tools (Incident.io, Rootly, PagerDuty) are excellent at <em>organizing</em> incident response. Slack channels, role assignments, status pages, postmortem templates. But they don't investigate anything. They don't touch your infrastructure. They make the process of being on fire more organized, but you still need a human to figure out what's burning and put it out.</p>
+
+<p>The enterprise AI SRE tools (Resolve.ai, Traversal, TierZero) are closer to what's needed. But they're built for large enterprises with complex sales cycles, months of onboarding, and price points that don't make sense for a 10-person startup. If you're a startup CTO who also happens to be the on-call engineer, you can't spend 6 months evaluating a $200K/yr platform.</p>
+
+<p>And the generic AI coding agents? Cool for building a todo app. Useless when you need to correlate a PagerDuty alert with a Datadog metric spike, a Railway deploy that went out 4 minutes earlier, a GitHub PR that changed an environment variable, and a Stripe status page showing a partial outage. That's not a coding problem. That's a <strong>reliability engineering</strong> problem. It requires domain knowledge that no generic tool has.</p>
+
+<h2>So I built Damasqas</h2>
+
+<p>Damasqas is an AI SRE that lives in your Slack workspace. It connects to your monitoring, your deployment platform, your code, and your third-party dependencies. And it <strong>actually understands the relationships between them</strong>.</p>
+
+<p>Ask it a question in plain English:</p>
+
+<div class="scene">
+  <strong>You:</strong> @damasqas why is checkout returning 500s?<br><br>
+  <strong>damasqas:</strong> Correlated across <span class="ok">datadog</span>, <span class="ok">railway</span>, and <span class="ok">github</span>. Deploy <span class="warn">#142</span> went live 4 minutes ago. PR <span class="warn">#89</span> changed the <code>STRIPE_API_VERSION</code> env var. The Stripe webhook handler is failing on the new payload format.<br><br>
+  Rolled back to <span class="ok">deploy #141</span>. Checkout healthy. Pushed a fix to <span class="ok">github/pr-#91</span> with an updated webhook parser. Tests passing. Ready to merge.
+</div>
+
+<p>It didn't just tell me what happened. It correlated signals across Datadog, Railway, and GitHub. It identified that a deploy changed a Stripe API version, which broke the webhook handler. It rolled back production. It wrote a fix. It pushed a PR. And it asked me to approve. All in Slack, all in under a minute.</p>
+
+<p>That's what I mean by <em>reliability engineering intelligence</em>. Not "I can write code in a container." I can correlate your monitoring alerts, your deployment history, your config changes, your third-party dependency health, and tell you whether this is your bug, their outage, or a config drift that slipped through CI.</p>
+
+<h2>What V1 can do</h2>
+
+<p>Today's launch includes everything I wished I had during every on-call rotation I've ever been on:</p>
+
+<p><strong>Incident investigation in plain English.</strong> Ask what's wrong and get the full picture. Damasqas correlates across monitoring, deploys, config changes, and third-party status pages to find root cause, not just surface the error.</p>
+
+<p><strong>Alert denoising.</strong> 247 PagerDuty alerts in 30 minutes? Damasqas groups them into 3 actual incidents, kills duplicates, and surfaces what matters. Your phone stops buzzing for things that don't need you.</p>
+
+<p><strong>Autonomous remediation.</strong> When something breaks, Damasqas doesn't just alert you. It rolls back bad deploys, restarts crashed services, fixes config drift, and opens PRs for code-level issues. Destructive actions require your approval.</p>
+
+<p><strong>SLO tracking with error budgets.</strong> Set up SLOs in plain English: "payments API should be 99.9% available." Damasqas tracks your error budget burn rate and alerts you before you breach, not after.</p>
+
+<p><strong>Dependency health monitoring.</strong> Is checkout failing because of your code or because Stripe is having a partial outage? Damasqas checks third-party status pages, correlates timing, and tells you definitively. Stops false investigations before they start.</p>
+
+<p><strong>Rule-based automation.</strong> "If the API error rate exceeds 5% for 3 minutes, roll back the last deploy." "Every Monday at 9am, post an SLO summary to #engineering." Rules that modify state require explicit approval.</p>
+
+<p><strong>Intelligent model routing.</strong> Not every question needs Opus 4.6. A service status check gets routed to a fast, cheap model. A cross-service root cause analysis gets the full reasoning power. You pay for what each task actually needs.</p>
+
+<h2>Why this isn't just another wrapper</h2>
+
+<p>I've seen the wave of AI SRE startups. Some are workflow tools that slapped an LLM onto their incident management product. Others are generic coding agents that happen to know some bash. The value is the sandbox, not the intelligence.</p>
+
+<p>Damasqas is different because the value <em>is</em> the intelligence. It's not a general-purpose agent that happens to know some DevOps. It's a specialist that understands:</p>
+
+<ul>
+  <li>Service topology, deployment graphs, and dependency chains</li>
+  <li>The difference between a deploy regression, a config drift, and a third-party outage</li>
+  <li>That 99.9% availability on your payments API is a different severity than 99% on your marketing site</li>
+  <li>How to correlate a PagerDuty alert, a Datadog metric, a Railway deploy, and a GitHub PR into a single root cause</li>
+</ul>
+
+<p>If Anthropic ships a better coding sandbox tomorrow, a wrapper dies. If Anthropic ships a better model tomorrow, Damasqas gets <em>smarter</em>, because the domain knowledge, the integrations, the SLO configs, and the service context are ours.</p>
+
+<h2>What's next</h2>
+
+<p>V1 ships with connectors for <strong>Datadog, PagerDuty, GitHub, Railway, Slack, and PostgreSQL</strong>. We're already building support for:</p>
+
+<ul>
+  <li><strong>Monitoring:</strong> AWS CloudWatch, Grafana, Prometheus</li>
+  <li><strong>Alerting:</strong> OpsGenie, Sentry</li>
+  <li><strong>Infrastructure:</strong> Kubernetes, Vercel, GCP, Render</li>
+  <li><strong>Project management:</strong> Linear</li>
+</ul>
+
+<p>Every new integration is an MCP server that plugs in without changing the bot. The architecture is built to grow.</p>
+
+<h2>Try it</h2>
+
+<p>Damasqas is free to start. Connect one project, ask unlimited questions, get zero-config baseline alerts. If you're a startup CTO or engineering lead who wants SRE-grade reliability without the SRE team, book a demo and I'll show you what it looks like on your actual stack.</p>
+
+<div class="cta-box">
+  <h3>Your production stack deserves its own SRE.</h3>
+  <p>Connect your stack in 5 minutes. Ask your first question. See the difference a specialist makes.</p>
+  <a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Book a demo</a>
+</div>
+
+<p>I built this because every team I've ever been on needed it. If you've ever been woken up at 3 AM by PagerDuty and spent 45 minutes just figuring out <em>what</em> broke, this is for you.</p>
+
+<p style="color:var(--ink-60);margin-top:8px">Shalin</p>
+
+<div class="blog-footer">&copy; 2026 Damasqas Corp.</div>
+
+</article>
+</body>
+</html>

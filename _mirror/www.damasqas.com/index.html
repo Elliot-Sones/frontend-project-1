@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damasqas | Your AI SRE | Incident Triage, Root Cause Analysis & Auto-Remediation</title>
+<meta name="description" content="Damasqas is an AI SRE that connects to your monitoring, logs, and deployments. It triages alerts, investigates incidents, rolls back bad deploys, and remediates autonomously. All from Slack. Free to start.">
+<meta name="keywords" content="AI SRE, incident management, root cause analysis, auto-remediation, alert denoising, on-call automation, PagerDuty, Datadog, site reliability engineering, incident response, Slack bot, production monitoring">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://damasqas.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Damasqas | Your AI SRE">
+<meta property="og:description" content="AI agent built exclusively for site reliability. Connects to your stack, triages alerts, investigates incidents, and remediates autonomously. Not a workflow tool, a specialist.">
+<meta property="og:url" content="https://damasqas.com/">
+<meta property="og:site_name" content="Damasqas">
+<meta property="og:image" content="https://damasqas.com/cloud-logo-v2.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Damasqas | Your AI SRE">
+<meta name="twitter:description" content="AI agent built exclusively for site reliability. Triages alerts, investigates incidents, remediates autonomously. From Slack.">
+<meta name="twitter:image" content="https://damasqas.com/cloud-logo-v2.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Damasqas","url":"https://damasqas.com","description":"AI-powered SRE that connects to your monitoring, logs, and deployments. Triages alerts, investigates incidents, and remediates autonomously.","potentialAction":{"@type":"SearchAction","target":"https://damasqas.com/docs#{search_term_string}","query-input":"required name=search_term_string"}}
+</script>
+<link rel="icon" type="image/jpeg" href="cloud-logo-v2.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET
+   ============================================================ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+/* ============================================================
+   TOKENS : warm Synchronized-inspired palette
+   ============================================================ */
+:root{
+  /* Canvas : warm cream */
+  --bg:#ECE5D5;
+  --bg-elev-1:#F2ECDC;
+  --bg-elev-2:#F7F1E2;
+  --bg-warm:#E5DEC9;
+  --bg-deep:#D8D0B8;
+
+  /* Ink : warm dark */
+  --ink-100:#1A1814;
+  --ink-90:#2D2A22;
+  --ink-80:#3D3A32;
+  --ink-60:#7A7466;
+  --ink-40:#B0A990;
+  --ink-20:#D5CDB3;
+
+  /* Accent : muted indigo, like the soft blue badges in the reference */
+  --accent:#4A6B9C;
+  --accent-deep:#2E4B73;
+  --accent-soft:#D8E0EC;
+  --accent-warm:#8A6E4F;
+  --accent-glow:rgba(74,107,156,0.1);
+
+  /* Signal */
+  --signal-ok:#6B8A5C;
+  --signal-ok-soft:#DFE6D2;
+  --signal-warn:#B88A3F;
+  --signal-warn-soft:#EFE2C5;
+  --signal-bad:#B5524A;
+  --signal-bad-soft:#EBD3CE;
+
+  /* Surfaces */
+  --hairline:rgba(26,24,20,0.08);
+  --hairline-strong:rgba(26,24,20,0.14);
+  --radius-card:18px;
+  --radius-pill:999px;
+  --radius-mock:20px;
+
+  /* Shadow */
+  --shadow-card:0 4px 16px rgba(26,24,20,0.04),0 24px 64px rgba(26,24,20,0.08);
+  --shadow-card-lg:0 8px 24px rgba(26,24,20,0.05),0 32px 80px rgba(26,24,20,0.1);
+  --shadow-pop:0 1px 2px rgba(26,24,20,0.05),0 8px 24px rgba(26,24,20,0.06);
+
+  /* Type scale */
+  --fs-display:clamp(3rem, 5.5vw + 1rem, 6rem);
+  --fs-h2:clamp(2rem, 3vw + 1rem, 3.6rem);
+  --fs-h3:clamp(1.4rem, 1vw + 0.9rem, 1.85rem);
+  --fs-body:clamp(1rem, 0.4vw + 0.9rem, 1.125rem);
+  --fs-meta:0.8125rem;
+  --fs-mono:0.875rem;
+
+  /* Rhythm */
+  --section-y:clamp(6rem, 12vh, 12rem);
+  --content-max:1180px;
+
+  /* Motion */
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-in-out:cubic-bezier(0.65,0,0.35,1);
+  --dur-fast:180ms;
+  --dur-med:420ms;
+  --dur-slow:900ms;
+
+  /* Fonts */
+  --font-display:'Newsreader',Georgia,serif;
+  --font-body:'Instrument Sans',-apple-system,sans-serif;
+  --font-mono:'Instrument Sans',-apple-system,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--ink-100);
+  font-family:var(--font-body);
+  font-size:var(--fs-body);
+  line-height:1.55;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Subtle paper noise overlay */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-repeat:repeat;opacity:0.4;mix-blend-mode:multiply;
+}
+
+/* Skip link */
+.skip-link{
+  position:absolute;top:-40px;left:0;
+  background:var(--ink-100);color:var(--bg);
+  padding:8px 16px;font-weight:600;font-size:0.85rem;
+  border-radius:0 0 8px 0;z-index:9999;
+}
+.skip-link:focus{top:0}
+
+/* Focus rings */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity 700ms var(--ease-out),transform 700ms var(--ease-out)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:80ms}
+.reveal-d2{transition-delay:160ms}
+.reveal-d3{transition-delay:240ms}
+
+/* ============================================================
+   ANNOUNCE BAR + NAV
+   ============================================================ */
+.announce-bar{
+  position:fixed;top:0;left:0;right:0;z-index:101;
+  height:36px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-family:var(--font-body);
+  font-size:0.78rem;font-weight:500;
+  color:var(--ink-80);
+  background:var(--bg-warm);
+  border-bottom:1px solid var(--hairline);
+  letter-spacing:0.01em;
+}
+.announce-bar a{color:var(--accent);font-weight:600;margin-left:6px}
+.announce-bar a:hover{text-decoration:underline}
+.announce-bar .pulse{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--signal-ok);margin-right:8px;vertical-align:middle;
+  animation:dotPulse 2.4s ease-in-out infinite;
+}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:0.35}}
+
+nav{
+  position:fixed;top:36px;left:0;right:0;z-index:100;
+  padding:14px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(236,229,213,0.85);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  transition:background var(--dur-med) var(--ease-out);
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:1.2rem;
+  letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:10px;
+  color:var(--ink-100);
+}
+.logo-mark{width:30px;height:30px;border-radius:8px;overflow:hidden;flex-shrink:0;border:1px solid var(--hairline)}
+.logo-mark img{width:100%;height:100%;object-fit:cover}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  font-family:var(--font-body);
+  font-size:0.85rem;
+  color:var(--ink-60);
+  font-weight:500;
+  letter-spacing:0.01em;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.nav-links a:hover{color:var(--ink-100)}
+.nav-cta{display:inline-flex;gap:12px;align-items:center}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 26px;border-radius:10px;
+  font-size:0.88rem;font-weight:600;font-family:var(--font-body);
+  cursor:pointer;border:none;
+  transition:all var(--dur-med) var(--ease-out);
+  min-height:48px;
+  white-space:nowrap;
+  line-height:1;
+}
+/* Compact variant for the nav */
+.nav-cta .btn{
+  padding:9px 18px;
+  font-size:0.78rem;
+  min-height:auto;
+  border-radius:7px;
+}
+.btn-primary{
+  background:var(--ink-100);color:var(--bg-elev-2);
+  box-shadow:var(--shadow-pop);
+}
+.btn-primary:hover{filter:brightness(1.15)}
+.btn-ghost{
+  background:transparent;color:var(--ink-80);
+  border:1px solid var(--hairline-strong);
+}
+.btn-ghost:hover{color:var(--ink-100);border-color:var(--ink-60);background:rgba(26,24,20,0.03)}
+.btn-large{padding:18px 36px;font-size:0.95rem;border-radius:var(--radius-pill);min-height:60px}
+
+/* ============================================================
+   SECTION BASE
+   ============================================================ */
+.section{padding:var(--section-y) 24px;position:relative}
+.section-inner{max-width:var(--content-max);margin:0 auto}
+.section-warm{background:var(--bg-warm)}
+.section-deep{background:var(--bg-deep)}
+
+.section-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.14em;
+  color:var(--ink-60);
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:24px;
+}
+.section-label::after{
+  content:'';flex:1;max-width:80px;height:1px;
+  background:var(--hairline-strong);
+}
+
+.display-h2{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:var(--fs-h2);
+  letter-spacing:-0.01em;
+  line-height:1.05;
+  max-width:18ch;
+  color:var(--ink-100);
+}
+.display-h2 .muted{color:var(--ink-40);font-style:italic}
+.display-h2.wide{max-width:22ch}
+
+.section-sub{
+  font-size:var(--fs-body);
+  color:var(--ink-60);
+  max-width:60ch;
+  margin-top:20px;
+  line-height:1.65;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;
+  padding:160px 24px 80px;
+  display:flex;align-items:center;
+  overflow:hidden;
+  background:var(--bg);
+  min-height:100vh;
+}
+
+/* Castle image in a proportional container */
+.hero-castle{
+  position:absolute;
+  top:98px;
+  right:0;
+  bottom:0;
+  width:50%;
+  max-width:960px;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,0.2) 12%,#000 30%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,0.2) 12%,#000 30%);
+  opacity:0.6;
+  filter:saturate(0.85);
+}
+.hero-castle img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 38%;
+}
+@media(max-width:1023px){
+  .hero{min-height:auto}
+  .hero-castle{
+    display:none;
+  }
+}
+
+.hero-inner{
+  max-width:var(--content-max);
+  margin:0 auto;
+  width:100%;
+  position:relative;
+  z-index:1;
+  display:block;
+}
+
+.hero-text{
+  position:relative;
+  z-index:2;
+  max-width:560px;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:7px 14px;border-radius:var(--radius-pill);
+  background:var(--bg-elev-1);
+  border:1px solid var(--hairline-strong);
+  font-family:var(--font-mono);
+  font-size:11px;font-weight:500;
+  letter-spacing:0.06em;
+  color:var(--ink-80);
+  margin-bottom:32px;
+  text-transform:uppercase;
+}
+.hero-eyebrow .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--signal-ok);
+  animation:dotPulse 2.4s ease-in-out infinite;
+}
+
+.hero h1{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:var(--fs-display);
+  line-height:0.98;
+  letter-spacing:-0.015em;
+  color:var(--ink-100);
+}
+.hero h1 .muted{
+  color:var(--ink-40);
+  font-style:italic;
+  display:inline-block;
+}
+.hero-sub{
+  font-family:var(--font-body);
+  font-size:var(--fs-body);
+  color:var(--ink-60);
+  max-width:46ch;
+  margin-top:30px;
+  line-height:1.6;
+}
+.hero-sub strong{color:var(--ink-100);font-weight:600}
+.hero-actions{
+  display:flex;gap:18px;align-items:center;
+  margin-top:40px;flex-wrap:wrap;
+}
+.hero-link{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  color:var(--ink-60);
+  letter-spacing:0.04em;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.hero-link:hover{color:var(--ink-100)}
+
+
+/* ============================================================
+   §01 BEFORE / AFTER
+   ============================================================ */
+.compare{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:36px;
+  margin-top:64px;
+  align-items:stretch;
+}
+@media(min-width:1024px){
+  .compare{grid-template-columns:1fr auto 1fr;gap:32px}
+}
+.compare-card{
+  border-radius:var(--radius-card);
+  padding:42px 38px;
+  position:relative;
+  display:flex;flex-direction:column;
+}
+.compare-before{
+  background:transparent;
+  border:1px dashed var(--hairline-strong);
+}
+.compare-after{
+  background:var(--bg-elev-2);
+  border:1px solid var(--hairline);
+  box-shadow:var(--shadow-card);
+}
+.compare-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  margin-bottom:24px;
+  display:inline-block;
+  padding:5px 11px;
+  border-radius:5px;
+}
+.compare-before .compare-label{
+  background:rgba(26,24,20,0.04);
+  color:var(--ink-60);
+}
+.compare-after .compare-label{
+  background:var(--accent-soft);
+  color:var(--accent-deep);
+}
+.compare-card h3{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:var(--fs-h3);
+  letter-spacing:-0.01em;
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.compare-before h3{color:var(--ink-60);font-style:italic}
+.compare-after h3{color:var(--ink-100)}
+.compare-desc{
+  font-size:0.95rem;
+  line-height:1.7;
+  margin-bottom:30px;
+}
+.compare-before .compare-desc{color:var(--ink-60)}
+.compare-after .compare-desc{color:var(--ink-80)}
+.compare-points{display:flex;flex-direction:column;gap:14px}
+.compare-point{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:0.92rem;line-height:1.55;
+}
+.compare-point .gly{
+  flex-shrink:0;margin-top:3px;font-size:0.82rem;
+  font-family:var(--font-mono);
+}
+.compare-before .compare-point{color:var(--ink-60)}
+.compare-before .compare-point .gly{color:var(--ink-40)}
+.compare-after .compare-point{color:var(--ink-80)}
+.compare-after .compare-point .gly{color:var(--signal-ok)}
+
+/* Central arrow */
+.compare-arrow{
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-size:var(--fs-h2);
+  color:var(--accent);
+  font-weight:300;
+  position:relative;
+}
+.compare-arrow .arrow-glyph{
+  display:block;
+  opacity:0;
+  transform:translateX(-20px);
+  transition:opacity 800ms var(--ease-out),transform 800ms var(--ease-out);
+  transition-delay:300ms;
+}
+.compare.in-view .compare-arrow .arrow-glyph{
+  opacity:1;
+  transform:translateX(0);
+}
+@media(max-width:1023px){
+  .compare-arrow{padding:8px 0}
+  .compare-arrow .arrow-glyph{transform:translateY(-20px) rotate(90deg)}
+  .compare.in-view .compare-arrow .arrow-glyph{transform:translateY(0) rotate(90deg)}
+}
+
+/* ============================================================
+   §02 STACK V2 : pinned scrollytelling
+   Header lives in normal flow above. Below it, the .stack-v2-scroll
+   wrapper has explicit height and contains a sticky pin that holds
+   the list+mock in place while scroll progress drives active state.
+   ============================================================ */
+.stack-v2{
+  padding:var(--section-y) 24px 0;
+  background:var(--bg);
+  position:relative;
+}
+.stack-v2-inner{max-width:var(--content-max);margin:0 auto}
+.stack-v2-header{margin-bottom:60px;max-width:780px}
+
+/* Outer wrapper provides scroll runway. ~110vh per layer plus a tail. */
+.stack-v2-scroll{
+  position:relative;
+  /* Default (mobile): unpinned, normal flow */
+}
+@media(min-width:1024px){
+  .stack-v2-scroll{
+    height:660vh;
+  }
+}
+
+/* Sticky pin holds the body in place inside the scroll wrapper */
+.stack-v2-pin{
+  position:relative;
+  padding-bottom:var(--section-y);
+}
+@media(min-width:1024px){
+  .stack-v2-pin{
+    position:sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    padding:120px 24px var(--section-y);
+    overflow:hidden;
+  }
+}
+
+.stack-v2-body{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:48px;
+  width:100%;
+  max-width:var(--content-max);
+  margin:0 auto;
+}
+@media(min-width:1024px){
+  .stack-v2-body{
+    grid-template-columns:5fr 7fr;
+    gap:80px;
+    align-items:center;
+  }
+}
+
+/* Left: numbered list. All 6 items always visible inside the pin. */
+.stack-v2-list{display:flex;flex-direction:column}
+.stack-v2-item{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:24px;
+  padding:22px 0;
+  border-top:1px solid var(--hairline);
+  cursor:pointer;
+  transition:opacity var(--dur-med) var(--ease-out);
+  text-align:left;
+  background:none;
+  border-left:none;border-right:none;border-bottom:none;
+}
+.stack-v2-item:last-child{border-bottom:1px solid var(--hairline)}
+.stack-v2-item:not(.active){opacity:0.32}
+.stack-v2-item:hover:not(.active){opacity:0.6}
+.stack-v2-num{
+  font-family:var(--font-mono);
+  font-size:0.74rem;
+  font-weight:600;
+  letter-spacing:0.04em;
+  color:var(--ink-100);
+  padding-top:8px;
+}
+.stack-v2-content h3{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  font-weight:500;
+  letter-spacing:-0.01em;
+  color:var(--ink-100);
+  line-height:1.2;
+}
+.stack-v2-desc{
+  font-size:0.9rem;
+  color:var(--ink-60);
+  line-height:1.65;
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  margin-top:0;
+  transition:max-height var(--dur-med) var(--ease-out),opacity var(--dur-med) var(--ease-out),margin-top var(--dur-med) var(--ease-out);
+}
+.stack-v2-item.active .stack-v2-desc{
+  max-height:200px;
+  opacity:1;
+  margin-top:12px;
+}
+
+/* Right: mock stage */
+.stack-v2-mock-wrap{
+  position:relative;
+  width:100%;
+}
+.stack-v2-mock-stage{
+  position:relative;
+  width:100%;
+  height:500px;
+}
+@media(max-width:1023px){
+  .stack-v2-mock-stage{height:auto}
+}
+
+.mock-card{
+  position:absolute;
+  inset:0;
+  background:var(--bg-elev-2);
+  border-radius:var(--radius-mock);
+  border:1px solid var(--hairline);
+  box-shadow:var(--shadow-card);
+  padding:32px 36px;
+  display:flex;flex-direction:column;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity 500ms var(--ease-out),transform 500ms var(--ease-out);
+  pointer-events:none;
+  overflow:hidden;
+}
+.mock-card.active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+@media(max-width:1023px){
+  .mock-card{
+    position:relative;
+    inset:auto;
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+    margin-bottom:20px;
+  }
+  .mock-card:last-child{margin-bottom:0}
+}
+
+.mock-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:28px;
+  gap:16px;
+}
+.mock-eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  font-weight:700;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:6px;
+}
+.mock-title{
+  font-family:var(--font-display);
+  font-size:1.25rem;
+  font-weight:500;
+  letter-spacing:-0.01em;
+  color:var(--ink-100);
+  line-height:1.25;
+}
+.mock-step-num{
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  font-weight:600;
+  letter-spacing:0.06em;
+  color:var(--ink-40);
+  padding:5px 10px;
+  border-radius:5px;
+  border:1px solid var(--hairline-strong);
+  flex-shrink:0;
+}
+
+.mock-rows{
+  display:flex;flex-direction:column;
+  gap:1px;
+  background:var(--hairline);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:auto;
+}
+.mock-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  padding:14px 18px;
+  background:var(--bg-elev-1);
+  font-family:var(--font-mono);
+  font-size:0.8rem;
+}
+.mock-row-name{
+  color:var(--ink-100);
+  font-weight:500;
+  flex:1;
+  min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mock-row-meta{
+  color:var(--ink-60);
+  font-size:0.72rem;
+  flex-shrink:0;
+}
+
+.pill{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:5px;
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  font-weight:700;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  flex-shrink:0;
+}
+.pill-ok{background:var(--accent-soft);color:var(--accent-deep)}
+.pill-warn{background:var(--signal-warn-soft);color:var(--signal-warn)}
+.pill-bad{background:var(--signal-bad-soft);color:var(--signal-bad)}
+.pill-meta{background:rgba(26,24,20,0.06);color:var(--ink-60)}
+.pill-good{background:var(--signal-ok-soft);color:var(--signal-ok)}
+
+.mock-footer{
+  margin-top:24px;
+  padding-top:18px;
+  border-top:1px solid var(--hairline);
+}
+.mock-progress-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-60);
+}
+.mock-progress-row .v{color:var(--ink-100);font-weight:600}
+.mock-progress-bar{
+  height:4px;
+  background:var(--bg-deep);
+  border-radius:var(--radius-pill);
+  overflow:hidden;
+}
+.mock-progress-fill{
+  height:100%;
+  background:var(--accent);
+  border-radius:var(--radius-pill);
+  transition:width 800ms var(--ease-out);
+}
+
+/* ============================================================
+   §03 HOW IT WORKS
+   ============================================================ */
+.how-steps{margin-top:64px;display:flex;flex-direction:column}
+.how-step{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:28px;
+  padding:56px 0;
+  border-top:1px solid var(--hairline);
+  align-items:start;
+}
+.how-step:last-child{border-bottom:1px solid var(--hairline)}
+@media(min-width:1024px){
+  .how-step{grid-template-columns:3fr 5fr 4fr;gap:48px}
+}
+.step-numeral{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:clamp(3rem,6vw,5.5rem);
+  line-height:0.9;
+  color:var(--ink-40);
+  letter-spacing:-0.02em;
+  font-style:italic;
+}
+.step-text h3{
+  font-family:var(--font-display);
+  font-size:var(--fs-h3);
+  font-weight:500;
+  letter-spacing:-0.01em;
+  margin-bottom:14px;
+  line-height:1.15;
+  color:var(--ink-100);
+}
+.step-text p{
+  font-size:0.95rem;
+  color:var(--ink-60);
+  line-height:1.7;
+}
+.step-mock{
+  background:var(--bg-elev-2);
+  border:1px solid var(--hairline);
+  border-radius:14px;
+  padding:22px;
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  line-height:1.85;
+  color:var(--ink-80);
+  box-shadow:var(--shadow-pop);
+}
+.step-mock .ok{color:var(--signal-ok)}
+.step-mock .warn{color:var(--signal-warn)}
+.step-mock .info{color:var(--accent)}
+.step-mock .hi{color:var(--ink-100);font-weight:600}
+.step-mock .meta{color:var(--ink-60)}
+.slack-msg{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.slack-msg:last-child{margin-bottom:0}
+.slack-avatar{
+  width:28px;height:28px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.62rem;font-weight:700;
+}
+.slack-avatar.user{background:var(--accent);color:var(--bg-elev-2)}
+.slack-avatar.bot{background:var(--bg-elev-1);overflow:hidden;border:1px solid var(--hairline)}
+.slack-avatar.bot img{width:100%;height:100%;object-fit:cover}
+.slack-name{font-weight:600;color:var(--ink-100);margin-bottom:3px;font-size:0.7rem;font-family:var(--font-mono)}
+.slack-content{color:var(--ink-80);font-size:0.84rem;line-height:1.65;font-family:var(--font-body)}
+.slack-content .cmd{color:var(--ink-100);font-weight:600}
+
+/* ============================================================
+   §04 AUDIENCE
+   ============================================================ */
+.audience-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  margin-top:64px;
+  border-radius:var(--radius-card);
+  overflow:hidden;
+  border:1px solid var(--hairline);
+  background:var(--bg-elev-2);
+  box-shadow:var(--shadow-card);
+  position:relative;
+}
+@media(min-width:900px){
+  .audience-grid{grid-template-columns:1fr 1fr}
+}
+.audience-card{
+  padding:52px 44px;
+  position:relative;
+}
+@media(min-width:900px){
+  .audience-card:first-child{border-right:1px solid var(--hairline)}
+}
+@media(max-width:899px){
+  .audience-card:first-child{border-bottom:1px solid var(--hairline)}
+}
+.audience-label{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:24px;
+  display:inline-block;
+}
+.audience-card h3{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:1.85rem;
+  letter-spacing:-0.01em;
+  margin-bottom:14px;
+  line-height:1.1;
+  color:var(--ink-100);
+}
+.audience-desc{
+  font-size:0.95rem;
+  color:var(--ink-60);
+  line-height:1.7;
+  margin-bottom:30px;
+  max-width:38ch;
+}
+.audience-points{display:flex;flex-direction:column;gap:14px}
+.audience-point{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:0.92rem;
+  color:var(--ink-80);
+  line-height:1.55;
+}
+.audience-point .check{
+  color:var(--signal-ok);
+  font-size:0.85rem;
+  margin-top:3px;
+  flex-shrink:0;
+  font-weight:600;
+}
+.audience-cta{margin-top:36px}
+
+/* ============================================================
+   FOOTER CTA
+   ============================================================ */
+.cta-section{
+  position:relative;
+  padding:140px 24px 80px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 100%,rgba(74,107,156,0.1),transparent 70%),
+    var(--bg);
+}
+.cta-section h2{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:var(--fs-display);
+  letter-spacing:-0.015em;
+  line-height:0.98;
+  position:relative;z-index:1;
+  max-width:18ch;
+  margin:0 auto;
+  color:var(--ink-100);
+}
+.cta-sub{
+  font-size:var(--fs-body);
+  color:var(--ink-60);
+  margin:28px auto 0;
+  max-width:50ch;
+  line-height:1.65;
+  position:relative;z-index:1;
+}
+.cta-actions{
+  display:flex;gap:16px;justify-content:center;
+  margin-top:44px;flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+
+/* ============================================================
+   WORDMARK
+   ============================================================ */
+.wordmark-section{
+  position:relative;
+  overflow:hidden;
+  margin-top:60px;
+  padding-top:40px;
+  user-select:none;
+}
+.wordmark{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:clamp(7rem,23vw,21rem);
+  line-height:0.78;
+  letter-spacing:-0.04em;
+  text-align:center;
+  background:linear-gradient(180deg,var(--ink-40) 0%,var(--ink-20) 35%,rgba(213,205,179,0) 90%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  white-space:nowrap;
+  margin-bottom:-0.25em;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  position:relative;
+  z-index:2;
+  padding:14px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-mono);
+  font-size:0.74rem;
+  color:var(--ink-60);
+  letter-spacing:0.02em;
+  border-top:1px solid var(--hairline);
+  background:var(--bg);
+}
+footer>div{flex:1}
+.footer-links{display:flex;gap:24px;justify-content:center}
+footer a{transition:color var(--dur-fast) var(--ease-out)}
+footer a:hover{color:var(--ink-100)}
+footer>div:last-child{text-align:right}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1023px){
+  nav{padding:10px 20px}
+  .nav-links{display:none}
+}
+@media(max-width:899px){
+  .hero{padding:140px 20px 40px}
+  .compare-card{padding:34px 26px}
+  .audience-card{padding:38px 26px}
+  footer{flex-direction:column;gap:10px;text-align:center;padding:14px 20px}
+  .footer-links{justify-content:center}
+}
+@media(max-width:600px){
+  .mock-card{padding:24px 22px}
+}
+
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:200ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="index.html#main">Skip to content</a>
+
+<div class="announce-bar">Damasqas V1 is live. Meet your AI SRE.<a href="blog.html">Read more &rarr;</a></div>
+
+<nav>
+  <a class="nav-logo" href="index.html"><div class="logo-mark"><img src="cloud-logo-v2.jpg" alt="Damasqas"></div> damasqas</a>
+  <div class="nav-links">
+    <a href="index.html#why">Why Damasqas</a>
+    <a href="index.html#features">The Stack</a>
+    <a href="index.html#how">How it works</a>
+    <a href="blog.html">Blog</a>
+  </div>
+  <div class="nav-cta">
+    <a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Book a Demo</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-castle" aria-hidden="true">
+    <img src="castle.jpg" alt="" loading="eager">
+  </div>
+  <div class="hero-inner">
+
+    <div class="hero-text">
+      <h1>Incidents resolved.<br><span class="muted">Before you open your laptop.</span></h1>
+      <p class="hero-sub">Damasqas is an AI agent built exclusively for site reliability. It connects to your monitoring, logs, and deployments, then <strong>triages alerts, investigates incidents, and remediates autonomously</strong>.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Request a demo</a>
+        <a class="hero-link" href="index.html#how">See how it works &darr;</a>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- ============================================================
+     §01 WHY DAMASQAS
+     ============================================================ -->
+<section class="section" id="why">
+  <div class="section-inner">
+    <div class="section-label reveal">01 / Why Damasqas</div>
+    <h2 class="display-h2 wide reveal reveal-d1">Incident management tools organize fires. <span class="muted">They don't put them out.</span></h2>
+    <p class="section-sub reveal reveal-d2">Workflow tools help you declare incidents, assign roles, and run postmortems. You still need a human to investigate, diagnose, and fix. Damasqas does the actual engineering.</p>
+
+    <div class="compare reveal reveal-d3" id="compare">
+      <div class="compare-card compare-before">
+        <div class="compare-label">Incident management tools</div>
+        <h3>A process layer<br>on top of chaos.</h3>
+        <p class="compare-desc">They create Slack channels, assign responders, post status pages, and generate postmortem templates. But they don't touch your infrastructure.</p>
+        <div class="compare-points">
+          <div class="compare-point"><span class="gly" aria-hidden="true">&rarr;</span><span>Organize the incident, never investigate it</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&rarr;</span><span>Require a human to read logs, correlate deploys, find root cause</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&rarr;</span><span>No concept of your deployment graph, config state, or service topology</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&rarr;</span><span>Enterprise pricing, long sales cycles, months of onboarding</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&rarr;</span><span>Great process. Zero intelligence.</span></div>
+        </div>
+      </div>
+
+      <div class="compare-arrow" aria-hidden="true">
+        <span class="arrow-glyph">&rarr;</span>
+      </div>
+
+      <div class="compare-card compare-after">
+        <div class="compare-label">Damasqas</div>
+        <h3>An SRE that<br>never sleeps.</h3>
+        <p class="compare-desc">Same agentic capabilities as the enterprise players. But purpose-built for startups and mid-market teams that need reliability without a dedicated SRE hire.</p>
+        <div class="compare-points">
+          <div class="compare-point"><span class="gly" aria-hidden="true">&check;</span><span>Investigates incidents before you even open Slack</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&check;</span><span>Correlates deploys, config changes, infra events, and third-party outages</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&check;</span><span>Auto-remediates with rollbacks, restarts, and scaling</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&check;</span><span>Free tier, 5-minute setup, no sales call required</span></div>
+          <div class="compare-point"><span class="gly" aria-hidden="true">&check;</span><span>Purpose-built SRE intelligence, not a generic AI bolted onto monitoring</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §02 STACK V2 : pinned scrollytelling
+     ============================================================ -->
+<section class="stack-v2" id="features">
+  <div class="stack-v2-inner">
+
+    <header class="stack-v2-header">
+      <div class="section-label reveal">02 / The AI SRE Stack</div>
+      <h2 class="display-h2 wide reveal reveal-d1">Six layers. One agent. <span class="muted">Full replacement for on-call.</span></h2>
+      <p class="section-sub reveal reveal-d2">Each layer builds on the previous one. From connecting your stack to writing the postmortem so the same failure never happens twice.</p>
+    </header>
+
+  </div>
+
+  <div class="stack-v2-scroll" id="stackScroll">
+    <div class="stack-v2-pin">
+
+    <div class="stack-v2-body">
+
+      <!-- LEFT: numbered list -->
+      <div class="stack-v2-list" id="stackList">
+
+        <button class="stack-v2-item active" data-idx="0" type="button">
+          <span class="stack-v2-num">01</span>
+          <div class="stack-v2-content">
+            <h3>Integration</h3>
+            <p class="stack-v2-desc">Damasqas connects once and builds a persistent service graph: every deploy, config, dependency edge, and external API. It knows your stack the way a tenured engineer does, from day one.</p>
+          </div>
+        </button>
+
+        <button class="stack-v2-item" data-idx="1" type="button">
+          <span class="stack-v2-num">02</span>
+          <div class="stack-v2-content">
+            <h3>Observability</h3>
+            <p class="stack-v2-desc">Damasqas audits observability coverage against your service graph. It finds the gaps: services with no latency tracking, endpoints with no error monitoring, dependencies with no health checks.</p>
+          </div>
+        </button>
+
+        <button class="stack-v2-item" data-idx="2" type="button">
+          <span class="stack-v2-num">03</span>
+          <div class="stack-v2-content">
+            <h3>Monitoring &amp; Alerting</h3>
+            <p class="stack-v2-desc">Set SLOs in plain English. Damasqas auto-tunes thresholds from baseline traffic, routes alerts by severity, and groups noisy alerts into actual incidents. 43 pages become 3.</p>
+          </div>
+        </button>
+
+        <button class="stack-v2-item" data-idx="3" type="button">
+          <span class="stack-v2-num">04</span>
+          <div class="stack-v2-content">
+            <h3>Investigation</h3>
+            <p class="stack-v2-desc">Damasqas runs the full causal chain automatically. What deployed? What config changed? Any dependencies down? It delivers root cause in seconds, not symptoms.</p>
+          </div>
+        </button>
+
+        <button class="stack-v2-item" data-idx="4" type="button">
+          <span class="stack-v2-num">05</span>
+          <div class="stack-v2-content">
+            <h3>Remediation</h3>
+            <p class="stack-v2-desc">Damasqas rolls back if urgent, writes the code fix, validates in a sandbox VM, runs your tests, and pings for approval. You approve a tested PR, not a guess.</p>
+          </div>
+        </button>
+
+        <button class="stack-v2-item" data-idx="5" type="button">
+          <span class="stack-v2-num">06</span>
+          <div class="stack-v2-content">
+            <h3>Post-Mortem &amp; Memory</h3>
+            <p class="stack-v2-desc">Damasqas auto-generates the blameless postmortem and indexes every incident into a vector store. Future investigations reference past incidents. The same failure never surprises you twice.</p>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- RIGHT: sticky mock area -->
+      <div class="stack-v2-mock-wrap">
+        <div class="stack-v2-mock-stage" id="mockStage">
+
+          <!-- Mock 1: Integration -->
+          <div class="mock-card active" data-idx="0">
+            <div class="mock-header">
+              <div>
+                <div class="mock-eyebrow">Service Graph</div>
+                <div class="mock-title">Connected &middot; Discovery</div>
+              </div>
+              <div class="mock-step-num">01</div>
+            </div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span class="mock-row-name">github/acme-app</span>
+                <span class="mock-row-meta">847 commits</span>
+                <span class="pill pill-ok">Indexed</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">railway/prod</span>
+                <span class="mock-row-meta">6 services</span>
+                <span class="pill pill-ok">Mapped</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">datadog</span>
+                <span class="mock-row-meta">12 monitors</span>
+                <span class="pill pill-ok">Synced</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">stripe, twilio, aws</span>
+                <span class="mock-row-meta">3 deps</span>
+                <span class="pill pill-ok">Tracked</span>
+              </div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-progress-row">
+                <span>Dependency map</span>
+                <span class="v">14 edges</span>
+              </div>
+              <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+
+          <!-- Mock 2: Observability -->
+          <div class="mock-card" data-idx="1">
+            <div class="mock-header">
+              <div>
+                <div class="mock-eyebrow">Observability Audit</div>
+                <div class="mock-title">Coverage Map</div>
+              </div>
+              <div class="mock-step-num">02</div>
+            </div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span class="mock-row-name">checkout-api</span>
+                <span class="mock-row-meta">latency, errors</span>
+                <span class="pill pill-good">Covered</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">payments-worker</span>
+                <span class="mock-row-meta">no memory metrics</span>
+                <span class="pill pill-warn">Gap</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">webhook-handler</span>
+                <span class="mock-row-meta">no latency tracking</span>
+                <span class="pill pill-warn">Gap</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">stripe (external)</span>
+                <span class="mock-row-meta">no health check</span>
+                <span class="pill pill-bad">Missing</span>
+              </div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-progress-row">
+                <span>3 gaps found</span>
+                <span class="v">auto-configuring</span>
+              </div>
+              <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:62%"></div></div>
+            </div>
+          </div>
+
+          <!-- Mock 3: Monitoring & Alerting -->
+          <div class="mock-card" data-idx="2">
+            <div class="mock-header">
+              <div>
+                <div class="mock-eyebrow">Alert Triage</div>
+                <div class="mock-title">43 alerts &rarr; 3 incidents</div>
+              </div>
+              <div class="mock-step-num">03</div>
+            </div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span class="mock-row-name">checkout-api regression</span>
+                <span class="mock-row-meta">18 alerts</span>
+                <span class="pill pill-bad">Incident</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">payments-worker OOM</span>
+                <span class="mock-row-meta">12 alerts</span>
+                <span class="pill pill-bad">Incident</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Stripe outage</span>
+                <span class="mock-row-meta">13 alerts</span>
+                <span class="pill pill-warn">External</span>
+              </div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-progress-row">
+                <span>40 suppressed</span>
+                <span class="v">93% noise reduction</span>
+              </div>
+              <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:93%"></div></div>
+            </div>
+          </div>
+
+          <!-- Mock 4: Investigation -->
+          <div class="mock-card" data-idx="3">
+            <div class="mock-header">
+              <div>
+                <div class="mock-eyebrow">Causal Chain</div>
+                <div class="mock-title">checkout-api &middot; 500s 42x baseline</div>
+              </div>
+              <div class="mock-step-num">04</div>
+            </div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span class="mock-row-name">deploy #142 live</span>
+                <span class="mock-row-meta">14:19 UTC</span>
+                <span class="pill pill-meta">Step 1</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">PR #89 changed STRIPE_API_VERSION</span>
+                <span class="pill pill-meta">Step 2</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">webhook handler unhandled payload</span>
+                <span class="pill pill-bad">Cause</span>
+              </div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-progress-row">
+                <span>Root cause</span>
+                <span class="v">identified in 12s</span>
+              </div>
+              <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+
+          <!-- Mock 5: Remediation -->
+          <div class="mock-card" data-idx="4">
+            <div class="mock-header">
+              <div>
+                <div class="mock-eyebrow">Remediation</div>
+                <div class="mock-title">Rollback &amp; Fix</div>
+              </div>
+              <div class="mock-step-num">05</div>
+            </div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span class="mock-row-name">Rolled back to deploy #141</span>
+                <span class="pill pill-good">Done</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Health check passing</span>
+                <span class="pill pill-good">Done</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Fix pushed to pr-#91</span>
+                <span class="pill pill-good">Done</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Sandbox tests passing</span>
+                <span class="pill pill-ok">Validated</span>
+              </div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-progress-row">
+                <span>Awaiting approval</span>
+                <span class="v">ready to merge</span>
+              </div>
+              <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:88%"></div></div>
+            </div>
+          </div>
+
+          <!-- Mock 6: Post-Mortem -->
+          <div class="mock-card" data-idx="5">
+            <div class="mock-header">
+              <div>
+                <div class="mock-eyebrow">Postmortem &middot; PM-2026-0342</div>
+                <div class="mock-title">Stripe webhook failure</div>
+              </div>
+              <div class="mock-step-num">06</div>
+            </div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span class="mock-row-name">Cause &middot; breaking API version change</span>
+                <span class="pill pill-meta">Why</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Fix &middot; rollback + parser update</span>
+                <span class="pill pill-meta">How</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Prevent &middot; pin API version in CI</span>
+                <span class="pill pill-meta">Next</span>
+              </div>
+              <div class="mock-row">
+                <span class="mock-row-name">Similar &middot; PM-2025-0218 (Twilio)</span>
+                <span class="pill pill-ok">Linked</span>
+              </div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-progress-row">
+                <span>Indexed to memory</span>
+                <span class="v">vector store</span>
+              </div>
+              <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §03 HOW IT WORKS
+     ============================================================ -->
+<section class="section section-warm" id="how">
+  <div class="section-inner">
+    <div class="section-label reveal">03 / How it works</div>
+    <h2 class="display-h2 reveal reveal-d1">Three steps. <span class="muted">Then it runs on its own.</span></h2>
+
+    <div class="how-steps">
+
+      <div class="how-step reveal">
+        <div class="step-numeral">01</div>
+        <div class="step-text">
+          <h3>Connect your stack</h3>
+          <p>Add monitoring, logging, deployment platforms, and repos. Damasqas connects via MCP servers, read-only by default. It learns your services, your topology, your SLOs.</p>
+        </div>
+        <div class="step-mock">
+          <span class="ok">&check;</span> datadog/production <span class="meta">&middot; 12 monitors, 8 services</span><br>
+          <span class="ok">&check;</span> github/acme-app <span class="meta">&middot; 847 commits indexed</span><br>
+          <span class="ok">&check;</span> railway/prod <span class="meta">&middot; 6 services monitored</span><br>
+          <span class="ok">&check;</span> pagerduty/default <span class="meta">&middot; on-call schedule synced</span><br>
+          <span class="meta">&#8635;</span> <span class="warn">kubernetes</span>, <span class="warn">grafana</span>, <span class="warn">aws cloudwatch</span> <span class="meta">&middot; coming soon</span>
+        </div>
+      </div>
+
+      <div class="how-step reveal">
+        <div class="step-numeral">02</div>
+        <div class="step-text">
+          <h3>Ask reliability questions in Slack</h3>
+          <p>Not "write me a function." Real infrastructure questions. Damasqas understands deployment state, service health, and change history.</p>
+        </div>
+        <div class="step-mock">
+          <div class="slack-msg">
+            <div class="slack-avatar user">SP</div>
+            <div>
+              <div class="slack-name">Shalin</div>
+              <div class="slack-content"><span class="cmd">@damasqas</span> why is API latency spiking?</div>
+            </div>
+          </div>
+          <div class="slack-msg">
+            <div class="slack-avatar bot"><img src="cloud-logo-v2.jpg" alt=""></div>
+            <div>
+              <div class="slack-name">damasqas</div>
+              <div class="slack-content">Traced to <span class="cmd">railway/payments-worker</span>. Database connection pool exhausted after deploy #138 removed connection limit config. Pushed fix to <span class="cmd">pr-#92</span> restoring the pool size. Latency recovering.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-step reveal">
+        <div class="step-numeral">03</div>
+        <div class="step-text">
+          <h3>Proactive monitoring + remediation</h3>
+          <p>Damasqas learns your service topology and auto-configures monitoring: SLOs, error budgets, deployment health, and dependency status, all tailored to your architecture.</p>
+        </div>
+        <div class="step-mock">
+          <div class="slack-msg">
+            <div class="slack-avatar bot"><img src="cloud-logo-v2.jpg" alt=""></div>
+            <div>
+              <div class="slack-name">damasqas</div>
+              <div class="slack-content"><span class="warn">&#9888; SLO Warning:</span> <span class="cmd">payments-api</span> error budget 73% consumed with 18 days left in window. Current burn rate will breach SLO in ~6 days. Top contributor: timeout errors on <span class="cmd">/v1/charges</span> endpoint.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     §04 BUILT FOR EVERYONE
+     ============================================================ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label reveal">04 / Built for everyone</div>
+    <h2 class="display-h2 reveal reveal-d1">Start solo. <span class="muted">Scale to the whole org.</span></h2>
+    <p class="section-sub reveal reveal-d2">Whether you're a solo founder who is also the on-call engineer or a startup CTO responsible for production uptime, Damasqas meets you where you are.</p>
+
+    <div class="audience-grid reveal reveal-d3">
+      <div class="audience-card">
+        <div class="audience-label">For startups &amp; mid-market</div>
+        <h3>SRE-grade reliability.<br>Without the SRE team.</h3>
+        <p class="audience-desc">Engineering leads and CTOs who need 24/7 production reliability without enterprise pricing or a dedicated SRE hire.</p>
+        <div class="audience-points">
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Multi-service monitoring with team workspaces</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Custom SLOs scoped to your service architecture</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Autonomous remediation with approval workflows</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Cross-service dependency mapping</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Dedicated Slack channel per environment</span></div>
+        </div>
+        <div class="audience-cta"><a class="btn btn-ghost" href="https://cal.com/shalin-patel-eq2u1j/30min">Request a demo &rarr;</a></div>
+      </div>
+
+      <div class="audience-card">
+        <div class="audience-label">For solo builders</div>
+        <h3>Ship faster.<br>Sleep through the night.</h3>
+        <p class="audience-desc">The SRE you can't afford to hire yet.</p>
+        <div class="audience-points">
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Free tier: one project, unlimited questions</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>5-minute setup via Slack or web chat</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Instant root cause analysis on any incident</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Auto-rollback on bad deploys, one-click approve</span></div>
+          <div class="audience-point"><span class="check" aria-hidden="true">&check;</span><span>Zero-config baseline alerts out of the box</span></div>
+        </div>
+        <div class="audience-cta"><a class="btn btn-primary" href="https://cal.com/shalin-patel-eq2u1j/30min">Start for free &rarr;</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER CTA
+     ============================================================ -->
+<section class="cta-section">
+  <h2 class="reveal">Your production stack <span class="display-h2 muted" style="font-size:inherit;display:inline">deserves its own SRE.</span></h2>
+  <p class="cta-sub reveal reveal-d1">Free to start. No credit card. Connect your stack in 5 minutes, ask your first reliability question, and see the difference a specialist makes.</p>
+  <div class="cta-actions reveal reveal-d2">
+    <a class="btn btn-primary btn-large" href="https://cal.com/shalin-patel-eq2u1j/30min">Talk to us</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     WORDMARK
+     ============================================================ -->
+<div class="wordmark-section" aria-hidden="true">
+  <div class="wordmark">damasqas</div>
+</div>
+
+</main>
+
+<footer>
+  <div class="nav-logo" style="font-size:0.95rem">
+    <div class="logo-mark" style="width:22px;height:22px;border-radius:6px"><img src="cloud-logo-v2.jpg" alt="Damasqas"></div>
+    damasqas
+  </div>
+  <div class="footer-links">
+    <a href="blog.html">Blog</a>
+    <a href="mailto:shalin@tryathena.ai">Contact Us</a>
+  </div>
+  <div>&copy; 2026 Damasqas Corp. All rights reserved.</div>
+</footer>
+
+<script>
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Reveal on scroll */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* Compare arrow draw */
+const compareEl = document.getElementById('compare');
+if (compareEl) {
+  const compareObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        compareObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  compareObserver.observe(compareEl);
+}
+
+/* ============================================================
+   NAV BACKGROUND ON SCROLL
+   ============================================================ */
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  navEl.style.background = window.scrollY > 80 ? 'rgba(236,229,213,0.96)' : 'rgba(236,229,213,0.85)';
+}, { passive: true });
+
+/* ============================================================
+   §02 STACK V2 : scroll-progress driver
+   ============================================================ */
+(() => {
+  const scrollEl = document.getElementById('stackScroll');
+  const items = [...document.querySelectorAll('.stack-v2-item')];
+  const mocks = [...document.querySelectorAll('.mock-card')];
+  if (!scrollEl || !items.length || !mocks.length) return;
+
+  const TOTAL = items.length;
+  let lastIdx = -1;
+  let clickLock = false;
+
+  function setActive(idx) {
+    if (idx === lastIdx) return;
+    items.forEach((el, i) => el.classList.toggle('active', i === idx));
+    mocks.forEach((el, i) => el.classList.toggle('active', i === idx));
+    lastIdx = idx;
+  }
+
+  const isDesktop = () => window.innerWidth >= 1024 && !prefersReducedMotion;
+
+  // Click handlers: just swap the active mock, no scrolling
+  items.forEach((el, i) => {
+    el.addEventListener('click', () => {
+      setActive(i);
+      // Lock out the scroll handler so it doesn't override the click
+      clickLock = true;
+      setTimeout(() => { clickLock = false; }, 1500);
+    });
+  });
+
+  // Desktop: also drive active state from scroll progress
+  if (isDesktop()) {
+    let ticking = false;
+    function update() {
+      if (clickLock) { ticking = false; return; }
+      const rect = scrollEl.getBoundingClientRect();
+      const scrollTop = -rect.top;
+      const scrollHeight = scrollEl.offsetHeight - window.innerHeight;
+      if (scrollHeight <= 0) { setActive(0); ticking = false; return; }
+      const progress = Math.max(0, Math.min(0.9999, scrollTop / scrollHeight));
+      setActive(Math.floor(progress * TOTAL));
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  } else {
+    setActive(0);
+  }
+})();
+</script>
+</body>
+</html>
