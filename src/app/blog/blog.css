@@ -1,9 +1,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#ECE5D5;
-  --bg-elev-1:#F2ECDC;
-  --bg-elev-2:#F7F1E2;
-  --bg-warm:#E5DEC9;
+  --bg:#FFFFFF;
+  --bg-elev-1:#FAFAFA;
+  --bg-elev-2:#F5F5F5;
+  --bg-warm:#F0F0F0;
   --ink-100:#1A1814;
   --ink-80:#3D3A32;
   --ink-60:#7A7466;
@@ -31,7 +31,7 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   padding:14px 32px;
   display:flex;align-items:center;justify-content:space-between;
-  background:rgba(236,229,213,0.85);
+  background:rgba(255,255,255,0.85);
   backdrop-filter:blur(20px) saturate(1.4);
   -webkit-backdrop-filter:blur(20px) saturate(1.4);
   border-bottom:1px solid var(--hairline);
