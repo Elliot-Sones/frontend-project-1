@@ -252,7 +252,7 @@ nav{
   min-height:100vh;
 }
 
-/* Castle video in a proportional container (right side) */
+/* Castle image in a proportional container */
 .hero-castle{
   position:absolute;
   top:98px;
@@ -268,18 +268,17 @@ nav{
   opacity:0.6;
   filter:saturate(0.85);
 }
-.hero-castle video{
+.hero-castle img{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center center;
-  display:block;
-  transform:scale(1.8);
-  transform-origin:center;
+  object-position:center 38%;
 }
 @media(max-width:1023px){
   .hero{min-height:auto}
-  .hero-castle{display:none}
+  .hero-castle{
+    display:none;
+  }
 }
 
 .hero-inner{
@@ -287,7 +286,7 @@ nav{
   margin:0 auto;
   width:100%;
   position:relative;
-  z-index:2;
+  z-index:1;
   display:block;
 }
 
