@@ -1,4 +1,15 @@
+(() => {
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Hero video: force play since autoplay can be skipped after dangerouslySetInnerHTML */
+(() => {
+  const heroVideo = document.querySelector('.hero-castle video');
+  if (heroVideo && !prefersReducedMotion) {
+    const tryPlay = () => heroVideo.play().catch(() => {});
+    if (heroVideo.readyState >= 2) tryPlay();
+    else heroVideo.addEventListener('loadeddata', tryPlay, { once: true });
+  }
+})();
 
 /* Reveal on scroll */
 const revealObserver = new IntersectionObserver((entries) => {
@@ -87,4 +98,6 @@ window.addEventListener('scroll', () => {
   } else {
     setActive(0);
   }
+})();
+
 })();
