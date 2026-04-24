@@ -1,0 +1,207 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+.msg {
+  display: flex;
+  gap: 10px;
+  opacity: 1;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  background: #e5e5e5;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.avatar.bot {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 600;
+  color: #111;
+  font-size: 12px;
+  margin-bottom: 3px;
+  font-family: var(--font-mono), monospace;
+}
+
+.text {
+  color: #444;
+  line-height: 1.5;
+}
+
+.cmd {
+  font-family: var(--font-mono), monospace;
+  background: #f0f0ef;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #1a1a1a;
+  font-size: 12.5px;
+}
+
+.typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.pills {
+  display: flex;
+  gap: 6px;
+  margin-left: 38px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 999px;
+  background: #fff;
+  color: #555;
+  font-family: var(--font-mono), monospace;
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Animations — only run when .playing is present --- */
+
+/* Whole stage fades out/in each loop so user always sees a fresh cycle */
+.playing .userMsg {
+  animation: fade-in 8s infinite;
+  animation-delay: 0s;
+}
+
+.playing .pills {
+  animation: pills-fade 8s infinite;
+}
+
+.playing .botMsg {
+  animation: bot-fade 8s infinite;
+}
+
+@keyframes fade-in {
+  0%   { opacity: 0; }
+  3%   { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes pills-fade {
+  0%,
+  32%  { opacity: 0; }
+  36%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes bot-fade {
+  0%,
+  45%  { opacity: 0; }
+  48%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* User typing: 27ch over 2s of an 8s loop, starting at 0.2s (2.5%) */
+.playing .userTyping {
+  width: 0;
+  border-right: 1.5px solid #1a1a1a;
+  animation:
+    user-type 8s infinite steps(27),
+    caret 0.7s steps(1) infinite;
+}
+
+@keyframes user-type {
+  0%,
+  2.5% { width: 0; }
+  27.5% { width: 27ch; }
+  100% { width: 27ch; }
+}
+
+/* Bot typing: 42ch starting at 3.8s (47.5%) over 2.7s (33.75%) */
+.playing .botTyping {
+  width: 0;
+  border-right: 1.5px solid #1a1a1a;
+  animation:
+    bot-type 8s infinite steps(42),
+    caret 0.7s steps(1) infinite;
+}
+
+@keyframes bot-type {
+  0%,
+  47.5% { width: 0; }
+  81.25% { width: 42ch; }
+  100% { width: 42ch; }
+}
+
+@keyframes caret {
+  50% { border-right-color: transparent; }
+}
+
+/* Pills pop in staggered inside the pills-fade window */
+.playing .pill {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: pill-pop 8s infinite;
+}
+.playing .pill1 { animation-delay: 0s; }
+.playing .pill2 { animation-delay: 0.3s; }
+.playing .pill3 { animation-delay: 0.6s; }
+
+@keyframes pill-pop {
+  0%,
+  32%  { opacity: 0; transform: translateY(6px); }
+  36%  { opacity: 1; transform: translateY(0); }
+  90%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+
+/* Reduced motion: show everything static, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .playing .userMsg,
+  .playing .pills,
+  .playing .botMsg,
+  .playing .userTyping,
+  .playing .botTyping,
+  .playing .pill {
+    animation: none;
+  }
+  .playing .userMsg,
+  .playing .pills,
+  .playing .botMsg,
+  .playing .pill {
+    opacity: 1;
+    transform: none;
+  }
+  .playing .userTyping,
+  .playing .botTyping {
+    width: auto;
+    border-right: none;
+  }
+}
