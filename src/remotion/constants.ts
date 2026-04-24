@@ -3,6 +3,11 @@
 export const FPS = 30;
 export const DURATION_FRAMES = 240;
 
+// Composition logical size — cards are positioned in absolute coordinates
+// within this canvas. Player scales it to fit the DOM element.
+export const COMPOSITION_WIDTH = 1100;
+export const COMPOSITION_HEIGHT = 660;
+
 // Beats — frame at which each element's entry animation begins.
 export const BEATS = {
   alert: 0,

@@ -1,23 +1,35 @@
 "use client";
 
 import { Player, type PlayerRef } from "@remotion/player";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { HeroComposition } from "@/remotion/HeroComposition";
-import { DURATION_FRAMES, FPS } from "@/remotion/constants";
+import {
+  COMPOSITION_HEIGHT,
+  COMPOSITION_WIDTH,
+  DURATION_FRAMES,
+  FPS,
+} from "@/remotion/constants";
+
+// Subscribe to prefers-reduced-motion without calling setState inside useEffect,
+// which React 19's react-hooks/set-state-in-effect rule forbids.
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+function subscribeReducedMotion(cb: () => void) {
+  const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+const getReducedMotionSnapshot = () =>
+  window.matchMedia(REDUCED_MOTION_QUERY).matches;
+const getReducedMotionServerSnapshot = () => false;
 
 export function HeroPlayer() {
   const playerRef = useRef<PlayerRef>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  // Detect prefers-reduced-motion.
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener("change", listener);
-    return () => mq.removeEventListener("change", listener);
-  }, []);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
 
   // Pause when off-screen; resume when visible.
   useEffect(() => {
@@ -56,8 +68,8 @@ export function HeroPlayer() {
           component={HeroComposition}
           durationInFrames={DURATION_FRAMES}
           fps={FPS}
-          compositionHeight={660}
-          compositionWidth={980}
+          compositionHeight={COMPOSITION_HEIGHT}
+          compositionWidth={COMPOSITION_WIDTH}
           autoPlay={false}
           loop={false}
           controls={false}

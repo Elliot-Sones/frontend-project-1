@@ -2,18 +2,23 @@
 
 import { Player } from "@remotion/player";
 import { HeroComposition } from "@/remotion/HeroComposition";
-import { DURATION_FRAMES, FPS } from "@/remotion/constants";
+import {
+  COMPOSITION_HEIGHT,
+  COMPOSITION_WIDTH,
+  DURATION_FRAMES,
+  FPS,
+} from "@/remotion/constants";
 
 export function HeroPreviewClient() {
   return (
-    <div style={{ maxWidth: 1180, margin: "48px auto", padding: 24 }}>
+    <div style={{ maxWidth: 1280, margin: "48px auto", padding: 24 }}>
       <h1 style={{ fontFamily: "system-ui", fontSize: 18, marginBottom: 16 }}>
         Hero composition preview
       </h1>
       <div
         style={{
-          width: 980,
-          height: 660,
+          width: COMPOSITION_WIDTH,
+          height: COMPOSITION_HEIGHT,
           margin: "0 auto",
           border: "1px solid #eee",
           borderRadius: 12,
@@ -25,8 +30,8 @@ export function HeroPreviewClient() {
           component={HeroComposition}
           durationInFrames={DURATION_FRAMES}
           fps={FPS}
-          compositionHeight={660}
-          compositionWidth={980}
+          compositionHeight={COMPOSITION_HEIGHT}
+          compositionWidth={COMPOSITION_WIDTH}
           autoPlay
           loop
           controls={false}

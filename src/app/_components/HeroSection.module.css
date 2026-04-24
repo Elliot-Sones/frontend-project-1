@@ -2,13 +2,14 @@
 
 .heroShell {
   display: grid;
-  grid-template-columns: minmax(360px, 0.54fr) minmax(680px, 1fr);
-  gap: clamp(24px, 4vw, 72px);
+  grid-template-columns: minmax(0, 0.48fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 56px);
   align-items: center;
   min-height: min(78vh, 900px);
-  max-width: var(--content-max, 1180px);
+  max-width: calc(var(--content-max, 1280px) + 120px);
   margin: 0 auto;
-  padding: clamp(96px, 10vw, 140px) clamp(24px, 4vw, 80px);
+  /* Top padding must clear the fixed announce bar (36px) + nav (~64px at top:52px). */
+  padding: clamp(160px, 14vw, 200px) clamp(24px, 4vw, 48px) clamp(80px, 7vw, 100px);
   position: relative;
   overflow: hidden;
 }
@@ -66,9 +67,8 @@
 }
 
 .heroCopy h1 {
-  margin: 38px 0 0;
-  max-width: 9.3ch;
-  letter-spacing: -0.078em;
+  margin: 32px 0 0;
+  letter-spacing: -0.06em;
 }
 
 .heroCopy h1 strong,
@@ -78,17 +78,19 @@
 
 .heroCopy h1 strong {
   font-family: var(--font-body);
-  font-size: clamp(3.6rem, 6vw, 7.2rem);
-  font-weight: 950;
-  line-height: 0.88;
+  font-size: clamp(2.4rem, 3.4vw, 3.6rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
 }
 
 .heroCopy h1 em {
   margin-top: 4px;
   font-family: var(--font-display);
-  font-size: clamp(3.4rem, 5.6vw, 6.8rem);
+  font-size: clamp(2.6rem, 3.8vw, 4rem);
   font-weight: 500;
-  line-height: 0.88;
+  line-height: 1;
+  letter-spacing: -0.015em;
 }
 
 .heroCopy p {
@@ -152,16 +154,14 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  min-height: 660px;
-  aspect-ratio: 980 / 660;
+  aspect-ratio: 1100 / 660;
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1023px) {
   .heroShell {
     grid-template-columns: 1fr;
   }
   .animationWrap {
-    min-height: 540px;
     max-width: 760px;
     margin: 40px auto 0;
   }
@@ -171,17 +171,8 @@
   .heroShell {
     padding: 80px 24px 60px;
   }
-  .heroCopy h1 strong {
-    font-size: clamp(3.2rem, 14vw, 4.6rem);
-  }
-  .heroCopy h1 em {
-    font-size: clamp(3rem, 13vw, 4.4rem);
-  }
   .primaryCta,
   .secondaryCta {
     width: 100%;
-  }
-  .animationWrap {
-    min-height: 420px;
   }
 }
