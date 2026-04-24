@@ -1,7 +1,21 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
 import styles from "./CapabilityCards.module.css";
 
 const demoUrl = "https://cal.com/shalin-patel-pvh97i/30min";
+
+function handleCardClick(e: MouseEvent<HTMLElement>) {
+  if ((e.target as HTMLElement).closest("a")) return;
+  window.open(demoUrl, "_blank", "noopener,noreferrer");
+}
+
+function handleCardKey(e: KeyboardEvent<HTMLElement>) {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  if ((e.target as HTMLElement).closest("a")) return;
+  e.preventDefault();
+  window.open(demoUrl, "_blank", "noopener,noreferrer");
+}
 
 const capabilities = [
   {
@@ -204,6 +218,11 @@ export function CapabilityCards() {
           <article
             className={`${styles.card} ${styles[capability.tone]}`}
             key={capability.title}
+            role="link"
+            tabIndex={0}
+            aria-label={`Book a demo — ${capability.title}`}
+            onClick={handleCardClick}
+            onKeyDown={handleCardKey}
           >
             <div className={styles.copy}>
               <span>{capability.eyebrow}</span>
