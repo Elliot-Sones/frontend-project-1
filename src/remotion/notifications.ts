@@ -65,9 +65,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−41s",
     enterFrame: BEATS.pagerdutyEnter,
     position: {
-      left: 470, top: "78%",
+      left: 450, top: "78%",
       translateZ: -20, rotateY: -12, rotateX: -6, rotateZ: -4,
-      width: 310, opacity: 1, zIndex: 8,
+      width: 370, opacity: 1, zIndex: 8,
     },
   },
   {
@@ -78,9 +78,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−39s",
     enterFrame: BEATS.slackEnter,
     position: {
-      left: 500, top: "16%",
+      left: 480, top: "14%",
       translateZ: -40, rotateY: -14, rotateX: 8, rotateZ: 3,
-      width: 300, opacity: 1, zIndex: 7,
+      width: 360, opacity: 1, zIndex: 7,
     },
   },
   {
@@ -91,9 +91,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−37s",
     enterFrame: BEATS.jiraEnter,
     position: {
-      left: 700, top: "34%",
+      left: 680, top: "34%",
       translateZ: -120, rotateY: -20, rotateX: 4, rotateZ: -4,
-      width: 280, opacity: 1, zIndex: 5,
+      width: 340, opacity: 1, zIndex: 5,
     },
   },
   {
@@ -130,9 +130,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−2s",
     enterFrame: BEATS.githubPrEnter,
     position: {
-      left: 730, top: "66%",
+      left: 710, top: "66%",
       translateZ: -180, rotateY: -24, rotateX: -6, rotateZ: 4,
-      width: 260, opacity: 1, zIndex: 3,
+      width: 320, opacity: 1, zIndex: 3,
     },
   },
   {
