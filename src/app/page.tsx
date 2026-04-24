@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import Script from "next/script";
+import { CapabilityCards } from "./_components/capability-cards/CapabilityCards";
 import { HeroSection } from "./_components/HeroSection";
 import { HowItWorks } from "./_components/how-it-works/HowItWorks";
 
@@ -35,6 +36,7 @@ export default function HomePage() {
     <>
       <div dangerouslySetInnerHTML={{ __html: beforeHero }} />
       <HeroSection />
+      <CapabilityCards />
       <div dangerouslySetInnerHTML={{ __html: beforeHow }} />
       <HowItWorks />
       <div dangerouslySetInnerHTML={{ __html: afterHow }} />
