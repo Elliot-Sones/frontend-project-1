@@ -136,6 +136,141 @@ function VisualField() {
   );
 }
 
+const capabilities = [
+  {
+    eyebrow: "Investigate before Slack",
+    title: "Investigates incidents before you even open Slack.",
+    detail:
+      "Damasqas starts from the alert, reads the surrounding logs and deploy history, then posts a plain-English incident brief.",
+    metric: "14:02 -> 14:03",
+    tone: "investigate",
+  },
+  {
+    eyebrow: "Correlation engine",
+    title: "Correlates deploys, config changes, infra events, and third-party outages.",
+    detail:
+      "It stitches your scattered signals into one causal graph instead of making founders jump between tabs.",
+    metric: "6 systems linked",
+    tone: "correlate",
+  },
+  {
+    eyebrow: "Autonomous actions",
+    title: "Auto-remediates with rollbacks, restarts, and scaling.",
+    detail:
+      "The fix path appears as an approval-ready action: rollback the bad deploy, restart a stuck worker, or scale the hot service.",
+    metric: "1-click approve",
+    tone: "remediate",
+  },
+  {
+    eyebrow: "Startup setup",
+    title: "Free tier, 5-minute setup, no sales call required.",
+    detail:
+      "Connect Slack, GitHub, and your observability stack quickly enough to test it against a real incident the same day.",
+    metric: "5 min",
+    tone: "setup",
+  },
+  {
+    eyebrow: "Specialist intelligence",
+    title: "Purpose-built SRE intelligence, not a generic AI bolted onto monitoring.",
+    detail:
+      "Damasqas is shaped around production reliability workflows: triage, root cause, remediation, and memory.",
+    metric: "SRE-native",
+    tone: "specialist",
+  },
+];
+
+function CapabilityVisual({ tone }: { tone: string }) {
+  if (tone === "investigate") {
+    return (
+      <div className={`${styles.capVisual} ${styles.investigateVisual}`}>
+        <div className={styles.alertMini}>P1 checkout</div>
+        <div className={styles.scanBeam} />
+        <div className={styles.rootMini}>Root cause found</div>
+      </div>
+    );
+  }
+
+  if (tone === "correlate") {
+    return (
+      <div className={`${styles.capVisual} ${styles.correlateVisual}`}>
+        {["logs", "deploy", "db", "stripe", "slack"].map((node) => (
+          <span key={node}>{node}</span>
+        ))}
+        <svg viewBox="0 0 320 160" aria-hidden="true">
+          <path d="M42 78 C92 16 178 26 236 78 S278 142 292 92" />
+          <path d="M76 126 C126 88 186 98 252 38" />
+          <path d="M160 28 C158 72 158 114 160 146" />
+        </svg>
+      </div>
+    );
+  }
+
+  if (tone === "remediate") {
+    return (
+      <div className={`${styles.capVisual} ${styles.remediateVisual}`}>
+        <div className={styles.rollbackRail}>
+          <span>3f82a</span>
+          <b />
+          <strong>a91fe</strong>
+        </div>
+        <div className={styles.deployButton}>Approve rollback</div>
+      </div>
+    );
+  }
+
+  if (tone === "setup") {
+    return (
+      <div className={`${styles.capVisual} ${styles.setupVisual}`}>
+        <div className={styles.timerRing}>5</div>
+        {["Slack", "GitHub", "Datadog"].map((tool) => (
+          <span key={tool}>{tool}<i /></span>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`${styles.capVisual} ${styles.specialistVisual}`}>
+      <div className={styles.specialistCore}>SRE</div>
+      <span>Triage</span>
+      <span>RCA</span>
+      <span>Fix</span>
+      <span>Memory</span>
+    </div>
+  );
+}
+
+function CapabilityCards() {
+  return (
+    <section className={styles.capabilities} id="capabilities">
+      <div className={styles.capHeader}>
+        <span className={styles.sectionLabel}>What it does</span>
+        <h2>Each capability maps to a founder outcome.</h2>
+        <p>
+          The cards below translate the “AI SRE” promise into concrete jobs
+          Damasqas performs during an incident.
+        </p>
+      </div>
+      <div className={styles.capGrid}>
+        {capabilities.map((capability) => (
+          <article
+            className={`${styles.capabilityCard} ${styles[capability.tone]}`}
+            key={capability.title}
+          >
+            <div className={styles.capCopy}>
+              <span>{capability.eyebrow}</span>
+              <h3>{capability.title}</h3>
+              <p>{capability.detail}</p>
+            </div>
+            <CapabilityVisual tone={capability.tone} />
+            <b className={styles.capMetric}>{capability.metric}</b>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function IncidentPopupsMockup() {
   return (
     <main className={styles.page}>
@@ -160,13 +295,15 @@ export default function IncidentPopupsMockup() {
             <a className={styles.primary} href={demoUrl}>
               Request a demo
             </a>
-            <a className={styles.secondary} href="#flow">
+            <a className={styles.secondary} href="#capabilities">
               See how it works &rarr;
             </a>
           </div>
         </div>
         <VisualField />
       </section>
+
+      <CapabilityCards />
 
       <section className={styles.flow} id="flow">
         <span className={styles.sectionLabel}>The sequence</span>
