@@ -629,15 +629,16 @@
 .capGrid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(430px, auto);
-  gap: 14px;
+  grid-auto-rows: auto;
+  gap: 16px;
 }
 
 .capabilityCard {
   position: relative;
-  min-height: 430px;
+  display: flex;
+  min-height: 472px;
+  flex-direction: column;
   padding: clamp(24px, 2.4vw, 34px);
-  padding-bottom: clamp(205px, 18vw, 245px);
   border: 1px solid var(--line);
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.72);
@@ -672,7 +673,7 @@
 .capabilityCard::before {
   content: "";
   position: absolute;
-  inset: auto -20% -32% 18%;
+  inset: auto -20% -28% 18%;
   z-index: -1;
   height: 220px;
   border-radius: 50%;
@@ -680,11 +681,26 @@
   filter: blur(10px);
 }
 
+.capabilityCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.42;
+  background-image:
+    linear-gradient(rgba(21, 21, 19, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 21, 19, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, black, transparent 78%);
+}
+
 .investigate {
   grid-column: span 8;
-  min-height: 430px;
-  padding-right: min(420px, 44%);
-  padding-bottom: clamp(24px, 2.4vw, 34px);
+  display: grid;
+  min-height: 470px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.8fr);
+  align-items: stretch;
+  gap: clamp(20px, 3vw, 36px);
   background: linear-gradient(135deg, #edf2ff 0%, #f9fbff 56%, #ffffff 100%);
 }
 
@@ -718,6 +734,7 @@
   position: relative;
   z-index: 3;
   max-width: 510px;
+  min-width: 0;
 }
 
 .capCopy > span {
@@ -743,28 +760,31 @@
 .capCopy h3 {
   margin-top: 18px;
   max-width: 690px;
-  font-size: clamp(2rem, 2.5vw, 3.15rem);
-  line-height: 0.96;
-  letter-spacing: -0.075em;
+  font-size: clamp(2rem, 2.35vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.07em;
 }
 
 .investigate .capCopy h3 {
   max-width: 500px;
-  font-size: clamp(2.35rem, 3.4vw, 4.25rem);
+  font-size: clamp(2.55rem, 3.15vw, 4rem);
+  line-height: 0.98;
 }
 
 .correlate .capCopy h3,
 .remediate .capCopy h3 {
   max-width: 100%;
-  font-size: clamp(1.95rem, 2.25vw, 2.75rem);
-  line-height: 0.98;
+  font-size: clamp(1.72rem, 1.85vw, 2.28rem);
+  line-height: 1.02;
+  letter-spacing: -0.068em;
 }
 
 .setup .capCopy h3,
 .specialist .capCopy h3 {
   max-width: 100%;
-  font-size: clamp(1.85rem, 2.05vw, 2.45rem);
-  line-height: 1;
+  font-size: clamp(1.68rem, 1.75vw, 2.2rem);
+  line-height: 1.03;
+  letter-spacing: -0.065em;
 }
 
 .capCopy p {
@@ -784,8 +804,8 @@
 
 .capMetric {
   position: absolute;
-  right: 22px;
-  bottom: 22px;
+  right: 20px;
+  top: 20px;
   z-index: 4;
   display: inline-flex;
   min-height: 42px;
@@ -800,62 +820,142 @@
 }
 
 .capVisual {
-  position: absolute;
-  right: clamp(20px, 3vw, 44px);
-  bottom: clamp(30px, 4vw, 52px);
+  position: relative;
   z-index: 2;
+  width: 100%;
+  min-height: 176px;
+  margin-top: auto;
 }
 
 .investigateVisual {
-  width: min(420px, 44%);
-  height: 190px;
+  align-self: stretch;
+  min-height: 100%;
+  margin-top: 0;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(51, 79, 134, 0.16), transparent 9rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.18));
 }
 
 .alertMini,
 .rootMini {
   position: absolute;
-  left: 0;
-  right: 0;
-  min-height: 62px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
+  display: grid;
+  gap: 4px;
+  min-height: 92px;
+  padding: 15px 18px;
   border: 1px solid rgba(21, 21, 19, 0.08);
   border-radius: 17px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 20px 55px rgba(21, 21, 19, 0.11);
-  font-weight: 950;
   letter-spacing: -0.04em;
 }
 
 .alertMini {
-  top: 0;
-  color: var(--red);
-  animation: miniCardPop 2.9s ease-in-out infinite;
+  top: 42px;
+  left: 0;
+  width: min(190px, 47%);
+  color: #2c2522;
+  border-left: 4px solid var(--red);
+  animation: miniCardPop 3.2s ease-in-out infinite;
 }
 
 .rootMini {
-  bottom: 0;
+  right: 0;
+  bottom: 50px;
+  width: min(205px, 50%);
+  color: #213d20;
+  border-left: 4px solid var(--deep-green);
+  animation: miniCardPop 3.2s 680ms ease-in-out infinite;
+}
+
+.alertMini span,
+.rootMini span,
+.alertMini small,
+.rootMini small {
+  color: rgba(21, 21, 19, 0.54);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.alertMini strong,
+.rootMini strong {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+.alertMini strong {
+  color: var(--red);
+}
+
+.rootMini strong {
   color: var(--deep-green);
-  animation: miniCardPop 2.9s 520ms ease-in-out infinite;
+}
+
+.lensMini {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border: 1px solid rgba(51, 79, 134, 0.18);
+  border-radius: 50%;
+  color: white;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.82), transparent 18%),
+    linear-gradient(145deg, #5a78b5, #172f68);
+  box-shadow:
+    0 22px 52px rgba(31, 55, 105, 0.25),
+    0 0 0 12px rgba(51, 79, 134, 0.08);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  transform: translate(-50%, -50%);
+  animation: lensSearch 3.2s ease-in-out infinite;
+}
+
+.investigateVisual::before,
+.investigateVisual::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(213, 57, 52, 0.08), rgba(51, 79, 134, 0.36), rgba(69, 110, 63, 0.12));
+  transform: translateY(-50%);
+}
+
+.investigateVisual::before {
+  left: 19%;
+  right: 50%;
+}
+
+.investigateVisual::after {
+  left: 50%;
+  right: 20%;
 }
 
 .scanBeam {
   position: absolute;
-  top: 42px;
-  bottom: 42px;
-  left: 50%;
-  width: 3px;
+  left: 14%;
+  right: 14%;
+  top: 50%;
+  height: 46px;
   border-radius: 999px;
-  background: linear-gradient(180deg, transparent, var(--blue), transparent);
-  box-shadow: 0 0 24px rgba(51, 79, 134, 0.42);
-  animation: scanBeam 2.4s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(51, 79, 134, 0.2), rgba(51, 79, 134, 0.48), transparent);
+  filter: blur(5px);
+  transform: translateY(-50%);
+  animation: scanBeam 3.2s ease-in-out infinite;
 }
 
 .correlateVisual {
-  inset: auto 24px 34px 24px;
-  width: auto;
-  height: 158px;
+  height: 218px;
+  margin-top: 24px;
 }
 
 .correlateVisual span {
@@ -863,8 +963,8 @@
   z-index: 2;
   display: grid;
   place-items: center;
-  min-width: 76px;
-  min-height: 42px;
+  min-width: 72px;
+  min-height: 40px;
   padding: 0 12px;
   border-radius: 14px;
   color: #121212;
@@ -875,32 +975,54 @@
   animation: nodePulse 3.2s ease-in-out infinite;
 }
 
-.correlateVisual span:nth-child(1) {
-  left: 6px;
-  top: 70px;
+.correlationHub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border-radius: 25px;
+  color: #151513;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 22px 52px rgba(17, 17, 15, 0.18),
+    0 0 0 12px rgba(255, 255, 255, 0.16);
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 950;
+  transform: translate(-50%, -50%);
+  animation: hubPulse 3.2s ease-in-out infinite;
 }
 
-.correlateVisual span:nth-child(2) {
-  left: 120px;
-  top: 12px;
+.correlateVisual span:nth-of-type(1) {
+  left: 3%;
+  top: 88px;
+}
+
+.correlateVisual span:nth-of-type(2) {
+  left: 31%;
+  top: 8px;
   animation-delay: 120ms;
 }
 
-.correlateVisual span:nth-child(3) {
-  left: 135px;
-  bottom: 8px;
+.correlateVisual span:nth-of-type(3) {
+  left: 41%;
+  bottom: 2px;
   animation-delay: 240ms;
 }
 
-.correlateVisual span:nth-child(4) {
-  right: 0;
-  top: 68px;
+.correlateVisual span:nth-of-type(4) {
+  right: 2%;
+  top: 76px;
   animation-delay: 360ms;
 }
 
-.correlateVisual span:nth-child(5) {
-  right: 42px;
-  bottom: 48px;
+.correlateVisual span:nth-of-type(5) {
+  right: 17%;
+  bottom: 28px;
   animation-delay: 480ms;
 }
 
@@ -919,18 +1041,17 @@
 }
 
 .remediateVisual {
-  left: 28px;
-  right: 28px;
-  bottom: 42px;
+  height: 208px;
+  margin-top: 24px;
 }
 
-.rollbackRail {
-  height: 82px;
-  display: flex;
+.actionStack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 14px;
-  padding: 0 20px;
+  min-height: 96px;
+  padding: 14px;
   border-radius: 20px;
   background: rgba(59, 20, 45, 0.72);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
@@ -938,24 +1059,40 @@
   font-weight: 950;
 }
 
-.rollbackRail span {
+.actionStack div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.actionStack span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.actionStack div:first-child strong {
   color: #ff9b9b;
   text-decoration: line-through;
 }
 
-.rollbackRail strong {
+.actionStack div:last-child strong {
   color: #c8ffc6;
 }
 
-.rollbackRail b {
-  flex: 1;
+.actionStack b {
+  position: relative;
+  display: block;
   height: 4px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
   overflow: hidden;
 }
 
-.rollbackRail b::after {
+.actionStack b::after {
   content: "";
   display: block;
   width: 42%;
@@ -981,18 +1118,36 @@
   animation: approveNudge 2.4s ease-in-out infinite;
 }
 
+.recoveryMini {
+  width: max-content;
+  max-width: 100%;
+  margin: 12px auto 0;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  border-radius: 999px;
+  color: #c8ffc6;
+  background: rgba(20, 65, 42, 0.52);
+  box-shadow: inset 0 0 0 1px rgba(200, 255, 198, 0.18);
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: -0.035em;
+  animation: recoveryGlow 2.4s 400ms ease-in-out infinite;
+}
+
 .setupVisual {
-  right: 28px;
-  bottom: 40px;
-  width: min(320px, calc(100% - 56px));
   display: grid;
   gap: 10px;
+  height: 215px;
+  margin-top: 24px;
+  padding-right: 86px;
 }
 
 .timerRing {
   position: absolute;
-  right: 6px;
-  bottom: 10px;
+  right: 2px;
+  top: 54px;
   display: grid;
   place-items: center;
   width: 92px;
@@ -1008,8 +1163,32 @@
   animation: timerPulse 2.6s ease-in-out infinite;
 }
 
+.setupVisual .timerRing strong,
+.setupVisual .timerRing span {
+  display: block;
+  width: auto;
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.setupVisual .timerRing strong {
+  margin-top: 8px;
+  line-height: 0.8;
+}
+
+.setupVisual .timerRing span {
+  color: var(--blue);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .setupVisual span {
-  width: calc(100% - 72px);
+  width: 100%;
   min-height: 54px;
   display: flex;
   align-items: center;
@@ -1039,9 +1218,10 @@
 }
 
 .specialistVisual {
-  inset: auto 24px 34px auto;
-  width: min(315px, calc(100% - 48px));
-  height: 210px;
+  height: 224px;
+  margin-top: 24px;
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 50%, rgba(51, 79, 134, 0.13), transparent 8rem);
 }
 
 .specialistCore {
@@ -1065,10 +1245,12 @@
 
 .specialistVisual span {
   position: absolute;
-  display: grid;
-  place-items: center;
-  min-width: 78px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 88px;
   min-height: 40px;
+  justify-content: center;
   border-radius: 999px;
   color: #2b2a26;
   background: rgba(255, 255, 255, 0.92);
@@ -1079,8 +1261,19 @@
   animation: specialistOrbit 5s ease-in-out infinite;
 }
 
+.specialistVisual span b {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: white;
+  background: #1f3769;
+  font-size: 0.66rem;
+}
+
 .specialistVisual span:nth-child(2) {
-  left: 0;
+  left: 2px;
   top: 24px;
 }
 
@@ -1285,12 +1478,28 @@
 @keyframes scanBeam {
   0%,
   100% {
-    transform: translateX(-90px);
+    transform: translate(-72px, -50%) scaleX(0.68);
     opacity: 0.35;
   }
   50% {
-    transform: translateX(90px);
+    transform: translate(72px, -50%) scaleX(1);
     opacity: 1;
+  }
+}
+
+@keyframes lensSearch {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow:
+      0 22px 52px rgba(31, 55, 105, 0.25),
+      0 0 0 12px rgba(51, 79, 134, 0.08);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow:
+      0 28px 62px rgba(31, 55, 105, 0.31),
+      0 0 0 22px rgba(51, 79, 134, 0.045);
   }
 }
 
@@ -1301,6 +1510,16 @@
   }
   50% {
     transform: scale(1.06);
+  }
+}
+
+@keyframes hubPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
   }
 }
 
@@ -1340,6 +1559,20 @@
   }
 }
 
+@keyframes recoveryGlow {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: inset 0 0 0 1px rgba(200, 255, 198, 0.18);
+  }
+  50% {
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 0 0 1px rgba(200, 255, 198, 0.32),
+      0 18px 42px rgba(20, 65, 42, 0.22);
+  }
+}
+
 @keyframes timerPulse {
   0%,
   100% {
@@ -1376,11 +1609,14 @@
   .capabilityCard,
   .alertMini,
   .rootMini,
+  .lensMini,
   .scanBeam,
+  .correlationHub,
   .correlateVisual span,
   .correlateVisual svg,
-  .rollbackRail b::after,
+  .actionStack b::after,
   .deployButton,
+  .recoveryMini,
   .timerRing,
   .specialistCore,
   .specialistVisual span,
@@ -1446,7 +1682,7 @@
   }
 
   .investigateVisual {
-    width: min(390px, 42%);
+    width: 100%;
   }
 
   .flowGrid {
@@ -1530,7 +1766,16 @@
   .setup,
   .specialist {
     grid-column: 1;
-    min-height: 440px;
+    min-height: 0;
+  }
+
+  .capabilityCard {
+    min-height: 0;
+  }
+
+  .investigate {
+    display: flex;
+    flex-direction: column;
   }
 
   .capVisual,
@@ -1539,15 +1784,42 @@
   .remediateVisual,
   .setupVisual,
   .specialistVisual {
-    left: 22px;
-    right: 22px;
-    bottom: 58px;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
     width: auto;
+    margin-top: 24px;
   }
 
   .capMetric {
-    left: 22px;
-    right: auto;
+    position: relative;
+    inset: auto;
+    width: max-content;
+    margin-top: 18px;
+  }
+
+  .investigateVisual {
+    min-height: 265px;
+  }
+
+  .correlateVisual,
+  .remediateVisual,
+  .setupVisual,
+  .specialistVisual {
+    height: 220px;
+  }
+
+  .setupVisual {
+    padding-right: 78px;
+  }
+
+  .alertMini {
+    top: 28px;
+  }
+
+  .rootMini {
+    bottom: 32px;
   }
 
   .flowGrid {
