@@ -221,20 +221,24 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "correlate") {
     return (
       <div className={`${styles.capVisual} ${styles.correlateVisual}`}>
-        <div className={styles.correlationBoard}>
+        <div className={styles.correlationScanner}>
+          <div className={styles.scanWash} />
           {[
-            ["deploy", "3f82a", "match"],
-            ["config", "flag off", "clear"],
-            ["infra", "cpu normal", "clear"],
-            ["third-party", "stripe ok", "clear"],
-          ].map(([source, signal, state], index) => (
+            ["deploy", "commit 3f82a", "MATCH", styles.matchLane],
+            ["config", "flags unchanged", "clear", styles.clearLane],
+            ["infra", "cpu + db normal", "clear", styles.clearLane],
+            ["third-party", "stripe healthy", "clear", styles.clearLane],
+          ].map(([source, signal, state, laneClass], index) => (
             <div
-              className={styles.correlationRow}
+              className={`${styles.signalLane} ${laneClass}`}
               key={source}
-              style={{ animationDelay: `${index * 140}ms` } as CSSProperties}
+              style={{ animationDelay: `${index * 180}ms` } as CSSProperties}
             >
               <span>{source}</span>
-              <strong>{signal}</strong>
+              <div>
+                <strong>{signal}</strong>
+                <b />
+              </div>
               <i>{state}</i>
             </div>
           ))}
@@ -242,8 +246,8 @@ function CapabilityVisual({ tone }: { tone: string }) {
         <div className={styles.correlationResult}>
           <b>D</b>
           <div>
-            <span>Cause isolated</span>
-            <strong>bad deploy, not infra or Stripe</strong>
+            <span>Cause locked</span>
+            <strong>deploy changed first; infra, config, and Stripe ruled out</strong>
           </div>
         </div>
       </div>
