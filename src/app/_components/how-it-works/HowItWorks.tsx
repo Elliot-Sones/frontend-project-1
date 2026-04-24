@@ -59,7 +59,6 @@ export function HowItWorks() {
     >
       <div className={styles.inner}>
         <div className={styles.header}>
-          <div className="section-label reveal">03 / How it works</div>
           <h2 className="display-h2 reveal reveal-d1">
             Three steps. <span className="muted">Then it runs on its own.</span>
           </h2>
