@@ -1,0 +1,391 @@
+/* Styles for components rendered inside <HeroComposition />.
+   Element-scoped only: card shells, log terminal, graph, orb wrap, ticker,
+   pulse, connector, reactions, commit badge.
+   Page-layout and hero-shell styles live in src/app/_components/HeroSection.module.css.
+*/
+
+/* =============================================================
+   Slack card
+   ============================================================= */
+.slackCard {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  min-width: 360px;
+  max-width: 590px;
+  padding: 18px 22px;
+  border: 1px solid rgba(17, 17, 17, 0.05);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 20px 70px rgba(28, 28, 24, 0.1);
+  filter: drop-shadow(0 22px 26px rgba(30, 28, 24, 0.13));
+}
+
+.slackCardAlert {
+  border-left: 3px solid #d14a3a;
+  padding-left: 19px;
+}
+
+.slackCardOk {
+  border-left: 3px solid #6b8a5c;
+  padding-left: 19px;
+}
+
+.slackCardNeutral {
+  /* no border addition — default */
+}
+
+.cardMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.cardMeta strong {
+  font-size: 1.02rem;
+  font-weight: 950;
+  letter-spacing: -0.035em;
+}
+
+.cardMeta span,
+.dots {
+  color: rgba(17, 17, 17, 0.45);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.slackCardBody {
+  margin: 0;
+  color: #22211f;
+  font-size: 1.05rem;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+}
+
+.slackCardBody b {
+  font-weight: 950;
+}
+
+.slackCardBody mark {
+  padding: 0 5px 2px;
+  border-radius: 5px;
+  color: #7c6438;
+  background: #eee6d5;
+  font-weight: 950;
+}
+
+.alertIcon,
+.botIcon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  color: white;
+  font-weight: 950;
+}
+
+.alertIcon {
+  background: #cc3b32;
+}
+
+.botIcon {
+  background: radial-gradient(circle at 32% 24%, #6d86c3 0 12%, #243f78 62%, #17264b 100%);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+}
+
+.pill {
+  display: inline-flex;
+  margin-right: 7px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  color: white;
+  background: #d14a3a;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+/* =============================================================
+   Log terminal (dark)
+   ============================================================= */
+.logCard {
+  width: 356px;
+  padding: 20px 18px;
+  border-radius: 10px;
+  color: #d8d1a8;
+  background: #080b17;
+  box-shadow: 0 25px 54px rgba(8, 11, 23, 0.24);
+  filter: drop-shadow(0 22px 26px rgba(30, 28, 24, 0.13));
+}
+
+.windowDots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.windowDots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.windowDots span:nth-child(1) {
+  background: #ce4439;
+}
+
+.windowDots span:nth-child(2) {
+  background: #b78b37;
+}
+
+.windowDots span:nth-child(3) {
+  background: #718a5f;
+}
+
+.windowDots b {
+  margin-left: 8px;
+  color: rgba(216, 209, 168, 0.34);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.86rem;
+  letter-spacing: 0.18em;
+}
+
+.logCard p {
+  margin: 16px 0 10px;
+  color: #c3b476;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.logCard p strong {
+  color: #e0554f;
+}
+
+.logCard small {
+  display: block;
+  margin-top: 12px;
+  color: rgba(216, 209, 168, 0.36);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 800;
+  text-align: center;
+}
+
+.logHighlight {
+  display: block;
+  padding: 9px 11px;
+  border-radius: 4px;
+  color: #d7c45e;
+  background: rgba(216, 196, 94, 0.18);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 900;
+  transition: background 400ms ease, box-shadow 400ms ease;
+}
+
+/* =============================================================
+   Graph card
+   ============================================================= */
+.metricCard {
+  width: 274px;
+  padding: 19px 17px 12px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 22px 26px rgba(30, 28, 24, 0.13));
+}
+
+.metricHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #11110f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+}
+
+.metricHeader b {
+  font-size: 0.95rem;
+}
+
+.metricCard svg {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.chartGhost,
+.chartLine {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.chartGhost {
+  stroke-width: 5;
+}
+
+.chartLine {
+  stroke-width: 3;
+  transition: d 400ms ease;
+}
+
+/* =============================================================
+   Agent orb (Three.js wrapper)
+   ============================================================= */
+.orbWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 22px 34px rgba(36, 63, 120, 0.28));
+}
+
+.orbWrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.orbWrap span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-display);
+  font-size: 4.1rem;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+/* =============================================================
+   Commit badge (swap indicator)
+   ============================================================= */
+.commitSwap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 950;
+  filter: drop-shadow(0 22px 26px rgba(30, 28, 24, 0.13));
+}
+
+.commitSwap span:first-child {
+  color: #d14a3a;
+  text-decoration: line-through;
+}
+
+.commitSwap span:nth-child(3),
+.commitSwap i {
+  color: #5b8a4d;
+}
+
+/* =============================================================
+   Connector lines
+   ============================================================= */
+.connectorLines {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  fill: none;
+  stroke: rgba(17, 17, 17, 0.18);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 6 10;
+  filter: drop-shadow(0 12px 12px rgba(17, 17, 17, 0.05));
+}
+
+/* =============================================================
+   Pulse ring
+   ============================================================= */
+.pulseRing {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(209, 74, 58, 0.45), rgba(209, 74, 58, 0));
+  pointer-events: none;
+  transform-origin: center;
+}
+
+/* =============================================================
+   Ticker badge
+   ============================================================= */
+.ticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: #10100f;
+  color: white;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 28px rgba(26, 24, 20, 0.2);
+}
+
+.tickerDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b88a3f;
+  box-shadow: 0 0 0 3px rgba(184, 138, 63, 0.3);
+  transition: background 300ms ease, box-shadow 300ms ease;
+}
+
+.tickerDotResolved {
+  background: #6b8a5c;
+  box-shadow: 0 0 0 3px rgba(107, 138, 92, 0.4);
+}
+
+.tickerText {
+  position: relative;
+  width: 144px;
+  height: 14px;
+}
+
+.tickerText span {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+  transition: opacity 260ms ease;
+}
+
+.tickerStateResolved {
+  color: #8ac08a;
+}
+
+/* =============================================================
+   Emoji reactions
+   ============================================================= */
+.reactions {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  background: #f2efe6;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 12px;
+}
+
+.reactionCount {
+  color: #3d3a32;
+  font-weight: 700;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
