@@ -221,26 +221,31 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "correlate") {
     return (
       <div className={`${styles.capVisual} ${styles.correlateVisual}`}>
-        <svg className={styles.correlationLines} viewBox="0 0 360 210" aria-hidden="true">
-          <path d="M70 104 C112 36 252 36 292 104" />
-          <path d="M68 105 C112 170 252 170 292 105" />
-          <path d="M180 22 C178 76 178 132 180 188" />
-          <path d="M82 62 C132 92 228 120 282 150" />
-        </svg>
-        <div className={styles.correlationCore}>
-          <strong>D</strong>
-          <span>94%</span>
+        <div className={styles.correlationBoard}>
+          {[
+            ["deploy", "3f82a", "match"],
+            ["config", "flag off", "clear"],
+            ["infra", "cpu normal", "clear"],
+            ["third-party", "stripe ok", "clear"],
+          ].map(([source, signal, state], index) => (
+            <div
+              className={styles.correlationRow}
+              key={source}
+              style={{ animationDelay: `${index * 140}ms` } as CSSProperties}
+            >
+              <span>{source}</span>
+              <strong>{signal}</strong>
+              <i>{state}</i>
+            </div>
+          ))}
         </div>
-        {["logs", "deploy", "db", "stripe", "slack"].map((node, index) => (
-          <span
-            className={styles.signalNode}
-            key={node}
-            style={{ animationDelay: `${index * 110}ms` } as CSSProperties}
-          >
-            {node}
-          </span>
-        ))}
-        <b className={styles.causalBadge}>causal graph</b>
+        <div className={styles.correlationResult}>
+          <b>D</b>
+          <div>
+            <span>Cause isolated</span>
+            <strong>bad deploy, not infra or Stripe</strong>
+          </div>
+        </div>
       </div>
     );
   }
