@@ -863,8 +863,8 @@
 .alertStorm,
 .agentWorkbench,
 .briefOutput,
-.signalNode,
-.causalBadge,
+.correlationRow,
+.correlationResult,
 .rollbackAction,
 .approvalPulse,
 .recoveryMini,
@@ -1073,112 +1073,112 @@
 }
 
 .correlateVisual {
-  height: 232px;
+  display: grid;
+  height: 292px;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 12px;
   margin-top: 24px;
 }
 
-.correlationLines {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.72);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-dasharray: 460;
-  stroke-dashoffset: 460;
-  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.34));
-  animation: causalLines 4.6s ease-in-out infinite;
+.correlationBoard {
+  display: grid;
+  gap: 8px;
+  align-content: end;
 }
 
-.correlationCore {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 4;
+.correlationRow {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr) 56px;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  color: #151513;
+  background: rgba(255, 255, 255, 0.88);
+  animation: rowScan 4.8s ease-in-out infinite;
+}
+
+.correlationRow:first-child {
+  border-color: rgba(200, 255, 198, 0.58);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.correlationRow span {
+  color: rgba(21, 21, 19, 0.52);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.correlationRow strong {
+  overflow: hidden;
+  font-size: 0.9rem;
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.correlationRow i {
   display: grid;
   place-items: center;
-  width: 92px;
-  height: 92px;
-  border-radius: 30px;
+  min-height: 26px;
+  border-radius: 999px;
+  color: #5f5b54;
+  background: rgba(21, 21, 19, 0.06);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.correlationRow:first-child i {
+  color: #2f552d;
+  background: rgba(108, 145, 96, 0.14);
+}
+
+.correlationResult {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 78px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
   color: #151513;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow:
-    0 24px 58px rgba(17, 17, 15, 0.2),
-    0 0 0 15px rgba(255, 255, 255, 0.15);
-  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
 }
 
-.correlationCore strong {
+.correlationResult b {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 17px;
+  color: white;
+  background: linear-gradient(145deg, #5977b6, #173269);
   font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 0.8;
+  font-size: 1.7rem;
 }
 
-.correlationCore span {
+.correlationResult span {
   color: var(--deep-green);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.signalNode {
-  position: absolute;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  min-width: 72px;
-  min-height: 40px;
-  padding: 0 12px;
-  border-radius: 14px;
-  color: #121212;
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 0.82rem;
-  font-weight: 950;
-  animation: signalConverge 4.6s ease-in-out infinite;
-}
-
-.signalNode:nth-of-type(1) {
-  left: 3%;
-  top: 94px;
-}
-
-.signalNode:nth-of-type(2) {
-  left: 31%;
-  top: 10px;
-}
-
-.signalNode:nth-of-type(3) {
-  left: 42%;
-  bottom: 10px;
-}
-
-.signalNode:nth-of-type(4) {
-  right: 1%;
-  top: 82px;
-}
-
-.signalNode:nth-of-type(5) {
-  right: 17%;
-  bottom: 40px;
-}
-
-.causalBadge {
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  z-index: 5;
-  display: inline-flex;
-  min-height: 34px;
-  align-items: center;
-  padding: 0 13px;
-  border-radius: 999px;
-  color: var(--deep-green);
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 0.75rem;
-  letter-spacing: -0.03em;
-  transform: translateX(-50%);
-  animation: badgeResolve 4.6s ease-in-out infinite;
+.correlationResult strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.92rem;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
 }
 
 .remediateVisual {
