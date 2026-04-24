@@ -2,16 +2,20 @@
 
 .heroShell {
   display: grid;
-  grid-template-columns: minmax(0, 0.48fr) minmax(0, 1fr);
-  gap: clamp(24px, 3vw, 56px);
+  /* Left col capped to prose width; right col takes all remaining space so
+     the notification stage reaches the viewport edge — no dead space, no
+     visible boundary between text and stack. */
+  grid-template-columns: minmax(340px, 560px) minmax(0, 1fr);
+  gap: 0;
   align-items: center;
   min-height: min(78vh, 900px);
-  max-width: calc(var(--content-max, 1280px) + 120px);
+  /* No max-width — heroShell spans the full page. */
   margin: 0 auto;
-  /* Top padding must clear the fixed announce bar (36px) + nav (~64px at top:52px). */
-  padding: clamp(160px, 14vw, 200px) clamp(24px, 4vw, 48px) clamp(80px, 7vw, 100px);
+  /* Top padding clears the fixed announce bar (36px) + nav.
+     Right padding = 0 so the notification stage reaches the viewport edge. */
+  padding: clamp(160px, 14vw, 200px) 0 clamp(80px, 7vw, 100px) clamp(40px, 6vw, 96px);
   position: relative;
-  /* overflow:visible so back-row notifications can bleed past the grid column */
+  /* overflow:visible so the 3D stack bleeds past boundaries */
   overflow: visible;
 }
 
@@ -147,6 +151,14 @@
   /* overflow:visible so the 3D stack can bleed past this box — keeps the
      "one continuous page" feel, no visible box edge where cards truncate. */
   overflow: visible;
+}
+
+/* @remotion/player renders internal divs with inline overflow:hidden
+   (unclassed wrapper + .__remotion-player) that clip our bleed. Force
+   every descendant visible so the hero can extend past the stage and
+   overlap the text column naturally. */
+.animationWrap :global(*) {
+  overflow: visible !important;
 }
 
 @media (max-width: 1023px) {
