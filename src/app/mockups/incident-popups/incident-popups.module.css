@@ -833,22 +833,33 @@
   margin-top: 0;
   border-radius: 24px;
   background:
-    radial-gradient(circle at 50% 48%, rgba(51, 79, 134, 0.16), transparent 9rem),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.18));
+    radial-gradient(circle at 55% 42%, rgba(51, 79, 134, 0.16), transparent 9rem),
+    radial-gradient(circle at 76% 78%, rgba(69, 110, 63, 0.13), transparent 8rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.2));
 }
 
-.noiseStack {
+.alertStorm {
   position: absolute;
-  left: 0;
-  top: 42px;
-  z-index: 2;
-  display: grid;
-  gap: 10px;
-  width: min(190px, 44%);
+  left: 4px;
+  top: 22px;
+  z-index: 4;
+  display: flex;
+  width: min(230px, 55%);
+  min-height: 112px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(213, 57, 52, 0.18);
+  border-left: 5px solid var(--red);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  animation: stormIntake 4.8s ease-in-out infinite;
 }
 
-.noiseStack span,
-.rootReport,
+.alertStorm,
+.agentWorkbench,
+.briefOutput,
 .signalNode,
 .causalBadge,
 .rollbackAction,
@@ -861,123 +872,206 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.68);
 }
 
-.noiseStack span {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 13px;
-  border: 1px solid rgba(213, 57, 52, 0.18);
-  border-left: 4px solid var(--red);
-  border-radius: 14px;
+.alertStorm strong {
+  flex: 0 0 100%;
   color: var(--red);
-  background: rgba(255, 255, 255, 0.92);
-  font-size: 0.78rem;
+  font-size: 0.84rem;
   font-weight: 950;
-  letter-spacing: -0.035em;
-  animation: alertCondense 5.2s ease-in-out infinite;
+  letter-spacing: -0.04em;
 }
 
-.investigationCore {
+.alertStorm span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--red);
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.investigationPipe {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 4;
-  display: grid;
-  place-items: center;
-  width: 108px;
-  height: 108px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.86), transparent 14%),
-    linear-gradient(145deg, #5977b6, #173269);
-  box-shadow:
-    0 28px 70px rgba(31, 55, 105, 0.26),
-    0 0 0 16px rgba(51, 79, 134, 0.08);
-  transform: translate(-50%, -50%);
+  left: 53%;
+  top: 28px;
+  bottom: 38px;
+  z-index: 1;
+  width: 4px;
+  border-radius: 999px;
+  background: rgba(51, 79, 134, 0.12);
 }
 
-.investigationCore strong {
-  color: white;
-  font-family: var(--font-display);
-  font-size: 2.15rem;
-  font-weight: 900;
-}
-
-.investigationCore i {
-  position: absolute;
-  inset: -18px;
-  border-radius: inherit;
-  border: 2px solid rgba(51, 79, 134, 0.12);
-  border-top-color: rgba(51, 79, 134, 0.58);
-  animation: rotateScanner 3.2s linear infinite;
-}
-
-.evidenceTrail {
+.investigationPipe::before {
+  content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--red), var(--blue), var(--deep-green));
+  clip-path: inset(0 0 100% 0);
+  animation: pipeFlow 4.8s ease-in-out infinite;
 }
 
-.evidenceTrail span {
+.investigationPipe span {
   position: absolute;
-  left: 18%;
-  right: 20%;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(213, 57, 52, 0.08), rgba(51, 79, 134, 0.56), rgba(69, 110, 63, 0.18));
-  transform-origin: left center;
-  clip-path: inset(0 100% 0 0);
-  animation: evidenceDraw 5.2s ease-in-out infinite;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 6px rgba(51, 79, 134, 0.12);
+  transform: translateX(-50%);
 }
 
-.evidenceTrail span:nth-child(1) {
-  top: 41%;
-  rotate: -8deg;
+.investigationPipe span:nth-child(1) {
+  top: 16px;
 }
 
-.evidenceTrail span:nth-child(2) {
+.investigationPipe span:nth-child(2) {
   top: 50%;
-  animation-delay: 160ms;
 }
 
-.evidenceTrail span:nth-child(3) {
-  top: 59%;
-  rotate: 8deg;
-  animation-delay: 320ms;
+.investigationPipe span:nth-child(3) {
+  bottom: 16px;
 }
 
-.rootReport {
+.agentWorkbench {
   position: absolute;
-  right: 0;
-  bottom: 40px;
-  z-index: 3;
+  left: 25%;
+  top: 38%;
+  z-index: 5;
   display: grid;
-  gap: 5px;
-  width: min(220px, 51%);
-  min-height: 108px;
-  padding: 17px 18px;
-  border: 1px solid rgba(69, 110, 63, 0.16);
-  border-left: 5px solid var(--deep-green);
+  gap: 10px;
+  width: min(260px, 64%);
+  padding: 16px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.94);
-  transform-origin: left center;
-  animation: answerReveal 5.2s ease-in-out infinite;
+  color: #efe9ce;
+  background: #11121f;
+  transform: translateY(-50%);
 }
 
-.rootReport span,
-.rootReport small {
-  color: rgba(21, 21, 19, 0.54);
-  font-size: 0.7rem;
-  font-weight: 850;
+.agentHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agentHeader b {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #ffffff;
+  background: linear-gradient(145deg, #5977b6, #173269);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.agentHeader span {
+  color: rgba(239, 233, 206, 0.72);
+  font-size: 0.74rem;
+  font-weight: 900;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.rootReport strong {
+.logSweep {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  overflow: hidden;
+  padding: 2px 0;
+}
+
+.logSweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(96, 128, 191, 0.34), transparent);
+  animation: logScanner 2.8s ease-in-out infinite;
+}
+
+.logSweep i {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(239, 233, 206, 0.22);
+}
+
+.logSweep i:nth-child(2) {
+  width: 78%;
+}
+
+.logSweep i:nth-child(3) {
+  width: 56%;
+}
+
+.agentWorkbench mark {
+  width: max-content;
+  max-width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: #f2d979;
+  background: rgba(242, 217, 121, 0.15);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.agentWorkbench small {
+  color: rgba(239, 233, 206, 0.58);
+  font-size: 0.76rem;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.briefOutput {
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  z-index: 4;
+  display: grid;
+  gap: 8px;
+  width: min(235px, 56%);
+  min-height: 116px;
+  padding: 17px 18px;
+  border: 1px solid rgba(69, 110, 63, 0.16);
+  border-left: 5px solid var(--deep-green);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  animation: briefArrives 4.8s ease-in-out infinite;
+}
+
+.briefOutput strong {
   color: var(--deep-green);
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 950;
   letter-spacing: -0.04em;
+}
+
+.briefOutput span {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+  border-radius: 999px;
+  color: #2f552d;
+  background: rgba(108, 145, 96, 0.1);
+  font-size: 0.78rem;
+  font-weight: 900;
+  position: relative;
+}
+
+.briefOutput span::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #17bf61;
+  box-shadow: 0 0 0 5px rgba(23, 191, 97, 0.11);
 }
 
 .correlateVisual {

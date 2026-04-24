@@ -184,26 +184,35 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "investigate") {
     return (
       <div className={`${styles.capVisual} ${styles.investigateVisual}`}>
-        <div className={styles.noiseStack} aria-hidden="true">
-          {["5xx spike", "cart timeout", "checkout log"].map((item, index) => (
-            <span key={item} style={{ animationDelay: `${index * 140}ms` } as CSSProperties}>
-              {item}
-            </span>
-          ))}
+        <div className={styles.alertStorm}>
+          <strong>Alert storm</strong>
+          <span>P1</span>
+          <span>5xx</span>
+          <span>cart</span>
+          <span>logs</span>
         </div>
-        <div className={styles.investigationCore}>
-          <strong>D</strong>
-          <i />
-        </div>
-        <div className={styles.evidenceTrail}>
+        <div className={styles.investigationPipe} aria-hidden="true">
           <span />
           <span />
           <span />
         </div>
-        <div className={styles.rootReport}>
-          <span>Root cause</span>
-          <strong>empty cart deploy</strong>
-          <small>brief posted before Slack opens</small>
+        <div className={styles.agentWorkbench}>
+          <div className={styles.agentHeader}>
+            <b>D</b>
+            <span>reading logs + deploys</span>
+          </div>
+          <div className={styles.logSweep}>
+            <i />
+            <i />
+            <i />
+          </div>
+          <mark>checkout.ts:142</mark>
+          <small>commit 3f82a introduced empty cart crash</small>
+        </div>
+        <div className={styles.briefOutput}>
+          <strong>Slack brief ready</strong>
+          <span>Root cause found</span>
+          <span>Rollback suggested</span>
         </div>
       </div>
     );
