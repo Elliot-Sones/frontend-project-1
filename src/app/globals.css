@@ -11,12 +11,12 @@ a{color:inherit;text-decoration:none}
    TOKENS : warm Synchronized-inspired palette
    ============================================================ */
 :root{
-  /* Canvas : white, matching logo */
+  /* Canvas : true white */
   --bg:#FFFFFF;
-  --bg-elev-1:#FAFAFA;
-  --bg-elev-2:#F5F5F5;
-  --bg-warm:#F0F0F0;
-  --bg-deep:#E8E8E8;
+  --bg-elev-1:#FFFFFF;
+  --bg-elev-2:#FFFFFF;
+  --bg-warm:#FFFFFF;
+  --bg-deep:#F7F7F7;
 
   /* Ink : warm dark */
   --ink-100:#1A1814;
@@ -88,12 +88,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* Subtle paper noise overlay */
-body::before{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-  background-repeat:repeat;opacity:0.4;mix-blend-mode:multiply;
-}
+/* Paper noise overlay removed — site is true white */
 
 /* Skip link */
 .skip-link{
@@ -124,7 +119,7 @@ body::before{
   font-family:var(--font-body);
   font-size:0.78rem;font-weight:500;
   color:var(--ink-80);
-  background:var(--bg-warm);
+  background:#FFFFFF;
   border-bottom:1px solid var(--hairline);
   letter-spacing:0.01em;
 }
@@ -143,7 +138,7 @@ nav{
   margin:0 auto;
   padding:12px 20px 12px 24px;
   display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg-elev-2);
+  background:#FFFFFF;
   border:1px solid var(--hairline);
   border-radius:16px;
   box-shadow:var(--shadow-pop);
