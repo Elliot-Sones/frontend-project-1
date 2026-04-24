@@ -73,24 +73,33 @@
   color: #1a1814;
 }
 
-/* ============= Hero variant ============= */
+/* ============= Hero variant (bigger, more prominent) ============= */
 .cardHero {
-  padding: 17px 19px;
-  border: 1px solid rgba(107, 138, 92, 0.3);
+  padding: 22px 24px;
+  gap: 14px;
+  border: 1px solid rgba(107, 138, 92, 0.35);
   background: rgba(253, 255, 250, 0.98);
 }
 
 .cardHero .src {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .cardHero .title {
-  font-size: 15px;
+  font-size: 19px;
+  line-height: 1.25;
   color: #1e3a14;
+  margin-bottom: 4px;
 }
 
 .cardHero .text {
-  font-size: 12.5px;
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+.cardHero .text code {
+  font-size: 13.5px;
+  padding: 1px 6px;
 }
 
 /* ============= Integration icon ============= */
@@ -113,10 +122,10 @@
 }
 
 .iconHero {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  font-size: 17px;
+  width: 66px;
+  height: 66px;
+  border-radius: 17px;
+  font-size: 22px;
 }
 
 /* Integration gradients */
