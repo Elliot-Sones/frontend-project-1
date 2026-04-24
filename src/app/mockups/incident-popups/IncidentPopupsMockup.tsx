@@ -1,4 +1,5 @@
 import styles from "./incident-popups.module.css";
+import type { CSSProperties } from "react";
 
 const demoUrl = "https://cal.com/shalin-patel-eq2u1j/30min";
 
@@ -183,17 +184,26 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "investigate") {
     return (
       <div className={`${styles.capVisual} ${styles.investigateVisual}`}>
-        <div className={styles.alertMini}>
-          <span>Alert storm</span>
-          <strong>P1 checkout</strong>
-          <small>43 alerts firing</small>
+        <div className={styles.noiseStack} aria-hidden="true">
+          {["5xx spike", "cart timeout", "checkout log"].map((item, index) => (
+            <span key={item} style={{ animationDelay: `${index * 140}ms` } as CSSProperties}>
+              {item}
+            </span>
+          ))}
         </div>
-        <div className={styles.lensMini}>D</div>
-        <div className={styles.scanBeam} />
-        <div className={styles.rootMini}>
-          <span>Answer</span>
-          <strong>Root cause found</strong>
-          <small>bad deploy isolated</small>
+        <div className={styles.investigationCore}>
+          <strong>D</strong>
+          <i />
+        </div>
+        <div className={styles.evidenceTrail}>
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className={styles.rootReport}>
+          <span>Root cause</span>
+          <strong>empty cart deploy</strong>
+          <small>brief posted before Slack opens</small>
         </div>
       </div>
     );
@@ -202,15 +212,26 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "correlate") {
     return (
       <div className={`${styles.capVisual} ${styles.correlateVisual}`}>
-        <div className={styles.correlationHub}>D</div>
-        {["logs", "deploy", "db", "stripe", "slack"].map((node) => (
-          <span key={node}>{node}</span>
-        ))}
-        <svg viewBox="0 0 320 160" aria-hidden="true">
-          <path d="M42 78 C92 16 178 26 236 78 S278 142 292 92" />
-          <path d="M76 126 C126 88 186 98 252 38" />
-          <path d="M160 28 C158 72 158 114 160 146" />
+        <svg className={styles.correlationLines} viewBox="0 0 360 210" aria-hidden="true">
+          <path d="M70 104 C112 36 252 36 292 104" />
+          <path d="M68 105 C112 170 252 170 292 105" />
+          <path d="M180 22 C178 76 178 132 180 188" />
+          <path d="M82 62 C132 92 228 120 282 150" />
         </svg>
+        <div className={styles.correlationCore}>
+          <strong>D</strong>
+          <span>94%</span>
+        </div>
+        {["logs", "deploy", "db", "stripe", "slack"].map((node, index) => (
+          <span
+            className={styles.signalNode}
+            key={node}
+            style={{ animationDelay: `${index * 110}ms` } as CSSProperties}
+          >
+            {node}
+          </span>
+        ))}
+        <b className={styles.causalBadge}>causal graph</b>
       </div>
     );
   }
@@ -218,19 +239,19 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "remediate") {
     return (
       <div className={`${styles.capVisual} ${styles.remediateVisual}`}>
-        <div className={styles.actionStack}>
-          <div>
-            <span>Bad deploy</span>
-            <strong>3f82a</strong>
-          </div>
-          <b />
-          <div>
-            <span>Safe state</span>
-            <strong>a91fe</strong>
-          </div>
+        <div className={styles.errorGraph}>
+          <span>47%</span>
+          <svg viewBox="0 0 240 70" aria-hidden="true">
+            <path d="M5 18 C45 18 48 55 88 55 S124 16 164 16 198 50 235 50" />
+          </svg>
         </div>
-        <div className={styles.deployButton}>Approve rollback</div>
-        <div className={styles.recoveryMini}>error rate back to 0.4%</div>
+        <div className={styles.rollbackAction}>
+          <span>3f82a</span>
+          <b />
+          <strong>a91fe</strong>
+        </div>
+        <div className={styles.approvalPulse}>Approve rollback</div>
+        <div className={styles.recoveryMini}>0.4% recovered</div>
       </div>
     );
   }
@@ -239,8 +260,12 @@ function CapabilityVisual({ tone }: { tone: string }) {
     return (
       <div className={`${styles.capVisual} ${styles.setupVisual}`}>
         <div className={styles.timerRing}><strong>5</strong><span>min</span></div>
-        {["Slack", "GitHub", "Datadog"].map((tool) => (
-          <span key={tool}>{tool}<i /></span>
+        {["Slack", "GitHub", "Datadog"].map((tool, index) => (
+          <span key={tool} style={{ animationDelay: `${index * 260}ms` } as CSSProperties}>
+            <b>{index + 1}</b>
+            {tool}
+            <i />
+          </span>
         ))}
       </div>
     );
@@ -248,11 +273,16 @@ function CapabilityVisual({ tone }: { tone: string }) {
 
   return (
     <div className={`${styles.capVisual} ${styles.specialistVisual}`}>
+      <svg viewBox="0 0 330 220" aria-hidden="true">
+        <path d="M165 24 C236 24 294 76 294 118 S235 196 165 196 36 160 36 110 94 24 165 24" />
+      </svg>
       <div className={styles.specialistCore}>SRE</div>
-      <span><b>1</b>Triage</span>
-      <span><b>2</b>RCA</span>
-      <span><b>3</b>Fix</span>
-      <span><b>4</b>Memory</span>
+      {["Triage", "RCA", "Fix", "Memory"].map((step, index) => (
+        <span key={step} style={{ animationDelay: `${index * 520}ms` } as CSSProperties}>
+          <b>{index + 1}</b>
+          {step}
+        </span>
+      ))}
     </div>
   );
 }
