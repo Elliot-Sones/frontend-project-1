@@ -84,8 +84,6 @@ export function HeroPlayer() {
   return (
     <div
       ref={containerRef}
-      onMouseEnter={() => playerRef.current?.pause()}
-      onMouseLeave={() => playerRef.current?.play()}
       onClick={() => {
         const p = playerRef.current;
         if (!p) return;
@@ -94,6 +92,7 @@ export function HeroPlayer() {
       }}
       aria-label={ariaLabel}
       role="img"
+      className="hero-bounce"
       style={{
         width: "100%",
         height: "100%",
