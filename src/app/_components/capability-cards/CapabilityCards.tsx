@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
 import styles from "./CapabilityCards.module.css";
 
+const demoUrl = "https://cal.com/shalin-patel-pvh97i/30min";
+
 const capabilities = [
   {
     eyebrow: "Investigate before Slack",
@@ -146,11 +148,18 @@ function CapabilityVisual({ tone }: { tone: (typeof capabilities)[number]["tone"
           <span>min</span>
         </div>
         {["Slack", "GitHub", "Datadog"].map((tool, index) => (
-          <span key={tool} style={{ animationDelay: `${index * 260}ms` } as CSSProperties}>
+          <a
+            key={tool}
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Book a demo — connect ${tool}`}
+            style={{ animationDelay: `${index * 260}ms` } as CSSProperties}
+          >
             <b>{index + 1}</b>
             {tool}
             <i />
-          </span>
+          </a>
         ))}
       </div>
     );
@@ -161,12 +170,27 @@ function CapabilityVisual({ tone }: { tone: (typeof capabilities)[number]["tone"
       <svg viewBox="0 0 330 220" aria-hidden="true">
         <path d="M165 24 C236 24 294 76 294 118 S235 196 165 196 36 160 36 110 94 24 165 24" />
       </svg>
-      <div className={styles.specialistCore}>SRE</div>
+      <a
+        className={styles.specialistCore}
+        href={demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Book a demo — purpose-built SRE intelligence"
+      >
+        SRE
+      </a>
       {["Triage", "RCA", "Fix", "Memory"].map((step, index) => (
-        <span key={step} style={{ animationDelay: `${index * 520}ms` } as CSSProperties}>
+        <a
+          key={step}
+          href={demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Book a demo — ${step}`}
+          style={{ animationDelay: `${index * 520}ms` } as CSSProperties}
+        >
           <b>{index + 1}</b>
           {step}
-        </span>
+        </a>
       ))}
     </div>
   );

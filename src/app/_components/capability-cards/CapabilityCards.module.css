@@ -203,8 +203,8 @@
 .rollbackAction,
 .approvalPulse,
 .recoveryMini,
-.setupVisual > span,
-.specialistVisual span {
+.setupVisual > a,
+.specialistVisual a {
   box-shadow:
     0 18px 42px rgba(26, 24, 20, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.68);
@@ -809,7 +809,7 @@
   text-transform: uppercase;
 }
 
-.setupVisual > span {
+.setupVisual > a {
   position: relative;
   z-index: 2;
   display: grid;
@@ -820,12 +820,35 @@
   padding: 0 14px 0 12px;
   border: 1px solid rgba(26, 24, 20, 0.08);
   border-radius: 16px;
+  color: inherit;
   background: #ffffff;
   font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease,
+    background 240ms ease;
   animation: setupStep 4.8s ease-in-out infinite;
 }
 
-.setupVisual > span b {
+.setupVisual > a:hover {
+  border-color: rgba(74, 107, 156, 0.42);
+  background: #f7faff;
+  transform: translateY(-3px) scale(1.025);
+  box-shadow:
+    0 28px 56px rgba(31, 55, 105, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  animation-play-state: paused;
+}
+
+.setupVisual > a:focus-visible {
+  outline: 2px solid var(--cap-blue-deep);
+  outline-offset: 3px;
+}
+
+.setupVisual > a b {
   display: grid;
   width: 28px;
   height: 28px;
@@ -836,7 +859,7 @@
   font-size: 0.74rem;
 }
 
-.setupVisual > span i {
+.setupVisual > a i {
   width: 13px;
   height: 13px;
   border-radius: 50%;
@@ -846,8 +869,8 @@
   animation: checkPop 4.8s ease-in-out infinite;
 }
 
-.setupVisual > span:nth-of-type(2) { margin-left: 16px; }
-.setupVisual > span:nth-of-type(3) { margin-left: 32px; }
+.setupVisual > a:nth-of-type(2) { margin-left: 16px; }
+.setupVisual > a:nth-of-type(3) { margin-left: 32px; }
 
 .specialistVisual {
   height: 232px;
@@ -886,10 +909,27 @@
   box-shadow: 0 26px 60px rgba(31, 55, 105, 0.24);
   font-size: 1.45rem;
   font-weight: 950;
+  text-decoration: none;
+  cursor: pointer;
   transform: translate(-50%, -50%);
+  transition:
+    box-shadow 260ms ease,
+    filter 260ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.specialistVisual span {
+.specialistCore:hover {
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow: 0 30px 72px rgba(31, 55, 105, 0.36);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.specialistCore:focus-visible {
+  outline: 2px solid var(--cap-blue-deep);
+  outline-offset: 4px;
+}
+
+.specialistVisual a:not(.specialistCore) {
   position: absolute;
   z-index: 4;
   display: inline-flex;
@@ -904,10 +944,32 @@
   background: rgba(255, 255, 255, 0.94);
   font-size: 0.82rem;
   font-weight: 950;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 240ms ease,
+    border-color 240ms ease,
+    background 240ms ease;
   animation: workflowStep 5.4s ease-in-out infinite;
 }
 
-.specialistVisual span b {
+.specialistVisual a:not(.specialistCore):hover {
+  border-color: rgba(74, 107, 156, 0.45);
+  background: #ffffff;
+  transform: scale(1.12);
+  box-shadow:
+    0 26px 52px rgba(31, 55, 105, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  animation-play-state: paused;
+}
+
+.specialistVisual a:not(.specialistCore):focus-visible {
+  outline: 2px solid var(--cap-blue-deep);
+  outline-offset: 3px;
+}
+
+.specialistVisual a b {
   display: grid;
   width: 22px;
   height: 22px;
@@ -918,10 +980,10 @@
   font-size: 0.66rem;
 }
 
-.specialistVisual span:nth-of-type(1) { left: 0; top: 26px; }
-.specialistVisual span:nth-of-type(2) { right: 0; top: 38px; }
-.specialistVisual span:nth-of-type(3) { right: 12px; bottom: 24px; }
-.specialistVisual span:nth-of-type(4) { left: 10px; bottom: 28px; }
+.specialistVisual a:nth-of-type(1) { left: 0; top: 26px; }
+.specialistVisual a:nth-of-type(2) { right: 0; top: 38px; }
+.specialistVisual a:nth-of-type(3) { right: 12px; bottom: 24px; }
+.specialistVisual a:nth-of-type(4) { left: 10px; bottom: 28px; }
 
 @keyframes cardRise {
   from { opacity: 0; transform: translateY(26px) scale(0.98); }
