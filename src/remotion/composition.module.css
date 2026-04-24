@@ -75,32 +75,32 @@
 
 /* ============= Hero variant (much bigger, compact spacing) ============= */
 .cardHero {
-  padding: 20px 22px;
-  gap: 14px;
-  border-radius: 22px;
+  padding: 22px 26px;
+  gap: 16px;
+  border-radius: 24px;
   border: 1px solid rgba(107, 138, 92, 0.35);
   background: rgba(253, 255, 250, 0.98);
 }
 
 .cardHero .src {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .cardHero .title {
-  font-size: 22px;
-  line-height: 1.2;
+  font-size: 26px;
+  line-height: 1.18;
   color: #1e3a14;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .cardHero .text {
-  font-size: 15.5px;
+  font-size: 17px;
   line-height: 1.4;
 }
 
 .cardHero .text code {
-  font-size: 14.5px;
-  padding: 1px 6px;
+  font-size: 16px;
+  padding: 2px 7px;
 }
 
 /* ============= Integration icon ============= */
@@ -123,10 +123,10 @@
 }
 
 .iconHero {
-  width: 76px;
-  height: 76px;
-  border-radius: 19px;
-  font-size: 25px;
+  width: 88px;
+  height: 88px;
+  border-radius: 22px;
+  font-size: 29px;
 }
 
 /* Integration gradients */
