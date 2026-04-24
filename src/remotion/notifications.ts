@@ -54,7 +54,7 @@ export const NOTIFICATIONS: Notification[] = [
     position: {
       left: 240, top: "18%",
       translateZ: 70, rotateY: -10, rotateX: 8, rotateZ: -5,
-      width: 410, opacity: 0.95, zIndex: 15,
+      width: 410, opacity: 1, zIndex: 15,
     },
   },
   {
@@ -67,7 +67,7 @@ export const NOTIFICATIONS: Notification[] = [
     position: {
       left: 470, top: "78%",
       translateZ: -20, rotateY: -12, rotateX: -6, rotateZ: -4,
-      width: 280, opacity: 0.82, zIndex: 8,
+      width: 310, opacity: 1, zIndex: 8,
     },
   },
   {
@@ -80,7 +80,7 @@ export const NOTIFICATIONS: Notification[] = [
     position: {
       left: 500, top: "16%",
       translateZ: -40, rotateY: -14, rotateX: 8, rotateZ: 3,
-      width: 260, opacity: 0.78, zIndex: 7,
+      width: 300, opacity: 1, zIndex: 7,
     },
   },
   {
@@ -91,9 +91,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−37s",
     enterFrame: BEATS.jiraEnter,
     position: {
-      left: 740, top: "34%",
-      translateZ: -160, rotateY: -20, rotateX: 4, rotateZ: -4,
-      width: 220, opacity: 0.58, blur: 0.8, zIndex: 5,
+      left: 700, top: "34%",
+      translateZ: -120, rotateY: -20, rotateX: 4, rotateZ: -4,
+      width: 280, opacity: 1, zIndex: 5,
     },
   },
   {
@@ -106,7 +106,7 @@ export const NOTIFICATIONS: Notification[] = [
     position: {
       left: 370, top: "52%",
       translateZ: 10, rotateY: -14, rotateX: 2, rotateZ: 2,
-      width: 340, opacity: 0.9, zIndex: 11,
+      width: 340, opacity: 1, zIndex: 11,
     },
   },
   {
@@ -119,7 +119,7 @@ export const NOTIFICATIONS: Notification[] = [
     position: {
       left: 170, top: "76%",
       translateZ: 90, rotateY: -8, rotateX: -2, rotateZ: 3,
-      width: 410, opacity: 0.97, zIndex: 17,
+      width: 410, opacity: 1, zIndex: 17,
     },
   },
   {
@@ -130,9 +130,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−2s",
     enterFrame: BEATS.githubPrEnter,
     position: {
-      left: 780, top: "66%",
-      translateZ: -240, rotateY: -24, rotateX: -6, rotateZ: 4,
-      width: 190, opacity: 0.4, blur: 1.6, zIndex: 3,
+      left: 730, top: "66%",
+      translateZ: -180, rotateY: -24, rotateX: -6, rotateZ: 4,
+      width: 260, opacity: 1, zIndex: 3,
     },
   },
   {
