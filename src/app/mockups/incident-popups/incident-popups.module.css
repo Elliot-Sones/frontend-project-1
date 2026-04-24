@@ -828,9 +828,14 @@
 }
 
 .investigateVisual {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  gap: 12px;
   align-self: stretch;
   min-height: 100%;
   margin-top: 0;
+  padding: 16px 18px 16px 34px;
   border-radius: 24px;
   background:
     radial-gradient(circle at 55% 42%, rgba(51, 79, 134, 0.16), transparent 9rem),
@@ -839,20 +844,18 @@
 }
 
 .alertStorm {
-  position: absolute;
-  left: 4px;
-  top: 22px;
+  position: relative;
   z-index: 4;
   display: flex;
-  width: min(230px, 55%);
-  min-height: 112px;
+  width: 100%;
+  min-height: 86px;
   flex-wrap: wrap;
   align-content: flex-start;
-  gap: 8px;
-  padding: 16px;
+  gap: 7px;
+  padding: 14px 15px;
   border: 1px solid rgba(213, 57, 52, 0.18);
   border-left: 5px solid var(--red);
-  border-radius: 20px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.94);
   animation: stormIntake 4.8s ease-in-out infinite;
 }
@@ -894,9 +897,9 @@
 
 .investigationPipe {
   position: absolute;
-  left: 53%;
-  top: 28px;
-  bottom: 38px;
+  left: 18px;
+  top: 46px;
+  bottom: 46px;
   z-index: 1;
   width: 4px;
   border-radius: 999px;
@@ -937,18 +940,15 @@
 }
 
 .agentWorkbench {
-  position: absolute;
-  left: 25%;
-  top: 38%;
+  position: relative;
   z-index: 5;
   display: grid;
-  gap: 10px;
-  width: min(260px, 64%);
-  padding: 16px;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 15px;
   border-radius: 18px;
   color: #efe9ce;
   background: #11121f;
-  transform: translateY(-50%);
 }
 
 .agentHeader {
@@ -960,8 +960,8 @@
 .agentHeader b {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 12px;
   color: #ffffff;
   background: linear-gradient(145deg, #5977b6, #173269);
@@ -971,7 +971,7 @@
 
 .agentHeader span {
   color: rgba(239, 233, 206, 0.72);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1010,7 +1010,7 @@
 .agentWorkbench mark {
   width: max-content;
   max-width: 100%;
-  padding: 6px 8px;
+  padding: 5px 8px;
   border-radius: 6px;
   color: #f2d979;
   background: rgba(242, 217, 121, 0.15);
@@ -1027,18 +1027,16 @@
 }
 
 .briefOutput {
-  position: absolute;
-  right: 0;
-  bottom: 24px;
+  position: relative;
   z-index: 4;
   display: grid;
-  gap: 8px;
-  width: min(235px, 56%);
-  min-height: 116px;
-  padding: 17px 18px;
+  gap: 7px;
+  width: 100%;
+  min-height: 98px;
+  padding: 15px 16px;
   border: 1px solid rgba(69, 110, 63, 0.16);
   border-left: 5px solid var(--deep-green);
-  border-radius: 20px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.96);
   animation: briefArrives 4.8s ease-in-out infinite;
 }
@@ -1051,7 +1049,7 @@
 }
 
 .briefOutput span {
-  min-height: 30px;
+  min-height: 28px;
   display: flex;
   align-items: center;
   padding-left: 30px;
@@ -2169,6 +2167,7 @@
 
   .investigateVisual {
     min-height: 265px;
+    padding: 16px 16px 16px 32px;
   }
 
   .correlateVisual,
@@ -2180,14 +2179,6 @@
 
   .setupVisual {
     padding-right: 78px;
-  }
-
-  .alertStorm {
-    top: 30px;
-  }
-
-  .briefOutput {
-    bottom: 26px;
   }
 
   .flowGrid {
