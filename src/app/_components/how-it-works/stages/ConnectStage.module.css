@@ -1,0 +1,119 @@
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.line {
+  stroke: #1a1a1a;
+  stroke-width: 1;
+  stroke-dasharray: 160;
+  stroke-dashoffset: 0;
+  opacity: 0.35;
+}
+
+.core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.tile {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  z-index: 3;
+}
+
+.tile svg {
+  width: 34px;
+  height: 34px;
+}
+
+.t1 { top: 14%; left: 10%; }
+.t2 { top: 14%; right: 10%; }
+.t3 { bottom: 14%; left: 10%; }
+.t4 { bottom: 14%; right: 10%; }
+
+/* --- Animations — only run when .playing is present --- */
+
+.playing .line {
+  stroke-dashoffset: 160;
+  opacity: 0;
+  animation: line-draw 8s infinite;
+}
+.playing .l1 { animation-delay: 0.6s; }
+.playing .l2 { animation-delay: 1.0s; }
+.playing .l3 { animation-delay: 1.4s; }
+.playing .l4 { animation-delay: 1.8s; }
+
+@keyframes line-draw {
+  0%   { stroke-dashoffset: 160; opacity: 0; }
+  8%   { opacity: 0.35; }
+  30%  { stroke-dashoffset: 0; opacity: 0.35; }
+  90%  { stroke-dashoffset: 0; opacity: 0.35; }
+  100% { stroke-dashoffset: 0; opacity: 0.35; }
+}
+
+.playing .core {
+  animation: core-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes core-pulse {
+  0%,
+  100% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.25); }
+  50%  { box-shadow: 0 0 0 18px rgba(26, 26, 26, 0); }
+}
+
+.playing .tile {
+  opacity: 0;
+  animation: tile-pop 8s infinite;
+}
+.playing .t1 { animation-delay: 0.2s; }
+.playing .t2 { animation-delay: 0.5s; }
+.playing .t3 { animation-delay: 0.8s; }
+.playing .t4 { animation-delay: 1.1s; }
+
+@keyframes tile-pop {
+  0%   { opacity: 0; transform: scale(0.6); }
+  10%  { opacity: 1; transform: scale(1); }
+  90%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playing .line,
+  .playing .core,
+  .playing .tile {
+    animation: none;
+  }
+  .playing .line { stroke-dashoffset: 0; opacity: 0.35; }
+  .playing .tile { opacity: 1; transform: none; }
+}
