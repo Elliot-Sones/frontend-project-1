@@ -65,6 +65,7 @@
 
 .correlate {
   grid-column: span 4;
+  min-height: 600px;
   color: white;
   background:
     radial-gradient(circle at 88% 16%, rgba(255, 255, 255, 0.36), transparent 9rem),
@@ -1149,6 +1150,10 @@
 
   .correlateVisual {
     height: 348px;
+  }
+
+  .correlate {
+    min-height: 560px;
   }
 
   .remediateVisual {
