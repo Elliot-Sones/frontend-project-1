@@ -1701,61 +1701,62 @@
   }
 }
 
-@keyframes alertCondense {
+@keyframes stormIntake {
   0%,
-  20% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-  42%,
-  66% {
-    opacity: 0.42;
-    transform: translateX(130%) scale(0.72);
-  }
-  84%,
   100% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
+    border-color: rgba(213, 57, 52, 0.18);
+    box-shadow:
+      0 18px 42px rgba(21, 21, 19, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  }
+  48% {
+    border-color: rgba(213, 57, 52, 0.4);
+    box-shadow:
+      0 24px 54px rgba(213, 57, 52, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
   }
 }
 
-@keyframes rotateScanner {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes evidenceDraw {
+@keyframes pipeFlow {
   0%,
-  18% {
-    opacity: 0;
-    clip-path: inset(0 100% 0 0);
+  14% {
+    clip-path: inset(0 0 100% 0);
   }
-  42%,
-  72% {
-    opacity: 1;
+  70%,
+  100% {
     clip-path: inset(0);
   }
+}
+
+@keyframes logScanner {
+  0%,
   100% {
-    opacity: 0.2;
-    clip-path: inset(0 0 0 100%);
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  18%,
+  66% {
+    opacity: 1;
+  }
+  82% {
+    transform: translateY(120%);
+    opacity: 0;
   }
 }
 
-@keyframes answerReveal {
+@keyframes briefArrives {
   0%,
-  32% {
-    opacity: 0.35;
-    transform: translateX(24px) scale(0.94);
+  36% {
+    transform: translateY(8px);
+    border-left-color: rgba(69, 110, 63, 0.36);
   }
-  48%,
-  82% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
+  58%,
   100% {
-    opacity: 0.35;
-    transform: translateX(24px) scale(0.94);
+    transform: translateY(0);
+    border-left-color: var(--deep-green);
+    box-shadow:
+      0 24px 54px rgba(69, 110, 63, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.74);
   }
 }
 
@@ -1968,10 +1969,11 @@
   .copy,
   .floatingCard,
   .capabilityCard,
-  .noiseStack span,
-  .investigationCore i,
-  .evidenceTrail span,
-  .rootReport,
+  .alertStorm,
+  .investigationPipe::before,
+  .agentWorkbench,
+  .logSweep::after,
+  .briefOutput,
   .correlationLines,
   .signalNode,
   .causalBadge,
@@ -2180,12 +2182,12 @@
     padding-right: 78px;
   }
 
-  .noiseStack {
+  .alertStorm {
     top: 30px;
   }
 
-  .rootReport {
-    bottom: 32px;
+  .briefOutput {
+    bottom: 26px;
   }
 
   .flowGrid {
