@@ -11,7 +11,8 @@
   /* Top padding must clear the fixed announce bar (36px) + nav (~64px at top:52px). */
   padding: clamp(160px, 14vw, 200px) clamp(24px, 4vw, 48px) clamp(80px, 7vw, 100px);
   position: relative;
-  overflow: hidden;
+  /* overflow:visible so back-row notifications can bleed past the grid column */
+  overflow: visible;
 }
 
 /* Dot pattern removed — true white canvas */
@@ -143,6 +144,9 @@
   z-index: 2;
   width: 100%;
   aspect-ratio: 1100 / 720;
+  /* overflow:visible so the 3D stack can bleed past this box — keeps the
+     "one continuous page" feel, no visible box edge where cards truncate. */
+  overflow: visible;
 }
 
 @media (max-width: 1023px) {

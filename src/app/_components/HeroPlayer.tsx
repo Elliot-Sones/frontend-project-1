@@ -62,7 +62,7 @@ export function HeroPlayer() {
         ref={containerRef}
         aria-label={ariaLabel}
         role="img"
-        style={{ width: "100%", height: "100%", position: "relative" }}
+        style={{ width: "100%", height: "100%", position: "relative", overflow: "visible" }}
       >
         <Player
           component={HeroComposition}
@@ -75,7 +75,7 @@ export function HeroPlayer() {
           controls={false}
           acknowledgeRemotionLicense
           initialFrame={60}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", overflow: "visible" }}
         />
       </div>
     );
@@ -99,6 +99,7 @@ export function HeroPlayer() {
         height: "100%",
         position: "relative",
         cursor: "pointer",
+        overflow: "visible",
       }}
     >
       <Player
@@ -106,13 +107,13 @@ export function HeroPlayer() {
         component={HeroComposition}
         durationInFrames={DURATION_FRAMES}
         fps={FPS}
-        compositionHeight={660}
-        compositionWidth={980}
+        compositionHeight={COMPOSITION_HEIGHT}
+        compositionWidth={COMPOSITION_WIDTH}
         autoPlay
         loop
         controls={false}
         acknowledgeRemotionLicense
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", overflow: "visible" }}
       />
     </div>
   );
