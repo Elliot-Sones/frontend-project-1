@@ -427,19 +427,19 @@
 
 .correlateVisual {
   display: grid;
-  height: 348px;
+  height: 318px;
   grid-template-rows: auto auto;
-  gap: 10px;
-  margin-top: 22px;
+  gap: 8px;
+  margin-top: 18px;
 }
 
 .correlationScanner {
   position: relative;
   display: grid;
-  gap: 8px;
+  gap: 6px;
   align-content: end;
   overflow: visible;
-  padding: 12px 12px 12px 18px;
+  padding: 10px 10px 10px 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 22px;
   background:
@@ -464,12 +464,12 @@
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 86px minmax(0, 1fr) 62px;
+  grid-template-columns: 76px minmax(0, 1fr) 56px;
   grid-template-areas: "source detail status";
   align-items: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 6px 10px 6px 14px;
+  gap: 7px;
+  min-height: 44px;
+  padding: 5px 8px 5px 12px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 14px;
   color: #151513;
@@ -486,7 +486,7 @@
   grid-area: source;
   color: rgba(26, 24, 20, 0.52);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.61rem;
+  font-size: 0.55rem;
   font-weight: 950;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -501,7 +501,7 @@
 .signalLane strong {
   display: block;
   overflow: hidden;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 950;
   letter-spacing: -0.045em;
   text-overflow: ellipsis;
@@ -542,12 +542,12 @@
 .signalLane i {
   grid-area: status;
   display: grid;
-  min-height: 26px;
+  min-height: 24px;
   place-items: center;
   border-radius: 999px;
   color: #5f5b54;
   background: rgba(26, 24, 20, 0.06);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-style: normal;
   font-weight: 950;
 }
@@ -560,11 +560,11 @@
 
 .correlationResult {
   display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
-  gap: 12px;
-  min-height: 72px;
-  padding: 10px 14px;
+  gap: 10px;
+  min-height: 66px;
+  padding: 9px 12px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 20px;
   color: #151513;
@@ -577,8 +577,8 @@
 .correlationResult b {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 17px;
   color: white;
   background: linear-gradient(145deg, #5977b6, #173269);
@@ -598,8 +598,8 @@
 .correlationResult strong {
   display: block;
   margin-top: 3px;
-  font-size: 0.92rem;
-  line-height: 1.12;
+  font-size: 0.84rem;
+  line-height: 1.08;
   letter-spacing: -0.04em;
 }
 
@@ -980,10 +980,10 @@
   font-size: 0.66rem;
 }
 
-.specialistVisual a:nth-of-type(1) { left: 0; top: 26px; }
-.specialistVisual a:nth-of-type(2) { right: 0; top: 38px; }
-.specialistVisual a:nth-of-type(3) { right: 12px; bottom: 24px; }
-.specialistVisual a:nth-of-type(4) { left: 10px; bottom: 28px; }
+.specialistVisual a:nth-of-type(2) { left: 0; top: 26px; }
+.specialistVisual a:nth-of-type(3) { right: 0; top: 38px; }
+.specialistVisual a:nth-of-type(4) { right: 12px; bottom: 24px; }
+.specialistVisual a:nth-of-type(5) { left: 10px; bottom: 28px; }
 
 @keyframes cardRise {
   from { opacity: 0; transform: translateY(26px) scale(0.98); }
@@ -1145,11 +1145,11 @@
   .approvalPulse::after,
   .recoveryMini,
   .setupVisual::after,
-  .setupVisual > span,
-  .setupVisual > span i,
+  .setupVisual > a,
+  .setupVisual > a i,
   .timerRing,
   .specialistVisual svg path,
-  .specialistVisual span {
+  .specialistVisual a {
     animation: none;
   }
 }
@@ -1211,7 +1211,7 @@
   }
 
   .correlateVisual {
-    height: 348px;
+    height: 318px;
   }
 
   .correlate {
