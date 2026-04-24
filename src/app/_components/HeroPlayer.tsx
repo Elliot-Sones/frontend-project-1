@@ -74,7 +74,7 @@ export function HeroPlayer() {
           loop={false}
           controls={false}
           acknowledgeRemotionLicense
-          initialFrame={200}
+          initialFrame={60}
           style={{ width: "100%", height: "100%" }}
         />
       </div>
