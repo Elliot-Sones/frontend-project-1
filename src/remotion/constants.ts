@@ -1,64 +1,43 @@
-// Frame timing: the hero composition runs 8s at 30fps = 240 frames.
-// All beat markers live here so timing changes in one place.
+// Hero notification stack — 5s loop at 30fps = 150 frames.
+// 8 notifications cascade in with 150ms (4.5 frame) stagger.
 export const FPS = 30;
-export const DURATION_FRAMES = 240;
+export const DURATION_FRAMES = 150;
 
-// Composition logical size — cards are positioned in absolute coordinates
-// within this canvas. Player scales it to fit the DOM element.
+// Logical canvas size — the Player scales this to fit the DOM element.
 export const COMPOSITION_WIDTH = 1100;
-export const COMPOSITION_HEIGHT = 660;
+export const COMPOSITION_HEIGHT = 720;
 
-// Beats — frame at which each element's entry animation begins.
+// Per-card entry frames (when the card starts popping in).
+// Stagger = 4.5 frames (150ms @ 30fps). Hero gets a tiny extra pause before entry.
 export const BEATS = {
-  alert: 0,
-  alertPulse: 0,
-  errorGraph: 18,
-  investigating: 42,
-  orb: 30,
-  connector1: 48,
-  logTerminal: 60,
-  logLine1: 72,
-  logLine2: 84,
-  logLine3: 96,
-  rootCause: 96,
-  highlightSweep: 108,
-  commitBadge: 114,
-  connector2: 132,
-  graphMorph: 150,
-  resolved: 162,
-  greenBloom: 180,
-  emoji1: 180,
-  emoji2: 186,
-  emoji3: 192,
-  tickerAlert: 0,
-  tickerInvestigating: 54,
-  tickerRootCause: 108,
-  tickerRollingBack: 144,
-  tickerResolved: 180,
-  globalFadeOut: 216,
-  loopEnd: 240,
+  datadogEnter: 0,
+  pagerdutyEnter: 5,
+  slackEnter: 9,
+  jiraEnter: 14,
+  investigatingEnter: 18,
+  githubCommitEnter: 23,
+  githubPrEnter: 27,
+  heroEnter: 32,
+  heroBloomPeak: 41,     // +9f after hero enters
+  heroBloomRest: 57,     // +25f after hero enters
+  globalFadeStart: 135,
+  loopEnd: 150,
 } as const;
 
-// Spring config: {stiffness: 120, damping: 18} = single damped approach, no overshoot.
-// See Remotion docs: https://www.remotion.dev/docs/spring
+// Spring physics: damped approach, no overshoot.
 export const SPRING_CONFIG = {
   damping: 18,
   stiffness: 120,
   mass: 1,
 } as const;
 
-// Colors — one source of truth.
+// Color tokens — used by NotificationCard styles and hero bloom shadow.
 export const COLORS = {
   canvas: "#FFFFFF",
   ink100: "#1A1814",
   ink80: "#3D3A32",
   ink60: "#7A7466",
-  red: "#D14A3A",
-  redDark: "#A8372A",
-  green: "#6B8A5C",
-  greenDark: "#4A7A3A",
-  indigo: "#4A6B9C",
-  indigoDark: "#2E4B73",
-  warmHighlight: "#FFF4A3",
-  logBg: "#0F1226",
+  heroGreen: "#6B8A5C",
+  heroGreenGlow: "rgba(107, 138, 92, 0.45)",
+  heroGreenRest: "rgba(107, 138, 92, 0.12)",
 } as const;
