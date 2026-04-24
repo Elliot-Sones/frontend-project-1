@@ -183,9 +183,18 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "investigate") {
     return (
       <div className={`${styles.capVisual} ${styles.investigateVisual}`}>
-        <div className={styles.alertMini}>P1 checkout</div>
+        <div className={styles.alertMini}>
+          <span>Alert storm</span>
+          <strong>P1 checkout</strong>
+          <small>43 alerts firing</small>
+        </div>
+        <div className={styles.lensMini}>D</div>
         <div className={styles.scanBeam} />
-        <div className={styles.rootMini}>Root cause found</div>
+        <div className={styles.rootMini}>
+          <span>Answer</span>
+          <strong>Root cause found</strong>
+          <small>bad deploy isolated</small>
+        </div>
       </div>
     );
   }
@@ -193,6 +202,7 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "correlate") {
     return (
       <div className={`${styles.capVisual} ${styles.correlateVisual}`}>
+        <div className={styles.correlationHub}>D</div>
         {["logs", "deploy", "db", "stripe", "slack"].map((node) => (
           <span key={node}>{node}</span>
         ))}
@@ -208,12 +218,19 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "remediate") {
     return (
       <div className={`${styles.capVisual} ${styles.remediateVisual}`}>
-        <div className={styles.rollbackRail}>
-          <span>3f82a</span>
+        <div className={styles.actionStack}>
+          <div>
+            <span>Bad deploy</span>
+            <strong>3f82a</strong>
+          </div>
           <b />
-          <strong>a91fe</strong>
+          <div>
+            <span>Safe state</span>
+            <strong>a91fe</strong>
+          </div>
         </div>
         <div className={styles.deployButton}>Approve rollback</div>
+        <div className={styles.recoveryMini}>error rate back to 0.4%</div>
       </div>
     );
   }
@@ -221,7 +238,7 @@ function CapabilityVisual({ tone }: { tone: string }) {
   if (tone === "setup") {
     return (
       <div className={`${styles.capVisual} ${styles.setupVisual}`}>
-        <div className={styles.timerRing}>5</div>
+        <div className={styles.timerRing}><strong>5</strong><span>min</span></div>
         {["Slack", "GitHub", "Datadog"].map((tool) => (
           <span key={tool}>{tool}<i /></span>
         ))}
@@ -232,10 +249,10 @@ function CapabilityVisual({ tone }: { tone: string }) {
   return (
     <div className={`${styles.capVisual} ${styles.specialistVisual}`}>
       <div className={styles.specialistCore}>SRE</div>
-      <span>Triage</span>
-      <span>RCA</span>
-      <span>Fix</span>
-      <span>Memory</span>
+      <span><b>1</b>Triage</span>
+      <span><b>2</b>RCA</span>
+      <span><b>3</b>Fix</span>
+      <span><b>4</b>Memory</span>
     </div>
   );
 }
