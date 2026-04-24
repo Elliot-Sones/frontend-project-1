@@ -63,14 +63,14 @@ Headlines and step titles carry over from the current section, minor tightening 
 - Section constrained to `max-width: 1100px` (matches hero width), centered.
 - Section background: true white (drops `section-warm` tint). Inherits site background.
 - Outer grid: `grid-template-columns: 120px 1fr; column-gap: 48px;`
-- **Left column: sticky rail.** `position: sticky; top: 120px; align-self: start;` Contains:
+- **Left column: sticky rail.** `position: sticky; top: 120px; align-self: start;` — `120px` clears the fixed nav (which sits at `top: 52px` with ~48px of height and padding, ending around 100px from viewport top). Contains:
   - Three numbered nodes (01 / 02 / 03) as `<ol><li>` styled as circles.
   - A vertical hairline connecting them.
   - A scroll-fill line overlaid, `transform-origin: top; transform: scaleY(var(--how-progress));`
   - Nodes switch from outlined to solid black when their step crosses the viewport midpoint (tracked per-step with the same IntersectionObserver pattern).
 - **Right column: steps.** Three rows stacked vertically.
   - Each row: `grid-template-columns: 1fr 1fr; gap: 48px; padding: 80px 0; border-top: 1px solid var(--hairline);`
-  - Left sub-column: step heading + description.
+  - Left sub-column: step heading + description. For step 01, a caption line (*datadog · github · railway · pagerduty — grafana, aws, kubernetes soon*) appears under the description in the left sub-column.
   - Right sub-column: the animated stage.
 - **Stage container:** `aspect-ratio: 4/3; border-radius: 14px; background: #fafaf9; border: 1px solid var(--hairline); overflow: hidden; position: relative;`
 
@@ -189,19 +189,33 @@ Each stage:
 
 ## HTML / mount integration
 
-The current `home.body.html` contains the §03 block inline. Replace that block with a mount marker:
+Use the same injection-marker pattern as `HeroSection` (see `src/app/page.tsx`, which already splits `home.body.html` on `<!-- HERO_INJECTION_POINT -->`).
 
-```html
-<!-- §03 HOW IT WORKS -->
-<div id="how-it-works-mount"></div>
-```
+1. In `src/app/home.body.html`, delete the existing `<section class="section section-warm" id="how">…</section>` block (lines 370–438) and replace it with the marker:
 
-Update `src/app/page.tsx` (or wherever `home.body.html` is rendered) to:
+   ```html
+   <!-- HOW_IT_WORKS_INJECTION_POINT -->
+   ```
 
-1. Continue rendering `home.body.html` as before for the other sections.
-2. After the HTML mounts, mount `<HowItWorks />` into the `#how-it-works-mount` node via a portal, **or** (preferred) split the HTML string around the mount marker and render `<HowItWorks />` as a sibling element between the two halves.
+2. In `src/app/page.tsx`, add a second marker constant (`HOW_MARKER`) and split the post-hero HTML on it:
 
-The preferred approach avoids portals. Exact pattern to match the existing `HeroSection` integration in `src/app/_components/HeroSection.tsx`.
+   ```ts
+   const HOW_MARKER = "<!-- HOW_IT_WORKS_INJECTION_POINT -->";
+   const [beforeHow, afterHow] = afterHero.split(HOW_MARKER);
+   if (afterHow === undefined) {
+     throw new Error(`Missing ${HOW_MARKER} in home.body.html.`);
+   }
+   ```
+
+   Then render:
+
+   ```tsx
+   <div dangerouslySetInnerHTML={{ __html: beforeHero }} />
+   <HeroSection />
+   <div dangerouslySetInnerHTML={{ __html: beforeHow }} />
+   <HowItWorks />
+   <div dangerouslySetInnerHTML={{ __html: afterHow }} />
+   ```
 
 The inline CSS for `.how-steps`, `.how-step`, `.step-numeral`, `.step-mock`, `.slack-msg`, `.slack-avatar`, `.slack-name`, `.slack-content` in `globals.css` (lines 750–801 plus any §03-only Slack styles) becomes dead once §03 is gone; remove those rules.
 
@@ -227,8 +241,8 @@ The inline CSS for `.how-steps`, `.how-step`, `.step-numeral`, `.step-mock`, `.s
 
 ## Edge cases & fallbacks
 
-- **JS disabled:** static HTML renders copy + stage containers. Stages appear in their static fallback state because the `.is-playing` class never attaches; animations never start. Fully readable and usable.
-- **Reduced motion:** identical to JS-disabled behavior for the stages; scroll-progress rail fill is also disabled (rail shows fully filled OR fully empty — pick fully empty to avoid implying progress that isn't earned; numerals still light up on enter).
+- **JS disabled:** `HowItWorks` is a client component; without JS, nothing from it renders (React client components require hydration). Accept this — the site already requires JS for the hero Remotion Player. Surrounding sections (rendered from static HTML) remain fully usable. (If we ever need a JS-off fallback, render a server-side static version of the section alongside and hide one via CSS; out of scope here.)
+- **Reduced motion:** all three stages render their final/static state (fully populated: all logos connected, messages fully visible, notification + full graph shown). Scroll-progress rail fill is disabled; all three numerals render in their solid/active state (since the content they represent is all visible at once).
 - **Very short viewport (<500px tall):** sticky rail would overflow; disable sticky below that height via media query, fall back to static rail.
 - **Very wide viewport (>1600px):** section remains `max-width: 1100px`, centered. Stages don't grow past their aspect ratio.
 
