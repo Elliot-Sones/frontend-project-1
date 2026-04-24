@@ -1,11 +1,11 @@
 /* Styles for the hero notification stack. Rendered inside <HeroComposition />. */
 
-/* ============= Notification card base (iOS 17 style) ============= */
+/* ============= Notification card base (iOS 17 style) — compact ============= */
 .card {
   position: absolute;
   display: flex;
-  gap: 11px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 12px 14px;
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -73,32 +73,33 @@
   color: #1a1814;
 }
 
-/* ============= Hero variant (bigger, more prominent) ============= */
+/* ============= Hero variant (much bigger, compact spacing) ============= */
 .cardHero {
-  padding: 22px 24px;
+  padding: 20px 22px;
   gap: 14px;
+  border-radius: 22px;
   border: 1px solid rgba(107, 138, 92, 0.35);
   background: rgba(253, 255, 250, 0.98);
 }
 
 .cardHero .src {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .cardHero .title {
-  font-size: 19px;
-  line-height: 1.25;
+  font-size: 22px;
+  line-height: 1.2;
   color: #1e3a14;
   margin-bottom: 4px;
 }
 
 .cardHero .text {
-  font-size: 14.5px;
-  line-height: 1.45;
+  font-size: 15.5px;
+  line-height: 1.4;
 }
 
 .cardHero .text code {
-  font-size: 13.5px;
+  font-size: 14.5px;
   padding: 1px 6px;
 }
 
@@ -122,10 +123,10 @@
 }
 
 .iconHero {
-  width: 66px;
-  height: 66px;
-  border-radius: 17px;
-  font-size: 22px;
+  width: 76px;
+  height: 76px;
+  border-radius: 19px;
+  font-size: 25px;
 }
 
 /* Integration gradients */

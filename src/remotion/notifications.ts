@@ -52,9 +52,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−42s",
     enterFrame: BEATS.datadogEnter,
     position: {
-      left: 260, top: "20%",
+      left: 290, top: "22%",
       translateZ: 70, rotateY: -10, rotateX: 8, rotateZ: -5,
-      width: 320, opacity: 0.95, zIndex: 15,
+      width: 370, opacity: 0.95, zIndex: 15,
     },
   },
   {
@@ -65,9 +65,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−41s",
     enterFrame: BEATS.pagerdutyEnter,
     position: {
-      left: 540, top: "86%",
+      left: 520, top: "80%",
       translateZ: -20, rotateY: -12, rotateX: -6, rotateZ: -4,
-      width: 235, opacity: 0.82, zIndex: 8,
+      width: 260, opacity: 0.82, zIndex: 8,
     },
   },
   {
@@ -78,9 +78,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−39s",
     enterFrame: BEATS.slackEnter,
     position: {
-      left: 540, top: "8%",
+      left: 550, top: "14%",
       translateZ: -30, rotateY: -14, rotateX: 8, rotateZ: 3,
-      width: 220, opacity: 0.8, zIndex: 7,
+      width: 240, opacity: 0.8, zIndex: 7,
     },
   },
   {
@@ -91,9 +91,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−37s",
     enterFrame: BEATS.jiraEnter,
     position: {
-      left: 870, top: "30%",
-      translateZ: -120, rotateY: -20, rotateX: 4, rotateZ: -4,
-      width: 200, opacity: 0.65, blur: 0.6, zIndex: 5,
+      left: 830, top: "34%",
+      translateZ: -140, rotateY: -20, rotateX: 4, rotateZ: -4,
+      width: 200, opacity: 0.62, blur: 0.7, zIndex: 5,
     },
   },
   {
@@ -106,7 +106,7 @@ export const NOTIFICATIONS: Notification[] = [
     position: {
       left: 420, top: "52%",
       translateZ: 10, rotateY: -14, rotateX: 2, rotateZ: 2,
-      width: 280, opacity: 0.88, zIndex: 11,
+      width: 310, opacity: 0.88, zIndex: 11,
     },
   },
   {
@@ -117,9 +117,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−7s",
     enterFrame: BEATS.githubCommitEnter,
     position: {
-      left: 190, top: "72%",
+      left: 200, top: "74%",
       translateZ: 90, rotateY: -8, rotateX: -2, rotateZ: 3,
-      width: 330, opacity: 0.97, zIndex: 17,
+      width: 370, opacity: 0.97, zIndex: 17,
     },
   },
   {
@@ -130,9 +130,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−2s",
     enterFrame: BEATS.githubPrEnter,
     position: {
-      left: 910, top: "68%",
-      translateZ: -200, rotateY: -24, rotateX: -6, rotateZ: 4,
-      width: 180, opacity: 0.5, blur: 1.2, zIndex: 3,
+      left: 870, top: "66%",
+      translateZ: -220, rotateY: -24, rotateX: -6, rotateZ: 4,
+      width: 180, opacity: 0.45, blur: 1.4, zIndex: 3,
     },
   },
   {
@@ -143,9 +143,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "now",
     enterFrame: BEATS.heroEnter,
     position: {
-      left: -160, top: "40%",
-      translateZ: 200, rotateY: -5, rotateX: 2, rotateZ: -3,
-      width: 440, opacity: 1, zIndex: 20,
+      left: -180, top: "42%",
+      translateZ: 240, rotateY: -5, rotateX: 2, rotateZ: -3,
+      width: 500, opacity: 1, zIndex: 20,
     },
     isHero: true,
   },
