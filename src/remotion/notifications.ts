@@ -52,9 +52,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−42s",
     enterFrame: BEATS.datadogEnter,
     position: {
-      left: 220, top: "28%",
+      left: 200, top: "28%",
       translateZ: 70, rotateY: -10, rotateX: 4, rotateZ: -5,
-      width: 470, opacity: 1, zIndex: 14,
+      width: 540, opacity: 1, zIndex: 14,
     },
   },
   {
@@ -117,9 +117,9 @@ export const NOTIFICATIONS: Notification[] = [
     time: "−7s",
     enterFrame: BEATS.githubCommitEnter,
     position: {
-      left: 190, top: "62%",
+      left: 170, top: "62%",
       translateZ: 110, rotateY: -8, rotateX: -2, rotateZ: 3,
-      width: 490, opacity: 1, zIndex: 17,
+      width: 550, opacity: 1, zIndex: 17,
     },
   },
   {
