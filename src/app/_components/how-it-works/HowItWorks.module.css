@@ -2,7 +2,22 @@
   --how-progress: 0;
   padding: clamp(4rem, 8vh, 7rem) 24px;
   position: relative;
-  background: transparent;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(74, 107, 156, 0.06), transparent 40%),
+    radial-gradient(circle at 80% 85%, rgba(180, 92, 214, 0.05), transparent 45%);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(26, 24, 20, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 24, 20, 0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(180deg, transparent, black 25%, black 75%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, black 25%, black 75%, transparent);
 }
 
 .inner {
@@ -147,17 +162,15 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono), monospace;
-  font-size: 10.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-60);
-  padding: 5px 11px;
-  border: 1px solid var(--hairline);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #086dcc;
+  background: rgba(0, 126, 255, 0.11);
+  padding: 7px 14px;
   border-radius: 999px;
-  background: #fff;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .stepBody h3 {
@@ -180,17 +193,17 @@
 .features {
   list-style: none;
   padding: 0;
-  margin: 20px 0 0;
+  margin: 22px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .features li {
   position: relative;
-  padding-left: 26px;
-  font-size: 0.9rem;
-  color: var(--ink-80, var(--ink-100));
+  padding-left: 30px;
+  font-size: 0.95rem;
+  color: var(--ink-80);
   line-height: 1.55;
 }
 
@@ -198,10 +211,14 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 8px;
-  width: 16px;
-  height: 1px;
-  background: var(--ink-40);
+  top: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0, 126, 255, 0.11);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'><path d='M2.5 6 L5 8.5 L9.5 3.5' stroke='%23086dcc' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .stepCaption {
@@ -234,8 +251,24 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 14px;
-  background: #fafaf9;
-  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #edf2ff 0%, #f9fbff 56%, #ffffff 100%);
+  border: 1px solid rgba(180, 200, 240, 0.35);
+  box-shadow:
+    0 1px 2px rgba(26, 24, 20, 0.04),
+    0 20px 40px -24px rgba(74, 107, 156, 0.18);
   overflow: hidden;
+}
+
+.stageFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(74, 107, 156, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 107, 156, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(135deg, black, transparent 85%);
+  -webkit-mask-image: linear-gradient(135deg, black, transparent 85%);
 }
