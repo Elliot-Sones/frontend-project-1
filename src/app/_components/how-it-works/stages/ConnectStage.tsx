@@ -26,7 +26,9 @@ export function ConnectStage() {
         <line className={`${styles.line} ${styles.l4}`} x1="332" y1="230" x2="200" y2="150" />
       </svg>
 
-      <div className={styles.core}>dmq</div>
+      <div className={styles.core}>
+        <img src="/cloud-logo-v2.jpg" alt="" />
+      </div>
 
       <div className={`${styles.tile} ${styles.t1}`}><DatadogLogo /></div>
       <div className={`${styles.tile} ${styles.t2}`}><GitHubLogo /></div>
