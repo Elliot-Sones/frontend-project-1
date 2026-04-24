@@ -754,7 +754,7 @@
   height: 222px;
   gap: 10px;
   margin-top: 24px;
-  padding-right: 92px;
+  padding-right: 108px;
 }
 
 .setupVisual::before {
@@ -821,7 +821,6 @@
   z-index: 2;
   display: grid;
   grid-template-columns: 30px minmax(0, 1fr) 18px;
-  width: 100%;
   min-height: 56px;
   align-items: center;
   gap: 12px;
@@ -1170,6 +1169,6 @@
   }
 
   .setupVisual {
-    padding-right: 78px;
+    padding-right: 108px;
   }
 }
