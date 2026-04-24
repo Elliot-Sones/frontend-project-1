@@ -16,7 +16,7 @@ export interface SlackCardProps {
 
 const variantClass: Record<SlackCardVariant, string> = {
   alert: styles.slackCardAlert,
-  neutral: styles.slackCardNeutral,
+  neutral: "", // CSS Module returns `undefined` for empty rulesets — avoid literal "undefined" in class attr
   ok: styles.slackCardOk,
 };
 

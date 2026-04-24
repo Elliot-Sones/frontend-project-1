@@ -1,0 +1,187 @@
+/* Hero section — unified white, seamless with surrounding page. */
+
+.heroShell {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.54fr) minmax(680px, 1fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: center;
+  min-height: min(78vh, 900px);
+  max-width: var(--content-max, 1180px);
+  margin: 0 auto;
+  padding: clamp(96px, 10vw, 140px) clamp(24px, 4vw, 80px);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroShell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.42;
+  background-image:
+    radial-gradient(circle, rgba(20, 20, 18, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.015) 1px, transparent 1px);
+  background-size: 22px 22px, 88px 88px;
+  mask-image: linear-gradient(90deg, transparent 0%, black 36%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 36%, black 90%, transparent 100%);
+  pointer-events: none;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 3;
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 38px;
+  padding: 0 17px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 999px;
+  color: rgba(17, 17, 17, 0.68);
+  background: rgba(250, 250, 247, 0.78);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 14px 40px rgba(40, 39, 34, 0.05);
+}
+
+.eyebrow span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d7e5d1;
+  box-shadow: 0 0 0 7px rgba(110, 139, 96, 0.08);
+  animation: eyebrowPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes eyebrowPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.46; transform: scale(0.72); }
+}
+
+.heroCopy h1 {
+  margin: 38px 0 0;
+  max-width: 9.3ch;
+  letter-spacing: -0.078em;
+}
+
+.heroCopy h1 strong,
+.heroCopy h1 em {
+  display: block;
+}
+
+.heroCopy h1 strong {
+  font-family: var(--font-body);
+  font-size: clamp(3.6rem, 6vw, 7.2rem);
+  font-weight: 950;
+  line-height: 0.88;
+}
+
+.heroCopy h1 em {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 5.6vw, 6.8rem);
+  font-weight: 500;
+  line-height: 0.88;
+}
+
+.heroCopy p {
+  max-width: 540px;
+  margin: 38px 0 0;
+  color: #33312d;
+  font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+  line-height: 1.55;
+  letter-spacing: -0.035em;
+}
+
+.heroCopy b {
+  color: #161512;
+  font-weight: 900;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 44px;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  padding: 0 30px;
+  border-radius: 12px;
+  font-size: 1.0rem;
+  font-weight: 950;
+  letter-spacing: -0.035em;
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryCta {
+  color: white;
+  background: #11110f;
+  box-shadow: 0 18px 38px rgba(17, 17, 15, 0.16);
+}
+
+.secondaryCta {
+  min-width: 220px;
+  color: #34322f;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.primaryCta:hover,
+.secondaryCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 46px rgba(17, 17, 15, 0.15);
+}
+
+.animationWrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 660px;
+  aspect-ratio: 980 / 660;
+}
+
+@media (max-width: 1279px) {
+  .heroShell {
+    grid-template-columns: 1fr;
+  }
+  .animationWrap {
+    min-height: 540px;
+    max-width: 760px;
+    margin: 40px auto 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .heroShell {
+    padding: 80px 24px 60px;
+  }
+  .heroCopy h1 strong {
+    font-size: clamp(3.2rem, 14vw, 4.6rem);
+  }
+  .heroCopy h1 em {
+    font-size: clamp(3rem, 13vw, 4.4rem);
+  }
+  .primaryCta,
+  .secondaryCta {
+    width: 100%;
+  }
+  .animationWrap {
+    min-height: 420px;
+  }
+}
