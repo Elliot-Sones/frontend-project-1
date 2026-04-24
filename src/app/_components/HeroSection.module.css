@@ -153,19 +153,8 @@
   overflow: visible;
 }
 
-/* Hover bounce — triggers once per hover-in. Spring cubic-bezier so it
-   overshoots slightly and settles. Applied via className="hero-bounce"
-   on HeroPlayer's wrapper div. */
-.animationWrap :global(.hero-bounce):hover {
-  animation: heroBounce 0.6s cubic-bezier(0.36, 1.56, 0.64, 1);
-}
-
-@keyframes heroBounce {
-  0%   { transform: translateY(0); }
-  40%  { transform: translateY(-10px); }
-  70%  { transform: translateY(4px); }
-  100% { transform: translateY(0); }
-}
+/* Continuous idle float lives inside the Remotion composition (per-card
+   sine motion) — nothing here depends on :hover. */
 
 /* @remotion/player renders internal divs with inline overflow:hidden
    (unclassed wrapper + .__remotion-player) that clip our bleed. Force

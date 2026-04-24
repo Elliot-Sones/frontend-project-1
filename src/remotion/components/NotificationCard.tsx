@@ -70,16 +70,47 @@ function heroScaleBoost(frame: number): number {
   );
 }
 
+/** Idle float: cards bob up and down continuously once settled.
+ *  Each card has a unique phase (based on enterFrame) so the stack doesn't
+ *  move in lockstep. Amplitude ramps in over ~20 frames after the card lands.
+ *  Returns { translateY (px), scaleBreath (~1.0) }.  */
+function useIdleFloat(frame: number, enterFrame: number, isHero: boolean) {
+  // Hero bloom ends at heroBloomRest; float starts after that to avoid conflict.
+  const settleDelay = isHero ? BEATS.heroBloomRest - BEATS.heroEnter : 15;
+  const settleFrame = enterFrame + settleDelay;
+
+  const ramp = interpolate(
+    frame,
+    [settleFrame, settleFrame + 20],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  const phase = enterFrame * 0.35;
+  const floatFreq = 0.055; // cycles/frame — ~0.91Hz at 30fps
+  const floatAmp = isHero ? 7 : 4.5; // px — hero bobs slightly more
+  const translateY = Math.sin(frame * floatFreq + phase) * floatAmp * ramp;
+
+  const breathFreq = 0.042;
+  const breathAmp = isHero ? 0.01 : 0.006; // scale amplitude (1% for hero)
+  const scaleBreath = 1 + Math.sin(frame * breathFreq + phase + 1.3) * breathAmp * ramp;
+
+  return { translateY, scaleBreath };
+}
+
 export function NotificationCard({ notification, frame }: NotificationCardProps) {
   const { fps } = useVideoConfig();
   const { position, integration, title, body, time, enterFrame, isHero } = notification;
 
   const { scale, opacity } = useCardMotion(frame, enterFrame, position.opacity, fps);
-  const effectiveScale = isHero ? scale * heroScaleBoost(frame) : scale;
+  const { translateY: idleY, scaleBreath } = useIdleFloat(frame, enterFrame, !!isHero);
+  const effectiveScale =
+    (isHero ? scale * heroScaleBoost(frame) : scale) * scaleBreath;
 
-  // Compose transform: translate to [left,top] anchor, then Z + rotations + scale.
+  // Compose transform: translate to [left,top] anchor (with idle float on Y),
+  // then Z + rotations + scale.
   const transform = [
-    `translate(0, -50%)`,
+    `translate(0, calc(-50% + ${idleY}px))`,
     `translateZ(${position.translateZ}px)`,
     `rotateY(${position.rotateY}deg)`,
     `rotateX(${position.rotateX}deg)`,

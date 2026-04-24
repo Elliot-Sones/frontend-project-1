@@ -74,7 +74,6 @@ export function HeroPlayer() {
       }}
       aria-label={ariaLabel}
       role="img"
-      className="hero-bounce"
       style={{
         width: "100%",
         height: "100%",
