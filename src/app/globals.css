@@ -107,7 +107,6 @@ body{
 .reveal.visible{opacity:1;transform:translateY(0)}
 .reveal-d1{transition-delay:80ms}
 .reveal-d2{transition-delay:160ms}
-.reveal-d3{transition-delay:240ms}
 
 /* ============================================================
    ANNOUNCE BAR + NAV
@@ -446,8 +445,6 @@ footer>div:last-child{text-align:right}
 }
 @media(max-width:899px){
   .hero{padding:140px 20px 40px}
-  .compare-card{padding:34px 26px}
-  .audience-card{padding:38px 26px}
   footer{flex-direction:column;gap:10px;text-align:center;padding:14px 20px}
   .footer-links{justify-content:center}
 }

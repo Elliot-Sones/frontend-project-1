@@ -22,20 +22,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-/* Compare arrow draw */
-const compareEl = document.getElementById('compare');
-if (compareEl) {
-  const compareObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in-view');
-        compareObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  compareObserver.observe(compareEl);
-}
-
 /* ============================================================
    NAV BACKGROUND ON SCROLL
    ============================================================ */
