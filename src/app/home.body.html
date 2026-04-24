@@ -367,75 +367,7 @@
   </div>
 </section>
 
-<!-- ============================================================
-     §03 HOW IT WORKS
-     ============================================================ -->
-<section class="section section-warm" id="how">
-  <div class="section-inner">
-    <div class="section-label reveal">03 / How it works</div>
-    <h2 class="display-h2 reveal reveal-d1">Three steps. <span class="muted">Then it runs on its own.</span></h2>
-
-    <div class="how-steps">
-
-      <div class="how-step reveal">
-        <div class="step-numeral">01</div>
-        <div class="step-text">
-          <h3>Connect your stack</h3>
-          <p>Add monitoring, logging, deployment platforms, and repos. Damasqas connects via MCP servers, read-only by default. It learns your services, your topology, your SLOs.</p>
-        </div>
-        <div class="step-mock">
-          <span class="ok">&check;</span> datadog/production <span class="meta">&middot; 12 monitors, 8 services</span><br>
-          <span class="ok">&check;</span> github/acme-app <span class="meta">&middot; 847 commits indexed</span><br>
-          <span class="ok">&check;</span> railway/prod <span class="meta">&middot; 6 services monitored</span><br>
-          <span class="ok">&check;</span> pagerduty/default <span class="meta">&middot; on-call schedule synced</span><br>
-          <span class="meta">&#8635;</span> <span class="warn">kubernetes</span>, <span class="warn">grafana</span>, <span class="warn">aws cloudwatch</span> <span class="meta">&middot; coming soon</span>
-        </div>
-      </div>
-
-      <div class="how-step reveal">
-        <div class="step-numeral">02</div>
-        <div class="step-text">
-          <h3>Ask reliability questions in Slack</h3>
-          <p>Not "write me a function." Real infrastructure questions. Damasqas understands deployment state, service health, and change history.</p>
-        </div>
-        <div class="step-mock">
-          <div class="slack-msg">
-            <div class="slack-avatar user">SP</div>
-            <div>
-              <div class="slack-name">Shalin</div>
-              <div class="slack-content"><span class="cmd">@damasqas</span> why is API latency spiking?</div>
-            </div>
-          </div>
-          <div class="slack-msg">
-            <div class="slack-avatar bot"><img src="/cloud-logo-v2.jpg" alt=""></div>
-            <div>
-              <div class="slack-name">damasqas</div>
-              <div class="slack-content">Traced to <span class="cmd">railway/payments-worker</span>. Database connection pool exhausted after deploy #138 removed connection limit config. Pushed fix to <span class="cmd">pr-#92</span> restoring the pool size. Latency recovering.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="how-step reveal">
-        <div class="step-numeral">03</div>
-        <div class="step-text">
-          <h3>Proactive monitoring + remediation</h3>
-          <p>Damasqas learns your service topology and auto-configures monitoring: SLOs, error budgets, deployment health, and dependency status, all tailored to your architecture.</p>
-        </div>
-        <div class="step-mock">
-          <div class="slack-msg">
-            <div class="slack-avatar bot"><img src="/cloud-logo-v2.jpg" alt=""></div>
-            <div>
-              <div class="slack-name">damasqas</div>
-              <div class="slack-content"><span class="warn">&#9888; SLO Warning:</span> <span class="cmd">payments-api</span> error budget 73% consumed with 18 days left in window. Current burn rate will breach SLO in ~6 days. Top contributor: timeout errors on <span class="cmd">/v1/charges</span> endpoint.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+<!-- HOW_IT_WORKS_INJECTION_POINT -->
 
 <!-- ============================================================
      §04 BUILT FOR EVERYONE
