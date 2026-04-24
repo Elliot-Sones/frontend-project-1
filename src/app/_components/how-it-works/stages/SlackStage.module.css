@@ -32,8 +32,16 @@
 }
 
 .avatar.bot {
-  background: #1a1a1a;
-  color: #fff;
+  background: #fff;
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  padding: 0;
+}
+
+.avatar.bot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .body {

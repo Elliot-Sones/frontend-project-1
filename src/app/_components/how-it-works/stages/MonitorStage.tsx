@@ -10,7 +10,9 @@ export function MonitorStage() {
   return (
     <div ref={ref} className={className} aria-hidden="true">
       <div className={styles.notif}>
-        <div className={styles.avatar}>d</div>
+        <div className={styles.avatar}>
+          <img src="/cloud-logo-v2.jpg" alt="" />
+        </div>
 
         <div className={styles.head}>
           <span className={styles.name}>damasqas</span>

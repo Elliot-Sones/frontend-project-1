@@ -1,6 +1,6 @@
 .section {
   --how-progress: 0;
-  padding: var(--section-y) 24px;
+  padding: clamp(4rem, 8vh, 7rem) 24px;
   position: relative;
   background: transparent;
 }
@@ -11,11 +11,19 @@
 }
 
 .header {
-  max-width: 720px;
+  max-width: 780px;
+}
+
+.subtitle {
+  margin-top: 20px;
+  font-size: var(--fs-body);
+  color: var(--ink-60);
+  line-height: 1.65;
+  max-width: 62ch;
 }
 
 .steps {
-  margin-top: 56px;
+  margin-top: 40px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
@@ -118,7 +126,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
-  padding: 56px 0;
+  padding: 48px 0;
   border-top: 1px solid var(--hairline);
   align-items: center;
 }
@@ -129,10 +137,27 @@
 
 @media (min-width: 900px) {
   .step {
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    padding: 80px 0;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 56px;
+    padding: 64px 0;
   }
+}
+
+.stepEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-60);
+  padding: 5px 11px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: #fff;
+  margin-bottom: 16px;
 }
 
 .stepBody h3 {
@@ -152,13 +177,43 @@
   margin: 0;
 }
 
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.features li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 0.9rem;
+  color: var(--ink-80, var(--ink-100));
+  line-height: 1.55;
+}
+
+.features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 16px;
+  height: 1px;
+  background: var(--ink-40);
+}
+
 .stepCaption {
-  margin-top: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--hairline);
   font-family: var(--font-mono), monospace;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--ink-40);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
 }
 
 .mobileNumeral {

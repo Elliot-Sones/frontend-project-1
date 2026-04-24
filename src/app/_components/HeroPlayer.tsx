@@ -110,7 +110,7 @@ export function HeroPlayer() {
         compositionHeight={COMPOSITION_HEIGHT}
         compositionWidth={COMPOSITION_WIDTH}
         autoPlay
-        loop
+        loop={false}
         controls={false}
         acknowledgeRemotionLicense
         style={{ width: "100%", height: "100%", overflow: "visible" }}

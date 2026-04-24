@@ -29,7 +29,9 @@ export function SlackStage() {
       </div>
 
       <div className={`${styles.msg} ${styles.botMsg}`}>
-        <div className={`${styles.avatar} ${styles.bot}`}>d</div>
+        <div className={`${styles.avatar} ${styles.bot}`}>
+          <img src="/cloud-logo-v2.jpg" alt="" />
+        </div>
         <div className={styles.body}>
           <div className={styles.name}>damasqas</div>
           <div className={styles.text}>

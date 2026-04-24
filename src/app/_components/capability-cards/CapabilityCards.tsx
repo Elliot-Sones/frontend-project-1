@@ -20,9 +20,9 @@ const capabilities = [
   },
   {
     eyebrow: "Autonomous actions",
-    title: "Auto-remediates with rollbacks, restarts, and scaling.",
+    title: "Auto-remediates with one click.",
     detail:
-      "The fix path appears as an approval-ready action: rollback the bad deploy, restart a stuck worker, or scale the hot service.",
+      "Rollback a bad deploy, restart a stuck worker, or scale a hot service — all approval-ready.",
     metric: "1-click approve",
     tone: "remediate",
   },
@@ -184,7 +184,7 @@ export function CapabilityCards() {
             <div className={styles.copy}>
               <span>{capability.eyebrow}</span>
               <h2>{capability.title}</h2>
-              <p>{capability.detail}</p>
+              {capability.tone !== "correlate" ? <p>{capability.detail}</p> : null}
             </div>
             <CapabilityVisual tone={capability.tone} />
             <b className={styles.metric}>{capability.metric}</b>

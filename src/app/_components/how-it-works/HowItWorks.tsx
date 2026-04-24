@@ -62,6 +62,11 @@ export function HowItWorks() {
           <h2 className="display-h2 reveal reveal-d1">
             Three steps. <span className="muted">Then it runs on its own.</span>
           </h2>
+          <p className={`${styles.subtitle} reveal reveal-d2`}>
+            No dashboards to babysit. No PagerDuty fatigue. Damasqas plugs into
+            your stack, answers your reliability questions, and acts before you
+            notice something&rsquo;s wrong.
+          </p>
         </div>
 
         <div className={styles.steps}>
@@ -98,12 +103,18 @@ export function HowItWorks() {
             <article className={styles.step}>
               <div className={styles.stepBody}>
                 <div className={styles.mobileNumeral}>01</div>
+                <div className={styles.stepEyebrow}>Setup · 5 minutes</div>
                 <h3>Connect your stack</h3>
                 <p>
                   Add monitoring, logging, deployment platforms, and repos.
                   Damasqas connects via MCP servers, read-only by default. It
                   learns your services, your topology, your SLOs.
                 </p>
+                <ul className={styles.features}>
+                  <li>Read-only by default &mdash; you stay in control</li>
+                  <li>Full service graph built from your real deploys</li>
+                  <li>No schema mapping. No dashboards to configure.</li>
+                </ul>
                 <div className={styles.stepCaption}>
                   datadog · github · railway · pagerduty — grafana, aws,
                   kubernetes soon
@@ -117,12 +128,18 @@ export function HowItWorks() {
             <article className={styles.step}>
               <div className={styles.stepBody}>
                 <div className={styles.mobileNumeral}>02</div>
+                <div className={styles.stepEyebrow}>On-demand · in Slack</div>
                 <h3>Ask reliability questions in Slack</h3>
                 <p>
                   Not &ldquo;write me a function.&rdquo; Real infrastructure
                   questions. Damasqas understands deployment state, service
                   health, and change history.
                 </p>
+                <ul className={styles.features}>
+                  <li>Root cause in seconds, cited to real logs and commits</li>
+                  <li>Cross-references deploys, config changes, and infra events</li>
+                  <li>Opens a reviewed PR when the fix is clear</li>
+                </ul>
               </div>
               <div className={styles.stageFrame}>
                 <SlackStage />
@@ -132,12 +149,18 @@ export function HowItWorks() {
             <article className={styles.step}>
               <div className={styles.stepBody}>
                 <div className={styles.mobileNumeral}>03</div>
+                <div className={styles.stepEyebrow}>Always on · zero-config</div>
                 <h3>Proactive monitoring + remediation</h3>
                 <p>
                   Damasqas learns your service topology and auto-configures
                   monitoring: SLOs, error budgets, deployment health, and
                   dependency status, all tailored to your architecture.
                 </p>
+                <ul className={styles.features}>
+                  <li>SLOs auto-tuned from baseline traffic</li>
+                  <li>Early-warning on budget burn, not after breach</li>
+                  <li>One-click rollback on bad deploys</li>
+                </ul>
               </div>
               <div className={styles.stageFrame}>
                 <MonitorStage />
