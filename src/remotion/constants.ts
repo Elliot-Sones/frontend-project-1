@@ -1,8 +1,9 @@
-// Hero notification stack — plays ONCE on load, stops at settled state.
-// 8 notifications cascade in with 150ms (4.5 frame) stagger.
-// Duration covers full cascade + hero bloom + brief settle, no fade-out.
+// Hero notification stack — cascades in over ~2s, then holds.
+// 8 notifications stagger 150ms (4.5 frames) apart.
+// Duration is very long so the loop effectively stays in "settled" state
+// after the initial cascade; we don't use the global fade.
 export const FPS = 30;
-export const DURATION_FRAMES = 80;
+export const DURATION_FRAMES = 3600;
 
 // Logical canvas size — the Player scales this to fit the DOM element.
 export const COMPOSITION_WIDTH = 1100;
@@ -21,10 +22,9 @@ export const BEATS = {
   heroEnter: 32,
   heroBloomPeak: 41,     // +9f after hero enters
   heroBloomRest: 57,     // +25f after hero enters
-  /* Fade-out frames retained for reduced-motion; no longer used because
-     the animation plays once and holds. */
-  globalFadeStart: 200,
-  loopEnd: 220,
+  /* globalFadeStart past DURATION_FRAMES means cards never fade. */
+  globalFadeStart: 3599,
+  loopEnd: 3600,
 } as const;
 
 // Spring physics: damped approach, no overshoot.

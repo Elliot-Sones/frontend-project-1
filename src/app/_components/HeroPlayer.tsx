@@ -31,27 +31,9 @@ export function HeroPlayer() {
     getReducedMotionServerSnapshot
   );
 
-  // Pause when off-screen; resume when visible.
-  useEffect(() => {
-    if (reducedMotion) return;
-    const el = containerRef.current;
-    const player = playerRef.current;
-    if (!el || !player) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries[0]?.isIntersecting ?? false;
-        if (visible) {
-          player.play();
-        } else {
-          player.pause();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [reducedMotion]);
+  // Cards cascade in over ~2s then hold — the Remotion loop runs forever
+  // but nothing changes after the initial cascade. Effectively "plays once
+  // on load". Chrome autoplay policy is happy because the Player is muted.
 
   const ariaLabel =
     "Animation showing Damasqas resolving a production incident in 42 seconds: a P1 alert fires, the agent investigates, identifies a bad commit, rolls it back, and posts a resolved message to Slack.";
@@ -109,7 +91,7 @@ export function HeroPlayer() {
         compositionHeight={COMPOSITION_HEIGHT}
         compositionWidth={COMPOSITION_WIDTH}
         autoPlay
-        loop={false}
+        loop
         controls={false}
         acknowledgeRemotionLicense
         style={{ width: "100%", height: "100%", overflow: "visible" }}
